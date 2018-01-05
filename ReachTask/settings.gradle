@@ -1,4 +1,8 @@
 include ':app'
 
 
+include ':utils'
+project(':utils').projectDir=new File("utils/utils")
 
+include ':skin'
+project(':skin').projectDir=new File("skin/skinlib")

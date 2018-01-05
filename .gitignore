@@ -1,0 +1,8 @@
+/build
+/ReachTask/.gradle/
+/ReachTask/gradle/
+/ReachTask/build/
+/ReachTask/.idea/
+/node_modules/
+
+

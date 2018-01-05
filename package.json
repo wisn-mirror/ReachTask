@@ -1,0 +1,24 @@
+{
+  "name": "reachtask",
+  "version": "1.0.0",
+  "description": "reachtask",
+  "main": "index.android.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"node node_modules/react-native/local-cli/cli.js start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wisn-mirror/ReachTask.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wisn-mirror/ReachTask/issues"
+  },
+  "homepage": "https://github.com/wisn-mirror/ReachTask#readme",
+  "dependencies": {
+    "react": "^16.2.0",
+    "react-native": "^0.51.0"
+  }
+}

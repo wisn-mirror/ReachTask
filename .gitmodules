@@ -1,0 +1,6 @@
+[submodule "ReachTask/utils"]
+	path = ReachTask/utils
+	url = https://github.com/wisn-mirror/AndroidUtils.git
+[submodule "ReachTask/skin"]
+	path = ReachTask/skin
+	url = https://github.com/wisn-mirror/SkinLib.git
