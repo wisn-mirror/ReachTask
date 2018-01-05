@@ -3,3 +3,4 @@ build
 .gradle/
 skin/
 utils/
+local.properties

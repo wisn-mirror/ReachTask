@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ReachTask</string>
+    <string name="host"></string>
+    <bool name="isDebug">true</bool>
+</resources>

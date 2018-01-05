@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+    ~
+    ~ 
+    ~
+    -->
+    <string name="host">https://release</string>
+    <bool name="isDebug">true</bool>
+
+</resources>

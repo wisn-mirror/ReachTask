@@ -2,25 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0161cf8d-497b-4951-9536-d2a52b1f1bd8" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ReachTask/app/src/main/java/com/wisn/reachtask/TestRNActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ReachTask/app/src/main/java/com/wisn/reachtask/base/BaseActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ReachTask/app/src/main/java/com/wisn/reachtask/base/BaseAppCompatActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ReachTask/app/src/main/java/com/wisn/reachtask/base/BaseFragment.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ReachTask/app/src/main/java/com/wisn/reachtask/base/BaseLazyFragment.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ReachTask/app/src/main/java/com/wisn/reachtask/base/react/BaseReactActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ReachTask/app/src/main/java/com/wisn/reachtask/base/react/BaseReactActivityDelegate.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ReachTask/app/src/main/java/com/wisn/reachtask/base/react/BaseReactContextBaseJavaModule.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ReachTask/app/src/main/java/com/wisn/reachtask/base/react/BaseReactFragment.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ReachTask/app/src/main/java/com/wisn/reachtask/base/react/BaseReactPackage.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReachTask/skin" afterPath="$PROJECT_DIR$/ReachTask/skin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReachTask/utils" afterPath="$PROJECT_DIR$/ReachTask/utils" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReachTask/app/app.iml" afterPath="$PROJECT_DIR$/ReachTask/app/app.iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ReachTask/mainmodule/.gitignore" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ReachTask/mainmodule/build.gradle" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ReachTask/mainmodule/mainmodule.iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ReachTask/mainmodule/proguard-rules.pro" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ReachTask/mainmodule/src/androidTest/java/com/wisn/mainmodule/ExampleInstrumentedTest.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ReachTask/mainmodule/src/main/AndroidManifest.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ReachTask/mainmodule/src/main/res/values/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ReachTask/mainmodule/src/test/java/com/wisn/mainmodule/ExampleUnitTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReachTask/app/build.gradle" afterPath="$PROJECT_DIR$/ReachTask/app/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReachTask/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/ReachTask/app/src/main/AndroidManifest.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReachTask/app/src/main/java/com/wisn/reachtask/MainActivity.java" afterPath="$PROJECT_DIR$/ReachTask/app/src/main/java/com/wisn/reachtask/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReachTask/app/src/main/java/com/wisn/reachtask/app/MApplication.java" afterPath="$PROJECT_DIR$/ReachTask/app/src/main/java/com/wisn/reachtask/app/MApplication.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReachTask/build.gradle" afterPath="$PROJECT_DIR$/ReachTask/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReachTask/app/src/main/java/com/wisn/reachtask/base/BaseFragment.java" afterPath="$PROJECT_DIR$/ReachTask/app/src/main/java/com/wisn/reachtask/base/BaseFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReachTask/app/src/main/java/com/wisn/reachtask/base/BaseLazyFragment.java" afterPath="$PROJECT_DIR$/ReachTask/app/src/main/java/com/wisn/reachtask/base/BaseLazyFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReachTask/settings.gradle" afterPath="$PROJECT_DIR$/ReachTask/settings.gradle" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -49,8 +44,8 @@
       <file leaf-file-name="BaseComponent.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/BaseComponent.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="15" column="0" lean-forward="true" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+            <state relative-caret-position="168">
+              <caret line="8" column="1" lean-forward="false" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="1" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -100,8 +95,8 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="343" />
-    <option name="y" value="32" />
+    <option name="x" value="333" />
+    <option name="y" value="273" />
     <option name="width" value="1440" />
     <option name="height" value="1024" />
   </component>
@@ -172,16 +167,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1515133677729</updated>
-      <workItem from="1515133691441" duration="397000" />
+      <workItem from="1515133691441" duration="1234000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="397000" />
+    <option name="totallyTimeSpent" value="1234000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="343" y="32" width="1440" height="1024" extended-state="0" />
-    <editor active="true" />
+    <frame x="333" y="273" width="1440" height="1024" extended-state="0" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24947146" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -190,7 +184,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18083961" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.59956944" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -233,8 +227,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/BaseComponent.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="15" column="0" lean-forward="true" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+        <state relative-caret-position="168">
+          <caret line="8" column="1" lean-forward="false" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="1" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>

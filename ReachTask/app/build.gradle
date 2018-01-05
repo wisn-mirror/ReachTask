@@ -11,20 +11,56 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    signingConfigs {
+        release {
+            storeFile file(RELEASE_STOREFILE)
+            keyAlias RELEASE_KEY_ALIAS
+            keyPassword RELEASE_KEY_PASSWORD
+            storePassword RELEASE_STOREPASSWORD
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
+    }
+
+    flavorDimensions 'product', 'channel'
+    productFlavors{
+
+        ///////////////////////////////product/////////////////////////////////////////
+        build_debug {
+            dimension 'product'
+        }
+
+        // 产生测试环境的产品
+        build_test {
+            dimension 'product'
+        }
+
+        // 产生生产环境环境的产品
+        build_release {
+            dimension 'product'
+        }
+
+        ///////////////////////////////version/////////////////////////////////////////
+        channel_1{
+            dimension 'channel'
+//            manifestPlaceholders= [ UMENG_CHANNEL:"flavor_a",CName_value:properties.getProperty("CNameAAA"), WisnTheme:"@style/AppTheme1","icon":"@mipmap/ic_launcher" ]
+        }
+
+        channel_2{
+            dimension 'channel'
+//            manifestPlaceholders= [  UMENG_CHANNEL:"flavor_b",CName_value:properties.getProperty("CNameBBB"),WisnTheme:"@style/AppTheme2","icon":"@mipmap/want" ]
+        }
+
     }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "com.facebook.react:react-native:$rootProject.reactnative"
-    implementation "com.android.support.constraint:constraint-layout:$rootProject.constraint"
-    implementation "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
-    testImplementation "junit:junit:$rootProject.junitVersion"
-    implementation project(':skin')
-    implementation project(':utils')
+    implementation project(':mainmodule')
 }
