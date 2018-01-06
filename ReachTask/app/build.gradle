@@ -7,7 +7,7 @@ android {
         applicationId "com.wisn.reachtask"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
+        versionCode getGitVersion()
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -22,9 +22,14 @@ android {
     }
     buildTypes {
         release {
+            debuggable true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+        }
+        debug {
+            debuggable true
+            applicationIdSuffix ".debug"
         }
     }
 
@@ -56,10 +61,31 @@ android {
             dimension 'channel'
 //            manifestPlaceholders= [  UMENG_CHANNEL:"flavor_b",CName_value:properties.getProperty("CNameBBB"),WisnTheme:"@style/AppTheme2","icon":"@mipmap/want" ]
         }
-
+    }
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def buildType = variant.buildType.name
+            def outputFile = output.outputFile
+            def date = releaseTime()
+            def applicationId = defaultConfig.applicationId
+            def versionName = defaultConfig.versionName
+            def versionCode = defaultConfig.versionCode
+            if (outputFile != null && buildType.contains("release") && outputFile.name.endsWith('.apk')) {
+                output.outputFileName= "${applicationId}_${variant.flavorName}_${versionCode}_${versionName}_${date}.apk"
+//                output.outputFile = new File(outputFile.parent, fileName)
+//                output.outputFile = new File("$rootDir/apkFile", fileName)  //3.0之前的
+            }
+        }
     }
 }
 
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd_hh-mm-ss", TimeZone.getTimeZone("Asia/Shanghai"))
+}
+
+def getGitVersion() {
+    return 'git rev-list HEAD --count'.execute().text.trim().toInteger()
+}
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':mainmodule')
