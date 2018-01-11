@@ -9,6 +9,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -20,7 +21,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "com.facebook.react:react-native:$rootProject.reactnative"
     implementation "com.android.support.constraint:constraint-layout:$rootProject.constraint"
     implementation "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
