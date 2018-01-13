@@ -1,4 +1,6 @@
 build
 .idea/
 .gradle/
+skin/
+utils/
 local.properties
