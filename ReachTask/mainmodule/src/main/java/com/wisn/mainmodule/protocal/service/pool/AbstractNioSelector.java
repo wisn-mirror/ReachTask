@@ -1,4 +1,6 @@
-package com.wisn.mainmodule.protocal.service;
+package com.wisn.mainmodule.protocal.service.pool;
+
+
 
 
 import java.io.IOException;
@@ -11,13 +13,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public abstract class AbstractNioSelector implements Runnable {
     private Executor executor;
     private String threadName;
+    protected NioSelectorRunnablePool nioSelectorRunnablePool;
     protected Selector selector;
     private AtomicBoolean weakup = new AtomicBoolean();
     private Queue<Runnable> taskQueue = new ConcurrentLinkedQueue<>();
 
-    public AbstractNioSelector(Executor executor, String threadName) {
+    public AbstractNioSelector(Executor executor, String threadName, NioSelectorRunnablePool nioSelectorRunnablePool) {
         this.executor = executor;
         this.threadName = threadName;
+        this.nioSelectorRunnablePool = nioSelectorRunnablePool;
         openSelector();
     }
 
