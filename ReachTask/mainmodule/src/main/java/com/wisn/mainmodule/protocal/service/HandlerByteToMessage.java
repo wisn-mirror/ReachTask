@@ -1,31 +1,33 @@
 package com.wisn.mainmodule.protocal.service;
 
+
+
+
 import com.wisn.mainmodule.protocal.coder.Request;
 import com.wisn.mainmodule.protocal.coder.Response;
 import com.wisn.mainmodule.protocal.constant.ConstantValues;
-
+import com.wisn.mainmodule.protocal.service.pool.ByteToMessage;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
-import java.util.Arrays;
 
-public class HandlerByteToMessage {
+public class HandlerByteToMessage implements ByteToMessage {
 
-    ByteBuffer bytebuffer;
+
     ByteBuffer mInt = ByteBuffer.allocate(4);
     ByteBuffer mshort = ByteBuffer.allocate(2);
     private short result;
     private short cmd;
     private short module;
 
-    public void read(SelectionKey key) throws IOException {
+    public synchronized void read(SelectionKey key) throws IOException {
         if (key == null) return;
         SocketChannel channel = (SocketChannel) key.channel();
         mInt.clear();
         int readHeader = channel.read(mInt);
-        if (readHeader == -1) return;
+        if (readHeader == -1 || readHeader != 4) return;
         mInt.flip();
         int anInt = mInt.getInt();
         if (anInt == ConstantValues.MESSAGE_HEADTAG) {
@@ -78,7 +80,7 @@ public class HandlerByteToMessage {
     private boolean readData(SocketChannel channel) throws IOException {
         mInt.clear();
         int readLength = channel.read(mInt);
-        if (readLength == -1) {
+        if (readLength == -1 || readLength != 4) {
             return false;
         }
         mInt.flip();
@@ -90,11 +92,8 @@ public class HandlerByteToMessage {
         if (length > 2048) {
             return false;
         }
-        if (bytebuffer != null) {
-            bytebuffer.clear();
-        } else {
-            bytebuffer = ByteBuffer.allocate(length);
-        }
+
+        ByteBuffer  bytebuffer = ByteBuffer.allocate(length);
         int readData = channel.read(bytebuffer);
         if (readData == -1) {
             return false;
@@ -117,12 +116,12 @@ public class HandlerByteToMessage {
         if (dataLength != 0) {
             byteBuf.put(request.getData());
         }
-        System.out.println("send:" + Arrays.toString(byteBuf.array()));
+//        System.out.println("send:" + Arrays.toString(byteBuf.array()));
         byteBuf.flip();
         return byteBuf;
     }
 
     public void receive(Response response) {
-        System.out.println("client:" + response);
+        System.out.println("client:" + new String(response.getData()));
     }
 }
