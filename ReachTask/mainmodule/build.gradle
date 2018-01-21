@@ -25,6 +25,8 @@ dependencies {
     implementation "com.facebook.react:react-native:$rootProject.reactnative"
     implementation "com.android.support.constraint:constraint-layout:$rootProject.constraint"
     implementation "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
+//    implementation "com.google.protobuf:protobuf-lite:3.0.0"
+    implementation "com.google.protobuf:protobuf-java:3.0.0"
     testImplementation "junit:junit:$rootProject.junitVersion"
     implementation project(':skin')
     implementation project(':utils')
