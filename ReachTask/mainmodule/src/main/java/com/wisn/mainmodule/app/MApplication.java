@@ -1,6 +1,8 @@
 package com.wisn.mainmodule.app;
 
 
+import android.database.sqlite.SQLiteDatabase;
+
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -8,6 +10,8 @@ import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.wisn.mainmodule.base.react.BaseReactPackage;
+import com.wisn.mainmodule.entity.DaoMaster;
+import com.wisn.mainmodule.entity.DaoSession;
 import com.wisn.skinlib.base.SkinApplication;
 import com.wisn.utils.Utils;
 
@@ -20,6 +24,8 @@ import java.util.List;
 
 public class MApplication extends SkinApplication implements ReactApplication {
 
+    private DaoSession daoSession;
+
     @Override
     public ReactNativeHost getReactNativeHost() {
         return host;
@@ -30,8 +36,22 @@ public class MApplication extends SkinApplication implements ReactApplication {
         super.onCreate();
         SoLoader.init(this, /* native exopackage */ false);
         Utils.init(this);
+        setDatabase();
     }
 
+    public void setDatabase(){
+        DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(this, "reachtask.db", null);
+        SQLiteDatabase writableDatabase = devOpenHelper.getWritableDatabase();
+        DaoMaster  daoMaster=new DaoMaster(writableDatabase);
+        daoSession = daoMaster.newSession();
+    }
+
+    public DaoSession getDaoSession(){
+        if(daoSession==null){
+            setDatabase();
+        }
+        return daoSession;
+    }
 
     @Override
     public boolean isSupplyRN() {
