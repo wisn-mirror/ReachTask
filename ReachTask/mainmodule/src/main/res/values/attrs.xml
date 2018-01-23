@@ -2,17 +2,17 @@
 <resources>
     <declare-styleable name="IndicatorScrollView">
         <!--图片大小-->
-        <attr name="drawableSize" format="dimension"/>
+        <attr name="drawableSize" format="dimension" />
         <!--图片之间的间隔-->
-        <attr name="drawableMargin" format="dimension"/>
+        <attr name="drawableMargin" format="dimension" />
         <!--是否显示滑动过程-->
-        <attr name="isScroll" format="boolean"/>
+        <attr name="isScroll" format="boolean" />
         <!--图片个数-->
-        <attr name="scrollCount" format="integer"/>
+        <attr name="scrollCount" format="integer" />
         <!--滑动选择图片-->
-        <attr name="drawableSelect" format="reference"/>
+        <attr name="drawableSelect" format="reference" />
         <!--滑动背景图片-->
-        <attr name="drawableUnSelect" format="reference"/>
+        <attr name="drawableUnSelect" format="reference" />
     </declare-styleable>
     <declare-styleable name="CountDownView">
         <!--颜色-->
@@ -22,10 +22,26 @@
         <!-- 圆环宽度 -->
         <attr name="ringWidth" format="float" />
         <!--进度文本颜色-->
-        <attr name="progressTextColor" format="color"/>
+        <attr name="progressTextColor" format="color" />
         <!-- 进度文本-->
         <attr name="progressText" format="dimension" />
         <!--倒计时-->
-        <attr name="countdownTime" format="integer"/>
+        <attr name="countdownTime" format="integer" />
+    </declare-styleable>
+    <declare-styleable name="ButtonView">
+        <attr name="drawableSizes" format="dimension" />
+        <attr name="drawableTop" format="reference" />
+        <attr name="drawableLeft" format="reference" />
+        <attr name="drawableRight" format="reference" />
+        <attr name="drawableBottom" format="reference" />
+        <attr name="tipText" format="string" />
+        <attr name="tipTextSize" format="dimension" />
+        <attr name="tipTextRedius" format="dimension" />
+        <attr name="tipRedius" format="dimension" />
+        <attr name="tipRediusMarginTop" format="dimension" />
+        <attr name="tipRediusMarginRight" format="dimension" />
+        <attr name="tipTextColor" format="color" />
+        <attr name="tipBackground" format="color" />
+        <attr name="isTip" format="boolean" />
     </declare-styleable>
 </resources>

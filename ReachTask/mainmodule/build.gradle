@@ -33,6 +33,7 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofit"
     implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttp"
     implementation "com.squareup.okhttp3:okhttp:$rootProject.okhttp"
+//    implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
 
 //    implementation "com.squareup.retrofit2:adapter-rxjava:$rootProject.retrofit"
     implementation "org.greenrobot:greendao:$rootProject.greendao"

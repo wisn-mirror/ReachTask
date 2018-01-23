@@ -55,5 +55,5 @@ ext {
     retrofit = "2.3.0"
     protobufjava = "2.4.1"
     greendao = "3.2.0"
-    okhttp = "3.8.1"
+    okhttp="3.8.1"
 }

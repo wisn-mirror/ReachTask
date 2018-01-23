@@ -23,7 +23,7 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 
-public class MainActivity extends Activity implements View.OnClickListener {
+public class TestActivity extends Activity implements View.OnClickListener {
     private TextView mTestResult, shareText, shareTextdelete, register, changePassword, loginOut, login, uploadicon, getusers, connect, sendMessage;
     private EditText url, userName, password, newpassword,host,port;
     private ScrollView mScroll_info;
@@ -126,7 +126,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             user.setPhonenumber(userName);
             user.setPassword(password);
             String s = new Gson().toJson(user);
-            LogUtils.e("MainActivity",s);
+            LogUtils.e("TestActivity",s);
             RequestBody body=RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), s);
 
             Call<HttpResponse<String>> register = retrofitService.register(body);
