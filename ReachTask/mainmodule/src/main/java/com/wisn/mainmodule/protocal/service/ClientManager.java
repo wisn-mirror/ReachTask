@@ -15,18 +15,31 @@ public class ClientManager {
     private HandlerByteToMessage handlerByteToMessage;
     private SocketChannel mConnect;
     private NioSelectorRunnablePool mNioSelectorRunnablePool;
+    private static ClientManager clientManager = null;
 
-    public void start(String ip, int port) {
+    private ClientManager() {
+    }
+
+    public static ClientManager getInstance() {
+        if (clientManager == null) {
+            synchronized (ClientManager.class) {
+                if (clientManager == null) {
+                    clientManager = new ClientManager();
+                }
+            }
+        }
+        return clientManager;
+    }
+
+    public void start(String ip, int port, HandlerByteToMessage handlerByteToMessage) {
         this.ip = ip;
         this.port = port;
-        if (handlerByteToMessage == null) {
-            handlerByteToMessage = new HandlerByteToMessage();
-        }
+        this.handlerByteToMessage = handlerByteToMessage;
         if (mNioSelectorRunnablePool == null) {
             mNioSelectorRunnablePool = new NioSelectorRunnablePool(Executors.newCachedThreadPool(),
-                                                                   Executors.newCachedThreadPool(),
-                                                                   Executors.newCachedThreadPool(),
-                                                                   handlerByteToMessage);
+                    Executors.newCachedThreadPool(),
+                    Executors.newCachedThreadPool(),
+                    this.handlerByteToMessage);
         }
 
         ClientBootstrap serverBootstrap = new ClientBootstrap(mNioSelectorRunnablePool);
@@ -37,17 +50,20 @@ public class ClientManager {
     public boolean write(Request request) {
         try {
             if (mConnect == null) {
-                start(ip, port);
-                return false;
+                if (ip == null || port == 0) return false;
+                start(ip, port, this.handlerByteToMessage);
             }
             if (mConnect.isConnectionPending()) {
                 mConnect.finishConnect();
             }
-            mConnect.write(handlerByteToMessage.getBytes(request));
+            if (mConnect.isConnected()) {
+                mConnect.write(handlerByteToMessage.getBytes(request));
+                return true;
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return true;
+        return false;
     }
 
 }

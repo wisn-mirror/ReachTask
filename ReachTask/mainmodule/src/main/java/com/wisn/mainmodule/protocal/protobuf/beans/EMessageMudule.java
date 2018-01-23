@@ -31,17 +31,21 @@ public final class EMessageMudule {
     boolean hasStatus();
     int getStatus();
     
-    // required string content = 6;
-    boolean hasContent();
-    String getContent();
-    
-    // required int64 createtime = 7;
+    // required int64 createtime = 6;
     boolean hasCreatetime();
     long getCreatetime();
     
-    // required int64 receivetime = 8;
+    // required int64 receivetime = 7;
     boolean hasReceivetime();
     long getReceivetime();
+    
+    // required string token = 8;
+    boolean hasToken();
+    String getToken();
+    
+    // required string content = 9;
+    boolean hasContent();
+    String getContent();
   }
   public static final class EMessage extends
       com.google.protobuf.GeneratedMessage
@@ -51,7 +55,20 @@ public final class EMessageMudule {
       super(builder);
     }
     private EMessage(boolean noInit) {}
-    
+
+    public String toMString() {
+      return "EMessage{" +
+              "messageid_=" + messageid_ +
+              ", fromuserid_=" + fromuserid_ +
+              ", targetuserid_=" + targetuserid_ +
+              ", messagetype_=" + messagetype_ +
+              ", status_=" + status_ +
+              ", createtime_=" + createtime_ +
+              ", receivetime_=" + receivetime_ +
+              ", token_=" + token_ +
+              ", content_=" + content_ +
+              '}';
+    }
     private static final EMessage defaultInstance;
     public static EMessage getDefaultInstance() {
       return defaultInstance;
@@ -66,7 +83,7 @@ public final class EMessageMudule {
       return EMessageMudule.internal_static_EMessage_descriptor;
     }
     
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
       return EMessageMudule.internal_static_EMessage_fieldAccessorTable;
     }
@@ -122,11 +139,63 @@ public final class EMessageMudule {
       return status_;
     }
     
-    // required string content = 6;
-    public static final int CONTENT_FIELD_NUMBER = 6;
+    // required int64 createtime = 6;
+    public static final int CREATETIME_FIELD_NUMBER = 6;
+    private long createtime_;
+    public boolean hasCreatetime() {
+      return ((bitField0_ & 0x00000020) == 0x00000020);
+    }
+    public long getCreatetime() {
+      return createtime_;
+    }
+    
+    // required int64 receivetime = 7;
+    public static final int RECEIVETIME_FIELD_NUMBER = 7;
+    private long receivetime_;
+    public boolean hasReceivetime() {
+      return ((bitField0_ & 0x00000040) == 0x00000040);
+    }
+    public long getReceivetime() {
+      return receivetime_;
+    }
+    
+    // required string token = 8;
+    public static final int TOKEN_FIELD_NUMBER = 8;
+    private Object token_;
+    public boolean hasToken() {
+      return ((bitField0_ & 0x00000080) == 0x00000080);
+    }
+    public String getToken() {
+      Object ref = token_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          token_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getTokenBytes() {
+      Object ref = token_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        token_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    
+    // required string content = 9;
+    public static final int CONTENT_FIELD_NUMBER = 9;
     private Object content_;
     public boolean hasContent() {
-      return ((bitField0_ & 0x00000020) == 0x00000020);
+      return ((bitField0_ & 0x00000100) == 0x00000100);
     }
     public String getContent() {
       Object ref = content_;
@@ -154,35 +223,16 @@ public final class EMessageMudule {
       }
     }
     
-    // required int64 createtime = 7;
-    public static final int CREATETIME_FIELD_NUMBER = 7;
-    private long createtime_;
-    public boolean hasCreatetime() {
-      return ((bitField0_ & 0x00000040) == 0x00000040);
-    }
-    public long getCreatetime() {
-      return createtime_;
-    }
-    
-    // required int64 receivetime = 8;
-    public static final int RECEIVETIME_FIELD_NUMBER = 8;
-    private long receivetime_;
-    public boolean hasReceivetime() {
-      return ((bitField0_ & 0x00000080) == 0x00000080);
-    }
-    public long getReceivetime() {
-      return receivetime_;
-    }
-    
     private void initFields() {
       messageid_ = 0L;
       fromuserid_ = 0L;
       targetuserid_ = 0L;
       messagetype_ = 0;
       status_ = 0;
-      content_ = "";
       createtime_ = 0L;
       receivetime_ = 0L;
+      token_ = "";
+      content_ = "";
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -209,15 +259,19 @@ public final class EMessageMudule {
         memoizedIsInitialized = 0;
         return false;
       }
-      if (!hasContent()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
       if (!hasCreatetime()) {
         memoizedIsInitialized = 0;
         return false;
       }
       if (!hasReceivetime()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasToken()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasContent()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -244,13 +298,16 @@ public final class EMessageMudule {
         output.writeInt32(5, status_);
       }
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
-        output.writeBytes(6, getContentBytes());
+        output.writeInt64(6, createtime_);
       }
       if (((bitField0_ & 0x00000040) == 0x00000040)) {
-        output.writeInt64(7, createtime_);
+        output.writeInt64(7, receivetime_);
       }
       if (((bitField0_ & 0x00000080) == 0x00000080)) {
-        output.writeInt64(8, receivetime_);
+        output.writeBytes(8, getTokenBytes());
+      }
+      if (((bitField0_ & 0x00000100) == 0x00000100)) {
+        output.writeBytes(9, getContentBytes());
       }
       getUnknownFields().writeTo(output);
     }
@@ -283,15 +340,19 @@ public final class EMessageMudule {
       }
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(6, getContentBytes());
+          .computeInt64Size(6, createtime_);
       }
       if (((bitField0_ & 0x00000040) == 0x00000040)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(7, createtime_);
+          .computeInt64Size(7, receivetime_);
       }
       if (((bitField0_ & 0x00000080) == 0x00000080)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(8, receivetime_);
+          .computeBytesSize(8, getTokenBytes());
+      }
+      if (((bitField0_ & 0x00000100) == 0x00000100)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(9, getContentBytes());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -381,7 +442,7 @@ public final class EMessageMudule {
     
     @Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -393,7 +454,7 @@ public final class EMessageMudule {
         return EMessageMudule.internal_static_EMessage_descriptor;
       }
       
-      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      protected FieldAccessorTable
           internalGetFieldAccessorTable() {
         return EMessageMudule.internal_static_EMessage_fieldAccessorTable;
       }
@@ -427,12 +488,14 @@ public final class EMessageMudule {
         bitField0_ = (bitField0_ & ~0x00000008);
         status_ = 0;
         bitField0_ = (bitField0_ & ~0x00000010);
-        content_ = "";
-        bitField0_ = (bitField0_ & ~0x00000020);
         createtime_ = 0L;
-        bitField0_ = (bitField0_ & ~0x00000040);
+        bitField0_ = (bitField0_ & ~0x00000020);
         receivetime_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000040);
+        token_ = "";
         bitField0_ = (bitField0_ & ~0x00000080);
+        content_ = "";
+        bitField0_ = (bitField0_ & ~0x00000100);
         return this;
       }
       
@@ -494,15 +557,19 @@ public final class EMessageMudule {
         if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
           to_bitField0_ |= 0x00000020;
         }
-        result.content_ = content_;
+        result.createtime_ = createtime_;
         if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
           to_bitField0_ |= 0x00000040;
         }
-        result.createtime_ = createtime_;
+        result.receivetime_ = receivetime_;
         if (((from_bitField0_ & 0x00000080) == 0x00000080)) {
           to_bitField0_ |= 0x00000080;
         }
-        result.receivetime_ = receivetime_;
+        result.token_ = token_;
+        if (((from_bitField0_ & 0x00000100) == 0x00000100)) {
+          to_bitField0_ |= 0x00000100;
+        }
+        result.content_ = content_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -534,14 +601,17 @@ public final class EMessageMudule {
         if (other.hasStatus()) {
           setStatus(other.getStatus());
         }
-        if (other.hasContent()) {
-          setContent(other.getContent());
-        }
         if (other.hasCreatetime()) {
           setCreatetime(other.getCreatetime());
         }
         if (other.hasReceivetime()) {
           setReceivetime(other.getReceivetime());
+        }
+        if (other.hasToken()) {
+          setToken(other.getToken());
+        }
+        if (other.hasContent()) {
+          setContent(other.getContent());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -568,15 +638,19 @@ public final class EMessageMudule {
           
           return false;
         }
-        if (!hasContent()) {
-          
-          return false;
-        }
         if (!hasCreatetime()) {
           
           return false;
         }
         if (!hasReceivetime()) {
+          
+          return false;
+        }
+        if (!hasToken()) {
+          
+          return false;
+        }
+        if (!hasContent()) {
           
           return false;
         }
@@ -631,19 +705,24 @@ public final class EMessageMudule {
               status_ = input.readInt32();
               break;
             }
-            case 50: {
+            case 48: {
               bitField0_ |= 0x00000020;
-              content_ = input.readBytes();
+              createtime_ = input.readInt64();
               break;
             }
             case 56: {
               bitField0_ |= 0x00000040;
-              createtime_ = input.readInt64();
+              receivetime_ = input.readInt64();
               break;
             }
-            case 64: {
+            case 66: {
               bitField0_ |= 0x00000080;
-              receivetime_ = input.readInt64();
+              token_ = input.readBytes();
+              break;
+            }
+            case 74: {
+              bitField0_ |= 0x00000100;
+              content_ = input.readBytes();
               break;
             }
           }
@@ -757,10 +836,88 @@ public final class EMessageMudule {
         return this;
       }
       
-      // required string content = 6;
+      // required int64 createtime = 6;
+      private long createtime_ ;
+      public boolean hasCreatetime() {
+        return ((bitField0_ & 0x00000020) == 0x00000020);
+      }
+      public long getCreatetime() {
+        return createtime_;
+      }
+      public Builder setCreatetime(long value) {
+        bitField0_ |= 0x00000020;
+        createtime_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearCreatetime() {
+        bitField0_ = (bitField0_ & ~0x00000020);
+        createtime_ = 0L;
+        onChanged();
+        return this;
+      }
+      
+      // required int64 receivetime = 7;
+      private long receivetime_ ;
+      public boolean hasReceivetime() {
+        return ((bitField0_ & 0x00000040) == 0x00000040);
+      }
+      public long getReceivetime() {
+        return receivetime_;
+      }
+      public Builder setReceivetime(long value) {
+        bitField0_ |= 0x00000040;
+        receivetime_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearReceivetime() {
+        bitField0_ = (bitField0_ & ~0x00000040);
+        receivetime_ = 0L;
+        onChanged();
+        return this;
+      }
+      
+      // required string token = 8;
+      private Object token_ = "";
+      public boolean hasToken() {
+        return ((bitField0_ & 0x00000080) == 0x00000080);
+      }
+      public String getToken() {
+        Object ref = token_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          token_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
+      }
+      public Builder setToken(String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000080;
+        token_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearToken() {
+        bitField0_ = (bitField0_ & ~0x00000080);
+        token_ = getDefaultInstance().getToken();
+        onChanged();
+        return this;
+      }
+      void setToken(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000080;
+        token_ = value;
+        onChanged();
+      }
+      
+      // required string content = 9;
       private Object content_ = "";
       public boolean hasContent() {
-        return ((bitField0_ & 0x00000020) == 0x00000020);
+        return ((bitField0_ & 0x00000100) == 0x00000100);
       }
       public String getContent() {
         Object ref = content_;
@@ -776,63 +933,21 @@ public final class EMessageMudule {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000020;
+  bitField0_ |= 0x00000100;
         content_ = value;
         onChanged();
         return this;
       }
       public Builder clearContent() {
-        bitField0_ = (bitField0_ & ~0x00000020);
+        bitField0_ = (bitField0_ & ~0x00000100);
         content_ = getDefaultInstance().getContent();
         onChanged();
         return this;
       }
       void setContent(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000020;
+        bitField0_ |= 0x00000100;
         content_ = value;
         onChanged();
-      }
-      
-      // required int64 createtime = 7;
-      private long createtime_ ;
-      public boolean hasCreatetime() {
-        return ((bitField0_ & 0x00000040) == 0x00000040);
-      }
-      public long getCreatetime() {
-        return createtime_;
-      }
-      public Builder setCreatetime(long value) {
-        bitField0_ |= 0x00000040;
-        createtime_ = value;
-        onChanged();
-        return this;
-      }
-      public Builder clearCreatetime() {
-        bitField0_ = (bitField0_ & ~0x00000040);
-        createtime_ = 0L;
-        onChanged();
-        return this;
-      }
-      
-      // required int64 receivetime = 8;
-      private long receivetime_ ;
-      public boolean hasReceivetime() {
-        return ((bitField0_ & 0x00000080) == 0x00000080);
-      }
-      public long getReceivetime() {
-        return receivetime_;
-      }
-      public Builder setReceivetime(long value) {
-        bitField0_ |= 0x00000080;
-        receivetime_ = value;
-        onChanged();
-        return this;
-      }
-      public Builder clearReceivetime() {
-        bitField0_ = (bitField0_ & ~0x00000080);
-        receivetime_ = 0L;
-        onChanged();
-        return this;
       }
       
       // @@protoc_insertion_point(builder_scope:EMessage)
@@ -860,13 +975,13 @@ public final class EMessageMudule {
       descriptor;
   static {
     String[] descriptorData = {
-      "\n\016EMessage.proto\"\246\001\n\010EMessage\022\021\n\tmessage" +
+      "\n\016EMessage.proto\"\265\001\n\010EMessage\022\021\n\tmessage" +
       "id\030\001 \002(\003\022\022\n\nfromuserid\030\002 \002(\003\022\024\n\014targetus" +
       "erid\030\003 \002(\003\022\023\n\013messagetype\030\004 \002(\005\022\016\n\006statu" +
-      "s\030\005 \002(\005\022\017\n\007content\030\006 \002(\t\022\022\n\ncreatetime\030\007" +
-      " \002(\003\022\023\n\013receivetime\030\010 \002(\003B=\n+com.wisn.ma" +
-      "inmodule.protocal.protobuf.beansB\016EMessa" +
-      "geMudule"
+      "s\030\005 \002(\005\022\022\n\ncreatetime\030\006 \002(\003\022\023\n\013receiveti" +
+      "me\030\007 \002(\003\022\r\n\005token\030\010 \002(\t\022\017\n\007content\030\t \002(\t" +
+      "B=\n+com.wisn.mainmodule.protocal.protobu" +
+      "f.beansB\016EMessageMudule"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -878,7 +993,7 @@ public final class EMessageMudule {
           internal_static_EMessage_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_EMessage_descriptor,
-              new String[] { "Messageid", "Fromuserid", "Targetuserid", "Messagetype", "Status", "Content", "Createtime", "Receivetime", },
+              new String[] { "Messageid", "Fromuserid", "Targetuserid", "Messagetype", "Status", "Createtime", "Receivetime", "Token", "Content", },
               EMessage.class,
               EMessage.Builder.class);
           return null;

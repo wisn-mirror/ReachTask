@@ -52,7 +52,8 @@ ext {
     constraint = "1.0.0"
 //    reactnative = "0.20.1"
     reactnative = "+"
-    retrofit = "2.1.0"
-    protobufjava = "3.0.0"
+    retrofit = "2.3.0"
+    protobufjava = "2.4.1"
     greendao = "3.2.0"
+    okhttp = "3.8.1"
 }

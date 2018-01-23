@@ -1,16 +1,33 @@
 package com.wisn.mainmodule;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    private TextView mTestResult,    shareText,  shareTextdelete,register, changePassword, loginOut, login,uploadicon,getusers ;
-    private EditText url, userName, password, newpassword;
+import com.google.gson.Gson;
+import com.wisn.mainmodule.entity.User;
+import com.wisn.mainmodule.http.HttpApi;
+import com.wisn.mainmodule.http.HttpApiService;
+import com.wisn.mainmodule.http.response.HttpResponse;
+import com.wisn.mainmodule.protocal.coder.Request;
+import com.wisn.mainmodule.protocal.coder.Response;
+import com.wisn.mainmodule.protocal.protobuf.beans.EMessageMudule;
+import com.wisn.mainmodule.protocal.service.ClientManager;
+import com.wisn.mainmodule.protocal.service.HandlerByteToMessage;
+import com.wisn.skinlib.utils.LogUtils;
+
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+
+public class MainActivity extends Activity implements View.OnClickListener {
+    private TextView mTestResult, shareText, shareTextdelete, register, changePassword, loginOut, login, uploadicon, getusers, connect, sendMessage;
+    private EditText url, userName, password, newpassword,host,port;
     private ScrollView mScroll_info;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,6 +35,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         url = (EditText) findViewById(R.id.url);
         userName = (EditText) findViewById(R.id.userName);
         password = (EditText) findViewById(R.id.password);
+        newpassword = (EditText) findViewById(R.id.newpassword);
+        host = (EditText) findViewById(R.id.host);
+        port = (EditText) findViewById(R.id.port);
         newpassword = (EditText) findViewById(R.id.newpassword);
         mScroll_info = (ScrollView) findViewById(R.id.scroll_info);
         mTestResult = (TextView) findViewById(R.id.testResult);
@@ -29,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getusers = (TextView) findViewById(R.id.getusers);
         changePassword = (TextView) findViewById(R.id.changePassword);
         loginOut = (TextView) findViewById(R.id.loginOut);
+        connect = (TextView) findViewById(R.id.connect);
+        sendMessage = (TextView) findViewById(R.id.sendMessage);
         register.setOnClickListener(this);
         shareText.setOnClickListener(this);
         shareTextdelete.setOnClickListener(this);
@@ -37,13 +59,89 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         uploadicon.setOnClickListener(this);
         getusers.setOnClickListener(this);
         changePassword.setOnClickListener(this);
-
+        connect.setOnClickListener(this);
+        sendMessage.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        if(view==changePassword){
 
+        String Url =  this.url.getText().toString().trim();
+        String userName = this.userName.getText().toString().trim();
+        String password =  this.password.getText().toString().trim();
+        String newpassword =  this.newpassword.getText().toString().trim();
+        HttpApi retrofitService = HttpApiService.createRetrofitService(HttpApi.class, Url);
+        final String Host = host.getText().toString().trim();
+        final int Port = Integer.parseInt(port.getText().toString().trim());
+        if (view == sendMessage) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    EMessageMudule.EMessage eMessage = EMessageMudule.EMessage.newBuilder()
+                            .setMessageid(20000)
+                            .setFromuserid(222)
+                            .setTargetuserid(10000)
+                            .setMessagetype(3)
+                            .setStatus(-1)
+                            .setContent("消息体")
+                            .setToken("fdasfdsafdasfdsafdsafdsfdsafdsfdsa")
+                            .setCreatetime(System.currentTimeMillis())
+                            .setReceivetime(-1).build();
+                    Request request = Request.valueOf((short) 1, (short) 2,  eMessage.toByteArray());
+
+                    ClientManager.getInstance().write(request);
+                }
+            }).start();
+
+        } else if (view == connect) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    ClientManager.getInstance().start(Host, Port, new HandlerByteToMessage() {
+                        @Override
+                        public void receive(Response response) {
+
+                            updateView(response.toString(),true);
+                        }
+                    });
+                }
+            }).start();
+
+        } else if (view == changePassword) {
+
+        } else if (view == getusers) {
+
+        } else if (view == uploadicon) {
+
+        } else if (view == login) {
+
+        } else if (view == loginOut) {
+
+        } else if (view == shareTextdelete) {
+            mTestResult.setText("");
+        } else if (view == shareText) {
+
+        } else if (view == register) {
+            User user=new User();
+            user.setPhonenumber(userName);
+            user.setPassword(password);
+            String s = new Gson().toJson(user);
+            LogUtils.e("MainActivity",s);
+            RequestBody body=RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), s);
+
+            Call<HttpResponse<String>> register = retrofitService.register(body);
+            register.enqueue(new Callback<HttpResponse<String>>() {
+                @Override
+                public void onResponse(Call<HttpResponse<String>> call, retrofit2.Response<HttpResponse<String>> response) {
+                    HttpResponse<String> body1 = response.body();
+                    updateView(body1.getMessage()+body1.getCode()+body1.getData(),true);
+                }
+
+                @Override
+                public void onFailure(Call<HttpResponse<String>> call, Throwable t) {
+
+                }
+            });
         }
     }
 

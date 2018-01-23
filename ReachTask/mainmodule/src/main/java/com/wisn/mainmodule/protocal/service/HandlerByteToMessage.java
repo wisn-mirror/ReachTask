@@ -13,7 +13,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 
-public class HandlerByteToMessage implements ByteToMessage {
+public abstract class HandlerByteToMessage implements ByteToMessage {
 
 
     ByteBuffer mInt = ByteBuffer.allocate(4);
@@ -121,7 +121,8 @@ public class HandlerByteToMessage implements ByteToMessage {
         return byteBuf;
     }
 
-    public void receive(Response response) {
-        System.out.println("client:" + new String(response.getData()));
-    }
+    public abstract void receive(Response response);
+//    {
+//        System.out.println("client:" + new String(response.getData()));
+//    }
 }

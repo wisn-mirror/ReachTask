@@ -5,7 +5,7 @@
     ~ 
     ~
     -->
-    <string name="host">https://release</string>
-    <bool name="isDebug">true</bool>
+    <string name="host">http://release</string>
+    <bool name="isDebug">true</bool>s
 
 </resources>
