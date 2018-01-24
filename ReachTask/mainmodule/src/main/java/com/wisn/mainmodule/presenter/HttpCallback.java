@@ -11,4 +11,5 @@ import com.wisn.mainmodule.http.response.HttpResponse;
 public interface HttpCallback<T> {
      void onSuccess(HttpResponse<T> response);
      void onError(String msg);
+     void onFinsh();
 }

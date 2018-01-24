@@ -25,13 +25,17 @@ public class RegisterPresenter implements HttpCallback<String> {
 
     @Override
     public void onSuccess(HttpResponse<String> response) {
-        registerView.hideRegisterPregress();
         registerView.registerSuccess(response.getMessage());
     }
 
     @Override
     public void onError(String msg) {
-        registerView.hideRegisterPregress();
+
         registerView.registerError(msg);
+    }
+
+    @Override
+    public void onFinsh() {
+        registerView.hideRegisterPregress();
     }
 }

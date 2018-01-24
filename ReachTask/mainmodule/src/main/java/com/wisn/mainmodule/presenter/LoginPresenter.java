@@ -29,7 +29,6 @@ public class LoginPresenter implements HttpCallback<User> {
 
     @Override
     public void onSuccess(HttpResponse<User> response) {
-        loginView.hideLoginPregress();
         Log.e("onSuccess  ss",response.toString());
         userModel.saveUser(response.getData(),true);
         loginView.loginSuccess(response.getMessage());
@@ -37,7 +36,12 @@ public class LoginPresenter implements HttpCallback<User> {
 
     @Override
     public void onError(String msg) {
-        loginView.hideLoginPregress();
+
         loginView.loginError(msg);
+    }
+
+    @Override
+    public void onFinsh() {
+        loginView.hideLoginPregress();
     }
 }
