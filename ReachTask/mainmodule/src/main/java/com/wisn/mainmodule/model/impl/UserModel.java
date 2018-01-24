@@ -152,13 +152,13 @@ public class UserModel implements IUserModel {
         Query<User> build = userDao.queryBuilder().where(UserDao.Properties.Phonenumber.eq(phoneNumber)).build();
         List<User> list = build.list();
         if (list == null || list.size() == 0) return false;
-        if (list.size() == 1 && list.get(0) != null && list.get(0).getPhonenumber().equals(phoneNumber))
+        if (list.size() == 1 && list.get(0) != null && list.get(0).getPhonenumber().equals(phoneNumber) && list.get(0).isIsactive())
             return true;
         return false;
     }
 
     @Override
-    public void saveUser(User user,boolean isActive) {
+    public void saveUser(User user, boolean isActive) {
         user.setIsactive(isActive);
         UserDao userDao = MApplication.getInstance().getDaoSession().getUserDao();
         userDao.save(user);
@@ -192,6 +192,19 @@ public class UserModel implements IUserModel {
 
     @Override
     public String getTokenByActiveUser() {
+        UserDao userDao = MApplication.getInstance().getDaoSession().getUserDao();
+        Query<User> build = userDao.queryBuilder().where(UserDao.Properties.Isactive.eq(true)).build();
+        List<User> list = build.list();
+        if (list == null || list.size() == 0) return null;
+        if (list.size() == 1 && list.get(0) != null && list.get(0).isIsactive())
+            return list.get(0).getToken();
         return null;
+    }
+
+    @Override
+    public List<User> getUsers(String phoneNumber) {
+        UserDao userDao = MApplication.getInstance().getDaoSession().getUserDao();
+        List<User> users = userDao.loadAll();
+        return users;
     }
 }

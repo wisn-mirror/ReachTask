@@ -35,9 +35,9 @@ public class User {
         this.lastlogintime = lastlogintime;
     }
 
-    @Generated(hash = 916199754)
+    @Generated(hash = 1033486250)
     public User(long userid, String nickname, String nameid, String iconurl, String password, String encryption, String phonenumber, String token, long expired,
-            long registertime, long lastlogintime) {
+            long registertime, long lastlogintime, boolean isactive) {
         this.userid = userid;
         this.nickname = nickname;
         this.nameid = nameid;
@@ -49,8 +49,8 @@ public class User {
         this.expired = expired;
         this.registertime = registertime;
         this.lastlogintime = lastlogintime;
+        this.isactive = isactive;
     }
-
 
     public long getUserid() {
         return userid;
@@ -164,6 +164,10 @@ public class User {
                 ", lastlogintime=" + lastlogintime +
                 ", isactive=" + isactive +
                 '}';
+    }
+
+    public boolean getIsactive() {
+        return this.isactive;
     }
 
 }

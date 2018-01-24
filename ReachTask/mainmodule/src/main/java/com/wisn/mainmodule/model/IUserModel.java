@@ -21,13 +21,13 @@ public interface IUserModel {
 
     void login(Login user, HttpCallback<User> callback);
 
-    void getUser(HttpCallback<List<User>> callback, int offset, int limit );
+    void getUser(HttpCallback<List<User>> callback, int offset, int limit);
 
     void loginOut(HttpCallback<String> callback);
 
     boolean isLogin(String phoneNumber);
 
-    void saveUser(User user,boolean isActive);
+    void saveUser(User user, boolean isActive);
 
     void saveUsers(List<User> user);
 
@@ -36,4 +36,6 @@ public interface IUserModel {
     void updateUser(User user);
 
     String getTokenByActiveUser();
+
+    List<User> getUsers(String phoneNumber);
 }
