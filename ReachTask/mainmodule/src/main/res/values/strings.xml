@@ -2,4 +2,8 @@
     <string name="app_name">ReachTask</string>
     <string name="host"></string>
     <bool name="isDebug">true</bool>
+
+
+    <string name="login_login" >登录</string>
+
 </resources>
