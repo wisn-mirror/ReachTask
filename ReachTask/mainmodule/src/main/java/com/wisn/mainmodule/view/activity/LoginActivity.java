@@ -15,8 +15,8 @@ import com.wisn.mainmodule.R;
 import com.wisn.mainmodule.base.BaseActivity;
 import com.wisn.mainmodule.http.request.Login;
 import com.wisn.mainmodule.presenter.LoginPresenter;
+import com.wisn.mainmodule.utils.ToastUtils;
 import com.wisn.mainmodule.view.LoginView;
-import com.wisn.utils.ToastUtils;
 
 /**
  * @author Wisn
@@ -88,12 +88,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void loginError(String msg) {
+        if(msg==null)return ;
         ToastUtils.show(msg);
     }
 
     @Override
     public void loginSuccess(String msg) {
         ToastUtils.show(msg);
+        startActivity(new Intent(this,HomeActivity.class));
+        this.finish();
     }
 
     @Override

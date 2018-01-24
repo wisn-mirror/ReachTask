@@ -1,5 +1,7 @@
 package com.wisn.mainmodule.model.impl;
 
+import android.util.Log;
+
 import com.wisn.mainmodule.app.MApplication;
 import com.wisn.mainmodule.entity.DaoSession;
 import com.wisn.mainmodule.entity.User;
@@ -12,7 +14,7 @@ import com.wisn.mainmodule.http.request.Register;
 import com.wisn.mainmodule.http.response.HttpResponse;
 import com.wisn.mainmodule.model.IUserModel;
 import com.wisn.mainmodule.presenter.HttpCallback;
-import com.wisn.mainmodule.tool.GsonTool;
+import com.wisn.mainmodule.utils.GsonTool;
 
 import org.greenrobot.greendao.query.Query;
 
@@ -68,6 +70,7 @@ public class UserModel implements IUserModel {
             @Override
             public void onResponse(Call<HttpResponse<String>> call, retrofit2.Response<HttpResponse<String>> response) {
                 HttpResponse<String> body1 = response.body();
+                Log.e("register",body1.toString());
                 if (body1.getCode() == 200) {
                     callback.onSuccess(body1);
                 } else {
@@ -90,9 +93,12 @@ public class UserModel implements IUserModel {
             @Override
             public void onResponse(Call<HttpResponse<User>> call, retrofit2.Response<HttpResponse<User>> response) {
                 HttpResponse<User> body1 = response.body();
+
+                Log.e("login",body1.toString());
                 if (body1.getCode() == 200) {
                     callback.onSuccess(body1);
                 } else {
+
                     callback.onError(body1.getMessage());
                 }
             }
@@ -160,8 +166,21 @@ public class UserModel implements IUserModel {
     @Override
     public void saveUser(User user, boolean isActive) {
         user.setIsactive(isActive);
+//        User userbyUserid = getUserbyUserid(user.getUserid());
+//
+//        if(userbyUserid!=null){
+//            Log.e("login",userbyUserid.toString());
+//            user.setId(userbyUserid.getId());
+//        }
+//        Log.e("login",userbyUserid+" ");
         UserDao userDao = MApplication.getInstance().getDaoSession().getUserDao();
         userDao.save(user);
+    }
+    public User getUserbyUserid(long  userid){
+        UserDao userDao = MApplication.getInstance().getDaoSession().getUserDao();
+        Query<User> query = userDao.queryBuilder().where(UserDao.Properties.Userid.eq(userid))
+                .orderDesc(UserDao.Properties.Userid).build();
+        return query.unique();
     }
 
     @Override

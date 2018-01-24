@@ -1,8 +1,9 @@
 package com.wisn.mainmodule.entity;
 
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Property;
 
 /**
  * `messageid` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '消息id',
@@ -16,9 +17,9 @@ import org.greenrobot.greendao.annotation.Generated;
  */
 @Entity
 public class Message {
+    @Property(nameInDb = "_id")
     @Id
-    private long messageid;
-
+    private Long messageid;
     private long fromuserid;
     private long targetuserid;
     private int messagetype;
@@ -30,18 +31,9 @@ public class Message {
     public Message() {
     }
 
-    public Message(long fromuserid, long targetuserid, int messagetype, int status, String content, long createtime, long receivetime) {
-        this.fromuserid = fromuserid;
-        this.targetuserid = targetuserid;
-        this.messagetype = messagetype;
-        this.status = status;
-        this.content = content;
-        this.createtime = createtime;
-        this.receivetime = receivetime;
-    }
 
-    @Generated(hash = 1764165679)
-    public Message(long messageid, long fromuserid, long targetuserid, int messagetype, int status, String content, long createtime,
+    @Generated(hash = 1612528557)
+    public Message(Long messageid, long fromuserid, long targetuserid, int messagetype, int status, String content, long createtime,
             long receivetime) {
         this.messageid = messageid;
         this.fromuserid = fromuserid;
@@ -53,11 +45,12 @@ public class Message {
         this.receivetime = receivetime;
     }
 
-    public long getMessageid() {
+
+    public Long getMessageid() {
         return messageid;
     }
 
-    public void setMessageid(long messageid) {
+    public void setMessageid(Long messageid) {
         this.messageid = messageid;
     }
 
@@ -130,4 +123,5 @@ public class Message {
                 ", receivetime=" + receivetime +
                 '}';
     }
+
 }

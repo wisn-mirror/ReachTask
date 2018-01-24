@@ -1,5 +1,7 @@
 package com.wisn.mainmodule.presenter;
 
+import android.util.Log;
+
 import com.wisn.mainmodule.entity.User;
 import com.wisn.mainmodule.http.response.HttpResponse;
 import com.wisn.mainmodule.model.IUserModel;
@@ -28,7 +30,9 @@ public class LoginPresenter implements HttpCallback<User> {
     @Override
     public void onSuccess(HttpResponse<User> response) {
         loginView.hideLoginPregress();
-
+        Log.e("onSuccess  ss",response.toString());
+        userModel.saveUser(response.getData(),true);
+        loginView.loginSuccess(response.getMessage());
     }
 
     @Override

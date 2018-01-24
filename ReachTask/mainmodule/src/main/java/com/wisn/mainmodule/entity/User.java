@@ -1,13 +1,15 @@
 package com.wisn.mainmodule.entity;
 
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Property;
 
 @Entity
 public class User {
+    @Property(nameInDb = "_id")
     @Id
-    private long userid;
+    private Long userid;
     private String nickname;
     private String nameid;
     private String iconurl;
@@ -23,21 +25,8 @@ public class User {
     public User() {
     }
 
-    public User(long userid, String nickname, String nameid, String iconurl, String password, String encryption, String phonenumber, long registertime, long lastlogintime) {
-        this.userid = userid;
-        this.nickname = nickname;
-        this.nameid = nameid;
-        this.iconurl = iconurl;
-        this.password = password;
-        this.encryption = encryption;
-        this.phonenumber = phonenumber;
-        this.registertime = registertime;
-        this.lastlogintime = lastlogintime;
-    }
-
-    @Generated(hash = 1033486250)
-    public User(long userid, String nickname, String nameid, String iconurl, String password, String encryption, String phonenumber, String token, long expired,
-            long registertime, long lastlogintime, boolean isactive) {
+    @Generated(hash = 832569860)
+    public User(Long userid, String nickname, String nameid, String iconurl, String password, String encryption, String phonenumber, String token, long expired, long registertime, long lastlogintime, boolean isactive) {
         this.userid = userid;
         this.nickname = nickname;
         this.nameid = nameid;
@@ -52,11 +41,11 @@ public class User {
         this.isactive = isactive;
     }
 
-    public long getUserid() {
+    public Long getUserid() {
         return userid;
     }
 
-    public void setUserid(long userid) {
+    public void setUserid(Long userid) {
         this.userid = userid;
     }
 
@@ -169,5 +158,7 @@ public class User {
     public boolean getIsactive() {
         return this.isactive;
     }
+
+
 
 }

@@ -1,6 +1,6 @@
 package com.wisn.mainmodule.http;
 
-import com.wisn.mainmodule.Contants;
+import com.wisn.mainmodule.utils.Contants;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;

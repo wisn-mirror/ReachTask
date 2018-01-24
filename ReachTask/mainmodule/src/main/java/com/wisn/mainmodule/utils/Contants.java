@@ -1,4 +1,4 @@
-package com.wisn.mainmodule;
+package com.wisn.mainmodule.utils;
 
 /**
  * @author Wisn
@@ -10,5 +10,5 @@ public class Contants {
     static {
 
     }
-    public static String baseUrl="";
+    public static String baseUrl="http://192.168.1.6:8080/";
 }

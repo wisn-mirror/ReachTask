@@ -12,6 +12,10 @@ import android.widget.Toast;
 
 import com.wisn.mainmodule.R;
 import com.wisn.mainmodule.base.BaseActivity;
+import com.wisn.mainmodule.http.request.Register;
+import com.wisn.mainmodule.presenter.RegisterPresenter;
+import com.wisn.mainmodule.view.RegisterView;
+import com.wisn.mainmodule.utils.ToastUtils;
 
 /**
  * @author Wisn
@@ -19,19 +23,20 @@ import com.wisn.mainmodule.base.BaseActivity;
  */
 
 
-public class RegisterActivity extends BaseActivity implements View.OnClickListener {
+public class RegisterActivity extends BaseActivity implements View.OnClickListener ,RegisterView{
     private TextView login;
     private EditText password;
     private EditText username;
     private EditText userid;
     private TextView forgetpassword;
     private Button register;
-
+    private RegisterPresenter registerPresenter;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         initView();
+        registerPresenter=new RegisterPresenter(this);
 
     }
 
@@ -78,7 +83,39 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         }
 
         // TODO validate success, do something
+        registerPresenter.register();
 
+    }
+
+    @Override
+    public Register getUser() {
+        Register register=new Register();
+        register.setPassword(password.getText().toString().trim());
+        register.setPhonenumber(username.getText().toString().trim());
+        register.setNameid(userid.getText().toString().trim());
+        return register;
+    }
+
+    @Override
+    public void registerError(String msg) {
+        if(msg==null)return ;
+        ToastUtils.show(msg);
+    }
+
+    @Override
+    public void registerSuccess(String msg) {
+        ToastUtils.show(msg);
+//        startActivity(new Intent(this,LoginActivity.class));
+        this.finish();
+    }
+
+    @Override
+    public void showRegisterProgress() {
+
+    }
+
+    @Override
+    public void hideRegisterPregress() {
 
     }
 }

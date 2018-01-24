@@ -1,4 +1,4 @@
-package com.wisn.mainmodule.tool;
+package com.wisn.mainmodule.utils;
 
 import com.google.gson.Gson;
 
