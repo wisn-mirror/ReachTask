@@ -1,4 +1,4 @@
-package com.wisn.mainmodule.activity;
+package com.wisn.mainmodule.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,10 @@ import android.widget.Toast;
 
 import com.wisn.mainmodule.R;
 import com.wisn.mainmodule.base.BaseActivity;
+import com.wisn.mainmodule.http.request.Login;
+import com.wisn.mainmodule.presenter.LoginPresenter;
+import com.wisn.mainmodule.view.LoginView;
+import com.wisn.utils.ToastUtils;
 
 /**
  * @author Wisn
@@ -20,7 +24,7 @@ import com.wisn.mainmodule.base.BaseActivity;
  */
 
 
-public class LoginActivity extends BaseActivity implements View.OnClickListener {
+public class LoginActivity extends BaseActivity implements View.OnClickListener,LoginView {
 
     private Button login;
     private EditText password;
@@ -28,13 +32,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private ImageView imageView;
     private TextView forgetpassword;
     private TextView register;
-
+    private LoginPresenter loginPresenter;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initView();
-
+        loginPresenter=new LoginPresenter(this);
     }
 
     private void initView() {
@@ -44,7 +48,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         imageView = (ImageView) findViewById(R.id.imageView);
         forgetpassword = (TextView) findViewById(R.id.forgetpassword);
         register = (TextView) findViewById(R.id.register);
-
         login.setOnClickListener(this);
         register.setOnClickListener(this);
     }
@@ -66,15 +69,40 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             Toast.makeText(this, "password is null", Toast.LENGTH_SHORT).show();
             return;
         }
-
         String usernameString = username.getText().toString().trim();
         if (TextUtils.isEmpty(usernameString)) {
             Toast.makeText(this, "Phone is null ", Toast.LENGTH_SHORT).show();
             return;
         }
-
         // TODO validate success, do something
+        loginPresenter.login();
+    }
 
+    @Override
+    public Login getUser() {
+        Login user=new Login();
+        user.setPassword(password.getText().toString().trim());
+        user.setPhonenumber(username.getText().toString().trim());
+        return user;
+    }
+
+    @Override
+    public void loginError(String msg) {
+        ToastUtils.show(msg);
+    }
+
+    @Override
+    public void loginSuccess(String msg) {
+        ToastUtils.show(msg);
+    }
+
+    @Override
+    public void showLoginProgress() {
+
+     }
+
+    @Override
+    public void hideLoginPregress() {
 
     }
 }

@@ -1,4 +1,4 @@
-package com.wisn.mainmodule.view;
+package com.wisn.mainmodule.widget;
 
 import android.animation.ValueAnimator;
 import android.content.Context;

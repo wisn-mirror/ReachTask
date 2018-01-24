@@ -18,7 +18,7 @@
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
-        <com.wisn.mainmodule.view.MyRadioButton
+        <com.wisn.mainmodule.widget.MyRadioButton
             android:id="@+id/radiobutton_bg_message"
             android:checked="true"
             radiobutton:drawableTop="@drawable/radiobutton_bg_message"
@@ -27,7 +27,7 @@
             radiobutton:isTip="false"
             android:text="Message" />
 
-        <com.wisn.mainmodule.view.MyRadioButton
+        <com.wisn.mainmodule.widget.MyRadioButton
             android:id="@+id/radiobutton_bg_contact"
             radiobutton:drawableTop="@drawable/radiobutton_bg_contact"
             style="@style/radiobutton_style"
@@ -35,7 +35,7 @@
             radiobutton:isTip="false"
             android:text="Contacts" />
 
-        <com.wisn.mainmodule.view.MyRadioButton
+        <com.wisn.mainmodule.widget.MyRadioButton
             android:id="@+id/radiobutton_bg_work"
             radiobutton:drawableTop="@drawable/radiobutton_bg_work"
             style="@style/radiobutton_style"
@@ -43,7 +43,7 @@
             radiobutton:isTip="true"
             android:text="Work" />
 
-        <com.wisn.mainmodule.view.MyRadioButton
+        <com.wisn.mainmodule.widget.MyRadioButton
             android:id="@+id/radiobutton_bg_mine"
             radiobutton:drawableTop="@drawable/radiobutton_bg_mine"
             style="@style/radiobutton_style"

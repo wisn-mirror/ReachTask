@@ -1,4 +1,4 @@
-package com.wisn.mainmodule.activity;
+package com.wisn.mainmodule.view.activity;
 
 import com.wisn.mainmodule.base.BaseActivity;
 

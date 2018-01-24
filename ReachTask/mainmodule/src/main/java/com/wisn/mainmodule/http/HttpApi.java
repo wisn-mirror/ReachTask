@@ -3,6 +3,8 @@ package com.wisn.mainmodule.http;
 import com.wisn.mainmodule.entity.User;
 import com.wisn.mainmodule.http.response.HttpResponse;
 
+import java.util.List;
+
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -36,9 +38,9 @@ public interface HttpApi {
 
     @Headers({"Content-Type:application/json"})
     @DELETE("userdata/loginout")
-    Call<HttpResponse<String>> loginOut(@Header("Authorization") String authorization, @Body RequestBody requestBody);
+    Call<HttpResponse<String>> loginOut(@Header("Authorization") String authorization);
 
     @Headers({"Content-Type:application/json"})
     @GET("userdata/getusers")
-    Call<HttpResponse<String>> getUsers(@Header("Authorization") String authorization, @Query("offset") int offset, @Query("limit") int limit);
+    Call<HttpResponse<List<User>>> getUsers(@Header("Authorization") String authorization, @Query("offset") int offset, @Query("limit") int limit);
 }

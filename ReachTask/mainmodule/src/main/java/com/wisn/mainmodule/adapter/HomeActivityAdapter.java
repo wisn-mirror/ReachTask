@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.wisn.mainmodule.fragment.HomeFragmentFactory;
+import com.wisn.mainmodule.view.fragment.HomeFragmentFactory;
 
 import java.util.List;
 

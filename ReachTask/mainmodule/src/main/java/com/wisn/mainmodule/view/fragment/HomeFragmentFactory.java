@@ -1,4 +1,4 @@
-package com.wisn.mainmodule.fragment;
+package com.wisn.mainmodule.view.fragment;
 
 import android.support.v4.app.Fragment;
 

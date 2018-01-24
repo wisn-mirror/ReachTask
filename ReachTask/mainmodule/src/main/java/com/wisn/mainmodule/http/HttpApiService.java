@@ -1,5 +1,7 @@
 package com.wisn.mainmodule.http;
 
+import com.wisn.mainmodule.Contants;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -12,6 +14,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class HttpApiService {
+    public static HttpApi getHttpApi() {
+        return createRetrofitService(HttpApi.class, Contants.baseUrl);
+    }
 
     public static <T> T createRetrofitService(final Class<T> service, String baseUrl) {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();

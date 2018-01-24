@@ -18,6 +18,7 @@ public class User {
     private long expired;
     private long registertime;
     private long lastlogintime;
+    private boolean isactive;
 
     public User() {
     }
@@ -139,15 +140,30 @@ public class User {
         this.expired = expired;
     }
 
+    public boolean isIsactive() {
+        return isactive;
+    }
+
+    public void setIsactive(boolean isactive) {
+        this.isactive = isactive;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "userid=" + userid +
                 ", nickname='" + nickname + '\'' +
                 ", nameid='" + nameid + '\'' +
+                ", iconurl='" + iconurl + '\'' +
+                ", password='" + password + '\'' +
+                ", encryption='" + encryption + '\'' +
                 ", phonenumber='" + phonenumber + '\'' +
+                ", token='" + token + '\'' +
+                ", expired=" + expired +
                 ", registertime=" + registertime +
                 ", lastlogintime=" + lastlogintime +
+                ", isactive=" + isactive +
                 '}';
     }
+
 }

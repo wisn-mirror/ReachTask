@@ -1,4 +1,4 @@
-package com.wisn.mainmodule.activity;
+package com.wisn.mainmodule.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;

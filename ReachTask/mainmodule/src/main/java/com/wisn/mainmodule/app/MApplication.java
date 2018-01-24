@@ -25,15 +25,18 @@ import java.util.List;
 public class MApplication extends SkinApplication implements ReactApplication {
 
     private DaoSession daoSession;
-
+    private static MApplication  app;
     @Override
     public ReactNativeHost getReactNativeHost() {
         return host;
     }
-
+    public static MApplication getInstance(){
+        return app;
+    }
     @Override
     public void onCreate() {
         super.onCreate();
+        app=this;
         SoLoader.init(this, /* native exopackage */ false);
         Utils.init(this);
         setDatabase();

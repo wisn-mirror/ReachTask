@@ -1,4 +1,4 @@
-package com.wisn.mainmodule.view;
+package com.wisn.mainmodule.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;

@@ -1,4 +1,4 @@
-package com.wisn.mainmodule.activity;
+package com.wisn.mainmodule.view.activity;
 
 import android.os.Bundle;
 import android.support.annotation.IdRes;
@@ -9,7 +9,7 @@ import android.widget.RadioGroup;
 import com.wisn.mainmodule.R;
 import com.wisn.mainmodule.adapter.HomeActivityAdapter;
 import com.wisn.mainmodule.base.BaseActivity;
-import com.wisn.mainmodule.view.MyRadioButton;
+import com.wisn.mainmodule.widget.MyRadioButton;
 
 /**
  * @author Wisn
