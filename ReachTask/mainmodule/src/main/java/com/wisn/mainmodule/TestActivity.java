@@ -78,6 +78,7 @@ public class TestActivity extends Activity implements View.OnClickListener {
             public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
                 Log.e(TAG,"MessageAService ");
                 MessageAService.HandleMessageImpl service= (MessageAService.HandleMessageImpl) iBinder;
+//                DaemonService.HandleMessageImpl service= (DaemonService.HandleMessageImpl) iBinder;
                 handleMessage = (HandleMessage) service.getService();
             }
 
@@ -91,6 +92,7 @@ public class TestActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         Intent  intent=new Intent(this, MessageAService.class);
+//        Intent  intent=new Intent(this, DaemonService.class);
         String Url =  this.url.getText().toString().trim();
         String userName = this.userName.getText().toString().trim();
         String password =  this.password.getText().toString().trim();

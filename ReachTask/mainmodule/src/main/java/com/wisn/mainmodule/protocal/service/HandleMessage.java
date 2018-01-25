@@ -1,5 +1,7 @@
 package com.wisn.mainmodule.protocal.service;
 
+import com.wisn.mainmodule.protocal.coder.Request;
+
 /**
  * @author Wisn
  * @time 2018/1/25 14:29
@@ -7,5 +9,5 @@ package com.wisn.mainmodule.protocal.service;
 
 
 public interface HandleMessage {
-    void sendMessage(String msg);
+    void sendMessage(Request request);
 }

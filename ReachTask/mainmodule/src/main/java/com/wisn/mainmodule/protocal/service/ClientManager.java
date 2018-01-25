@@ -7,6 +7,9 @@ import com.wisn.mainmodule.protocal.service.pool.NioSelectorRunnablePool;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.channels.SocketChannel;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.Executors;
 
 public class ClientManager {
@@ -16,6 +19,9 @@ public class ClientManager {
     private SocketChannel mConnect;
     private NioSelectorRunnablePool mNioSelectorRunnablePool;
     private static ClientManager clientManager = null;
+    private ClientBootstrap serverBootstrap;
+    private InetSocketAddress inetSocketAddress;
+    private Timer timer;
 
     private ClientManager() {
     }
@@ -31,6 +37,13 @@ public class ClientManager {
         return clientManager;
     }
 
+    public boolean isActive() {
+        if (mConnect == null || !mConnect.isConnected()) {
+            return false;
+        }
+        return true;
+    }
+
     public void start(String ip, int port, HandlerByteToMessage handlerByteToMessage) {
         this.ip = ip;
         this.port = port;
@@ -42,9 +55,25 @@ public class ClientManager {
                     this.handlerByteToMessage);
         }
 
-        ClientBootstrap serverBootstrap = new ClientBootstrap(mNioSelectorRunnablePool);
-        InetSocketAddress inetSocketAddress = new InetSocketAddress(ip, port);
+        serverBootstrap = new ClientBootstrap(mNioSelectorRunnablePool);
+        inetSocketAddress = new InetSocketAddress(ip, port);
         mConnect = serverBootstrap.connect(inetSocketAddress);
+    }
+
+    public void tryConnectServer() {
+        if (timer != null) {
+            timer.cancel();
+        } else {
+            timer = new Timer();
+        }
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (mNioSelectorRunnablePool != null && serverBootstrap != null && mConnect != null) {
+                    mConnect = serverBootstrap.connect(inetSocketAddress);
+                }
+            }
+        }, new Date(), 2000);
     }
 
     public boolean write(Request request) {

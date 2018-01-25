@@ -34,6 +34,11 @@
             android:exported="true"
             android:name=".protocal.service.MessageAService">
         </service>
+        <service
+            android:enabled="true"
+            android:exported="true"
+            android:name=".protocal.service.DaemonService">
+        </service>
 
     </application>
 
