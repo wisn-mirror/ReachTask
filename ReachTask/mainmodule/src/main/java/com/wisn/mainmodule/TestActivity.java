@@ -1,7 +1,13 @@
 package com.wisn.mainmodule;
 
 import android.app.Activity;
+import android.app.Service;
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ScrollView;
@@ -16,7 +22,9 @@ import com.wisn.mainmodule.protocal.coder.Request;
 import com.wisn.mainmodule.protocal.coder.Response;
 import com.wisn.mainmodule.protocal.protobuf.beans.EMessageMudule;
 import com.wisn.mainmodule.protocal.service.ClientManager;
+import com.wisn.mainmodule.protocal.service.HandleMessage;
 import com.wisn.mainmodule.protocal.service.HandlerByteToMessage;
+import com.wisn.mainmodule.protocal.service.MessageAService;
 import com.wisn.skinlib.utils.LogUtils;
 
 import okhttp3.RequestBody;
@@ -24,9 +32,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 public class TestActivity extends Activity implements View.OnClickListener {
+    public static String TAG="TestActivity";
+
     private TextView mTestResult, shareText, shareTextdelete, register, changePassword, loginOut, login, uploadicon, getusers, connect, sendMessage;
     private EditText url, userName, password, newpassword,host,port;
     private ScrollView mScroll_info;
+    private ServiceConnection connection;
+    private HandleMessage handleMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,11 +73,24 @@ public class TestActivity extends Activity implements View.OnClickListener {
         changePassword.setOnClickListener(this);
         connect.setOnClickListener(this);
         sendMessage.setOnClickListener(this);
+        connection = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+                Log.e(TAG,"MessageAService ");
+                MessageAService.HandleMessageImpl service= (MessageAService.HandleMessageImpl) iBinder;
+                handleMessage = (HandleMessage) service.getService();
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName componentName) {
+
+            }
+        };
     }
 
     @Override
     public void onClick(View view) {
-
+        Intent  intent=new Intent(this, MessageAService.class);
         String Url =  this.url.getText().toString().trim();
         String userName = this.userName.getText().toString().trim();
         String password =  this.password.getText().toString().trim();
@@ -109,14 +134,15 @@ public class TestActivity extends Activity implements View.OnClickListener {
 
         } else if (view == changePassword) {
 
+            startService(intent);
         } else if (view == getusers) {
-
+            stopService(intent);
         } else if (view == uploadicon) {
-
+            bindService(intent,connection, Service.BIND_AUTO_CREATE);
         } else if (view == login) {
-
+            unbindService(connection);
         } else if (view == loginOut) {
-
+            handleMessage.sendMessage("hello");
         } else if (view == shareTextdelete) {
             mTestResult.setText("");
         } else if (view == shareText) {

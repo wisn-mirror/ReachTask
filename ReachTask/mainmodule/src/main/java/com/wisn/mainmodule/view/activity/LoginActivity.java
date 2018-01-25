@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wisn.mainmodule.R;
+import com.wisn.mainmodule.TestActivity;
 import com.wisn.mainmodule.base.BaseActivity;
 import com.wisn.mainmodule.http.request.Login;
 import com.wisn.mainmodule.presenter.LoginPresenter;
@@ -50,16 +51,18 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         register = (TextView) findViewById(R.id.register);
         login.setOnClickListener(this);
         register.setOnClickListener(this);
-        startActivity(new Intent(this,HomeActivity.class));
+//        startActivity(new Intent(this,HomeActivity.class));
     }
 
     @Override
     public void onClick(View v) {
+
         if (v == login) {
             submit();
         } else if (v == register) {
-            startActivity(new Intent(this,RegisterActivity.class));
-            this.finish();
+            startActivity(new Intent(this,TestActivity.class));
+//            startActivity(new Intent(this,RegisterActivity.class));
+//            this.finish();
         }
     }
 
