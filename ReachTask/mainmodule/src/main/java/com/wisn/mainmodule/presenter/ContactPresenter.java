@@ -27,9 +27,14 @@ public class ContactPresenter implements HttpCallback<List<User>> {
     }
 
     public void refreshContact() {
-        offset = offset + limit;
+        offset = 0;
         contactView.startRefresh();
         userModel.getUser(this, offset, 100);
+    }
+    public void addMore(){
+        contactView.startRefresh();
+        userModel.getUser(this, offset, 100);
+        offset = offset+limit;
     }
 
     public void getUsers() {
@@ -43,7 +48,12 @@ public class ContactPresenter implements HttpCallback<List<User>> {
 
     @Override
     public void onSuccess(HttpResponse<List<User>> response) {
-        contactView.updateContactList(response.getData());
+        List<User> data = response.getData();
+        userModel.saveUsers(data);
+        List<User> users = userModel.getUsers(null);
+        if(offset==0){
+            contactView.setUserData(users);
+        }
     }
 
     @Override

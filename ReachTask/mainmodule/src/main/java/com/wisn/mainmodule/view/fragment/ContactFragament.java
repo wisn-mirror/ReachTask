@@ -3,7 +3,10 @@ package com.wisn.mainmodule.view.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +16,9 @@ import com.wisn.mainmodule.base.BaseLazyFragment;
 import com.wisn.mainmodule.entity.User;
 import com.wisn.mainmodule.presenter.ContactPresenter;
 import com.wisn.mainmodule.view.ContactView;
+import com.wisn.mainmodule.view.viewholder.ContactsItemHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,6 +31,10 @@ public class ContactFragament extends BaseLazyFragment implements ContactView{
     private RecyclerView contact_list;
     private SwipeRefreshLayout contact_list_refresh;
     private ContactPresenter contactPresenter;
+    private LinearLayoutManager mLinearLayoutManager;
+    private RecyclerView.Adapter<RecyclerView.ViewHolder> adapter;
+    private List<User> users=new ArrayList<>();
+
     @Override
     public View onCreateLazyView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_contact, container, false);
@@ -35,20 +44,82 @@ public class ContactFragament extends BaseLazyFragment implements ContactView{
     }
 
     private void initView(View view) {
-        contact_list_refresh = view.findViewById(R.id.contact_list_refresh);
-        contact_list = view.findViewById(R.id.contact_list);
+        contact_list_refresh = (SwipeRefreshLayout)view.findViewById(R.id.contact_list_refresh);
+        contact_list =(RecyclerView) view.findViewById(R.id.contact_list);
+
+        contact_list_refresh.setProgressViewOffset(false, 0,
+                (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
+
+        contact_list_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                contactPresenter.refreshContact();
+            }
+        });
+        mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        contact_list.setLayoutManager(mLinearLayoutManager);
+        contact_list.setItemAnimator(new DefaultItemAnimator());
+        contact_list.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            private int mLastVisibleItem;
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if(newState==RecyclerView.SCROLL_STATE_IDLE
+                        &&mLastVisibleItem+5>mLinearLayoutManager.getItemCount()){
+                        contactPresenter.addMore();
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                //获取加载的最后一个可见视图在适配器的位置。
+                mLastVisibleItem = mLinearLayoutManager.findLastVisibleItemPosition();
+            }
+        });
+        adapter = new RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+
+            @Override
+            public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                View inflate = View.inflate(getActivity(), R.layout.item_contact, null);
+                ContactsItemHolder contactsItemHolder=new ContactsItemHolder(inflate);
+                return contactsItemHolder;
+            }
+
+            @Override
+            public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+                if(holder instanceof  ContactsItemHolder){
+                    ContactsItemHolder contactsItemHolder= (ContactsItemHolder) holder;
+                    contactsItemHolder.textview.setText(users.get(position).getUserid()+" "+users.get(position).getNameid());
+                }
+            }
+
+            @Override
+            public int getItemCount() {
+                return users.size();
+            }
+
+            @Override
+            public int getItemViewType(int position) {
+                return super.getItemViewType(position);
+            }
+        };
+        contact_list.setAdapter(adapter);
+
     }
 
     @Override
     public void firstVisible() {
         super.firstVisible();
-        contactPresenter.refreshContact();
+        contactPresenter.getUsers();
     }
 
     @Override
-    public void updateContactList(List<User> userlist) {
-
+    public void setUserData(List<User> userData) {
+        users=userData;
+        adapter.notifyDataSetChanged();
     }
+
 
     @Override
     public void startRefresh() {
@@ -57,7 +128,7 @@ public class ContactFragament extends BaseLazyFragment implements ContactView{
 
     @Override
     public void finishRefresh() {
-
+        contact_list_refresh.setRefreshing(false);
     }
 
     @Override
@@ -65,8 +136,4 @@ public class ContactFragament extends BaseLazyFragment implements ContactView{
 
     }
 
-    @Override
-    public void setUserData(List<User> userData) {
-
-    }
 }

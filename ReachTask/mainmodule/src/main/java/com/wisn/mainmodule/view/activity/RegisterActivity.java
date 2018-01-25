@@ -15,7 +15,7 @@ import com.wisn.mainmodule.base.BaseActivity;
 import com.wisn.mainmodule.http.request.Register;
 import com.wisn.mainmodule.presenter.RegisterPresenter;
 import com.wisn.mainmodule.view.RegisterView;
-import com.wisn.mainmodule.utils.ToastUtils;
+import com.wisn.utils.ToastUtils;
 
 /**
  * @author Wisn

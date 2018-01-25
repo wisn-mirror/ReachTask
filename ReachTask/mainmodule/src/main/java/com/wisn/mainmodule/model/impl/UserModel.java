@@ -42,13 +42,18 @@ public class UserModel implements IUserModel {
 
     @Override
     public void updatePassword(ChangePassword changePassword, final HttpCallback<String> callback) {
+        String tokenByActiveUser = getTokenByActiveUser();
+        if (tokenByActiveUser == null) {
+            callback.onError("请登录");
+            callback.onFinsh();
+        }
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), GsonTool.toJson(changePassword));
-        Call<HttpResponse<String>> updatepassword = httpApi.changePassword(getTokenByActiveUser(), body);
+        Call<HttpResponse<String>> updatepassword = httpApi.changePassword(tokenByActiveUser, body);
         updatepassword.enqueue(new Callback<HttpResponse<String>>() {
             @Override
             public void onResponse(Call<HttpResponse<String>> call, retrofit2.Response<HttpResponse<String>> response) {
                 HttpResponse<String> body1 = response.body();
-                if (body1.getCode() == 200) {
+                if (body1 != null && body1.getCode() == 200) {
                     callback.onSuccess(body1);
                 } else {
                     callback.onError(body1.getMessage());
@@ -73,7 +78,7 @@ public class UserModel implements IUserModel {
             public void onResponse(Call<HttpResponse<String>> call, retrofit2.Response<HttpResponse<String>> response) {
                 HttpResponse<String> body1 = response.body();
                 Log.e("register", body1.toString());
-                if (body1.getCode() == 200) {
+                if (body1 != null && body1.getCode() == 200) {
                     callback.onSuccess(body1);
                 } else {
                     callback.onError(body1.getMessage());
@@ -99,7 +104,7 @@ public class UserModel implements IUserModel {
                 HttpResponse<User> body1 = response.body();
 
                 Log.e("login", body1.toString());
-                if (body1.getCode() == 200) {
+                if (body1 != null && body1.getCode() == 200) {
                     callback.onSuccess(body1);
                 } else {
 
@@ -118,12 +123,18 @@ public class UserModel implements IUserModel {
 
     @Override
     public void getUser(final HttpCallback<List<User>> callback, int offset, int limit) {
-        Call<HttpResponse<List<User>>> getUsers = httpApi.getUsers(getTokenByActiveUser(), offset, limit);
+        String tokenByActiveUser = getTokenByActiveUser();
+        if (tokenByActiveUser == null) {
+            callback.onError("请登录");
+            callback.onFinsh();
+        }
+
+        Call<HttpResponse<List<User>>> getUsers = httpApi.getUsers(tokenByActiveUser, offset, limit);
         getUsers.enqueue(new Callback<HttpResponse<List<User>>>() {
             @Override
             public void onResponse(Call<HttpResponse<List<User>>> call, retrofit2.Response<HttpResponse<List<User>>> response) {
                 HttpResponse<List<User>> body1 = response.body();
-                if (body1.getCode() == 200) {
+                if (body1 != null && body1.getCode() == 200) {
                     callback.onSuccess(body1);
                 } else {
                     callback.onError(body1.getMessage());
@@ -146,7 +157,7 @@ public class UserModel implements IUserModel {
             @Override
             public void onResponse(Call<HttpResponse<String>> call, retrofit2.Response<HttpResponse<String>> response) {
                 HttpResponse<String> body1 = response.body();
-                if (body1.getCode() == 200) {
+                if (body1 != null && body1.getCode() == 200) {
                     callback.onSuccess(body1);
                 } else {
                     callback.onError(body1.getMessage());
@@ -175,10 +186,10 @@ public class UserModel implements IUserModel {
     }
 
     @Override
-    public void saveUser(User user, boolean isActive) {
+    public void saveUser(final User user, boolean isActive) {
         user.setIsactive(isActive);
         UserDao userDao = MApplication.getInstance().getDaoSession().getUserDao();
-        userDao.save(user);
+        userDao.insertOrReplace(user);
     }
 
     public User getUserbyUserid(long userid) {
@@ -217,11 +228,14 @@ public class UserModel implements IUserModel {
     @Override
     public String getTokenByActiveUser() {
         UserDao userDao = MApplication.getInstance().getDaoSession().getUserDao();
-        Query<User> build = userDao.queryBuilder().where(UserDao.Properties.Isactive.eq(true)).build();
-        List<User> list = build.list();
-        if (list == null || list.size() == 0) return null;
-        if (list.size() == 1 && list.get(0) != null && list.get(0).isIsactive())
-            return list.get(0).getToken();
+        Query<User> query = userDao.queryBuilder().where(UserDao.Properties.Isactive.eq(true))
+                .orderDesc(UserDao.Properties.Userid).build();
+        User user = query.unique();
+        if (user != null) {
+            System.err.println(user.getToken());
+            return user.getToken();
+        }
+        System.err.println(user);
         return null;
     }
 
@@ -229,6 +243,10 @@ public class UserModel implements IUserModel {
     public List<User> getUsers(String phoneNumber) {
         UserDao userDao = MApplication.getInstance().getDaoSession().getUserDao();
         List<User> users = userDao.loadAll();
+        for (User userone : users) {
+            System.err.println("  ddd:" + userone);
+        }
+        System.err.println("  dddddd:" + users);
         return users;
     }
 }

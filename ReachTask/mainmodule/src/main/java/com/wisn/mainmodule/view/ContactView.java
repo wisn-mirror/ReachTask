@@ -11,7 +11,6 @@ import java.util.List;
 
 
 public interface ContactView {
-    void updateContactList(List<User> userlist);
     void startRefresh();
     void finishRefresh();
     void refreshError(String msg);
