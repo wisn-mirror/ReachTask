@@ -2,6 +2,7 @@ package com.wisn.mainmodule.presenter;
 
 import android.util.Log;
 
+import com.wisn.mainmodule.app.MApplication;
 import com.wisn.mainmodule.entity.User;
 import com.wisn.mainmodule.http.response.HttpResponse;
 import com.wisn.mainmodule.model.IUserModel;
@@ -34,6 +35,8 @@ public class LoginPresenter implements HttpCallback<User> {
         userModel.saveUser(response.getData(),true);
         loginView.loginSuccess(response.getMessage());
         userModel.getUsers(null);
+        MApplication.getInstance().startMessageService();
+
 //        userModel.getTokenByActiveUser();
 //        User data = response.getData();
 //        data.setIsactive(true);
@@ -54,7 +57,6 @@ public class LoginPresenter implements HttpCallback<User> {
 
     @Override
     public void onError(String msg) {
-
         loginView.loginError(msg);
     }
 

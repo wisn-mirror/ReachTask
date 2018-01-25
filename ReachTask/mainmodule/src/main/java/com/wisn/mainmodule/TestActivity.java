@@ -144,7 +144,7 @@ public class TestActivity extends Activity implements View.OnClickListener {
         } else if (view == login) {
             unbindService(connection);
         } else if (view == loginOut) {
-            handleMessage.sendMessage("hello");
+//            handleMessage.sendMessage("hello");
         } else if (view == shareTextdelete) {
             mTestResult.setText("");
         } else if (view == shareText) {

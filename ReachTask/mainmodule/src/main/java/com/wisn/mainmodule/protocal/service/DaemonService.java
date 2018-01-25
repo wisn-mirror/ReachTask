@@ -5,7 +5,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -17,23 +16,15 @@ import android.util.Log;
  */
 
 
-public class DaemonService extends Service implements HandleMessage{
+public class DaemonService extends Service {
     public static String TAG="DaemonService";
-    private HandleMessageImpl handleMessage;
     private BroadcastReceiver mReceiver;
 
     public DaemonService() {
-//        super("MessageAService");
         Log.e(TAG,"MessageAService ");
     }
 
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-        Log.e(TAG,"onBind ");
-//        return super.onBind(intent);
-        return handleMessage;
-    }
+
 
     @Override
     public boolean onUnbind(Intent intent) {
@@ -45,7 +36,6 @@ public class DaemonService extends Service implements HandleMessage{
     public void onCreate() {
         super.onCreate();
         Log.e(TAG,"onCreate ");
-        handleMessage = new HandleMessageImpl();
         mReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -77,23 +67,11 @@ public class DaemonService extends Service implements HandleMessage{
         unregisterReceiver(mReceiver);
     }
 
-    public class HandleMessageImpl  extends Binder  {
-        @Override
-        public String getInterfaceDescriptor() {
-            return super.getInterfaceDescriptor();
-        }
-
-        @Override
-        public boolean isBinderAlive() {
-            return super.isBinderAlive();
-        }
-        public DaemonService getService(){
-            return DaemonService.this;
-        }
-    }
-
+    @Nullable
     @Override
-    public void sendMessage( String msg) {
-        Log.e(TAG,"sendMessage: "+msg);
+    public IBinder onBind(Intent intent) {
+        return null;
     }
+
+
 }

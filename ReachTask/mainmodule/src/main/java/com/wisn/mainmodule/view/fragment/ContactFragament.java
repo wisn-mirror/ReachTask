@@ -1,5 +1,6 @@
 package com.wisn.mainmodule.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -15,7 +16,9 @@ import com.wisn.mainmodule.R;
 import com.wisn.mainmodule.base.BaseLazyFragment;
 import com.wisn.mainmodule.entity.User;
 import com.wisn.mainmodule.presenter.ContactPresenter;
+import com.wisn.mainmodule.utils.Contants;
 import com.wisn.mainmodule.view.ContactView;
+import com.wisn.mainmodule.view.activity.MessageActivity;
 import com.wisn.mainmodule.view.viewholder.ContactsItemHolder;
 
 import java.util.ArrayList;
@@ -81,16 +84,24 @@ public class ContactFragament extends BaseLazyFragment implements ContactView{
 
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                View inflate = View.inflate(getActivity(), R.layout.item_contact, null);
+                final View inflate = View.inflate(getActivity(), R.layout.item_contact, null);
                 ContactsItemHolder contactsItemHolder=new ContactsItemHolder(inflate);
                 return contactsItemHolder;
             }
 
             @Override
-            public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
                 if(holder instanceof  ContactsItemHolder){
                     ContactsItemHolder contactsItemHolder= (ContactsItemHolder) holder;
                     contactsItemHolder.textview.setText(users.get(position).getUserid()+" "+users.get(position).getNameid());
+                    contactsItemHolder.textview.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent=   new Intent(getActivity(), MessageActivity.class);
+                            intent.putExtra(Contants.userid_flag, users.get(position).getUserid());
+                            startActivity(intent);
+                        }
+                    });
                 }
             }
 

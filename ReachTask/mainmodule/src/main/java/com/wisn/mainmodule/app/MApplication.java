@@ -1,6 +1,7 @@
 package com.wisn.mainmodule.app;
 
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.facebook.react.ReactApplication;
@@ -12,6 +13,8 @@ import com.facebook.soloader.SoLoader;
 import com.wisn.mainmodule.base.react.BaseReactPackage;
 import com.wisn.mainmodule.entity.DaoMaster;
 import com.wisn.mainmodule.entity.DaoSession;
+import com.wisn.mainmodule.protocal.service.DaemonService;
+import com.wisn.mainmodule.protocal.service.MessageAService;
 import com.wisn.skinlib.base.SkinApplication;
 import com.wisn.utils.Utils;
 
@@ -81,5 +84,11 @@ public class MApplication extends SkinApplication implements ReactApplication {
         return mReactContext;
     }
 
+    public void startMessageService(){
+        Intent MessageAService=new Intent(this, MessageAService.class);
+        Intent DaemonService=new Intent(this, DaemonService.class);
+        startService(MessageAService);
+        startService(DaemonService);
+    }
 
 }

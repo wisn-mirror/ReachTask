@@ -100,7 +100,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     public void loginSuccess(String msg) {
         ToastUtils.show(msg);
         startActivity(new Intent(this,HomeActivity.class));
-//        this.finish();
+        this.finish();
     }
 
     @Override
