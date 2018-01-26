@@ -30,6 +30,9 @@ public class MessagePresenter {
         messageModel = new MessageModel();
         userModel = new UserModel();
     }
+    public void loadMessage(Long targetUser){
+
+     }
 
     public void sendMessage(short module, short cmd, Message message) {
         User activeUser = userModel.getActiveUser();
@@ -39,6 +42,8 @@ public class MessagePresenter {
             EMessageMudule.EMessage eMessage = message.buildEMessage();
             Request request = Request.valueOf(module, cmd, eMessage.toByteArray());
             messageView.getHandleMessage().sendMessage(request);
+            messageModel.saveMessage(message);
+            messageView.updateMoreMessage(message);
         } else {
             Log.e(TAG, "未登录");
         }

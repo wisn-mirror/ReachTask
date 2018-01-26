@@ -1,7 +1,12 @@
 package com.wisn.mainmodule.model.impl;
 
+import com.wisn.mainmodule.app.MApplication;
 import com.wisn.mainmodule.entity.Message;
+import com.wisn.mainmodule.entity.MessageDao;
 import com.wisn.mainmodule.model.IMessageModel;
+
+import org.greenrobot.greendao.query.DeleteQuery;
+import org.greenrobot.greendao.query.Query;
 
 import java.util.List;
 
@@ -11,29 +16,64 @@ import java.util.List;
  */
 
 
-public class MessageModel implements IMessageModel{
+public class MessageModel implements IMessageModel {
     @Override
     public void saveMessage(Message message) {
-
+        MessageDao messageDao = MApplication.getInstance().getDaoSession().getMessageDao();
+        messageDao.insertOrReplace(message);
     }
 
     @Override
     public List<Message> getMesssages() {
+        MessageDao messageDao = MApplication.getInstance().getDaoSession().getMessageDao();
+        List<Message> messages = messageDao.loadAll();
+        for (Message message : messages) {
+            System.err.println("  ddd:" + message);
+        }
+        System.err.println("  dddddd:" + messages);
+        return messages;
+    }
+
+    public List<Message> getMesssagesByTargetid(Long targerid) {
+        MessageDao messageDao = MApplication.getInstance().getDaoSession().getMessageDao();
+        Query<Message> build = messageDao.queryBuilder().where(MessageDao.Properties.Targetuserid.eq(targerid))
+                .orderDesc(MessageDao.Properties.Createtime)
+                .build();
+        List<Message> list = build.list();
+        for (Message message : list) {
+            System.err.println("  ddd:" + message);
+        }
+        System.err.println("  dddddd:" + list);
+        return list;
+    }
+
+    public Message getMesssage(Long messageId) {
+        MessageDao messageDao = MApplication.getInstance().getDaoSession().getMessageDao();
+        Query<Message> build = messageDao.queryBuilder().where(MessageDao.Properties.Messageid.eq(messageId)).build();
+        Message unique = build.unique();
+        if (unique != null) {
+            System.err.println(unique);
+            return unique;
+        }
         return null;
     }
 
     @Override
     public void updateMessage(Message message) {
-
+        MessageDao messageDao = MApplication.getInstance().getDaoSession().getMessageDao();
+        messageDao.update(message);
     }
 
     @Override
-    public void deleteMessage(int messageid) {
-
+    public void deleteMessage(Long messageid) {
+        MessageDao messageDao = MApplication.getInstance().getDaoSession().getMessageDao();
+        messageDao.deleteByKey(messageid);
     }
 
     @Override
-    public void deleteMessageByContactUserId(int userid) {
-
+    public void deleteMessageByContactUserId(Long userid) {
+        MessageDao messageDao = MApplication.getInstance().getDaoSession().getMessageDao();
+        DeleteQuery<Message> messageDeleteQuery = messageDao.queryBuilder().where(MessageDao.Properties.Targetuserid.eq(userid)).buildDelete();
+        messageDeleteQuery.executeDeleteWithoutDetachingEntities();
     }
 }

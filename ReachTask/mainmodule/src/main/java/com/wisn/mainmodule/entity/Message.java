@@ -7,9 +7,9 @@ import android.text.TextUtils;
 import com.wisn.mainmodule.protocal.protobuf.beans.EMessageMudule;
 
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
+import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * `messageid` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '消息id',
@@ -30,6 +30,7 @@ public class Message implements Parcelable {
     private long targetuserid;
     private int messagetype;
     private int status;
+    private long contactid;
     private String token;
     private String content;
     private long createtime;
@@ -39,17 +40,12 @@ public class Message implements Parcelable {
 
     }
 
-    @Generated(hash = 739975192)
-    public Message(Long messageid, long fromuserid, long targetuserid, int messagetype, int status, String token, String content, long createtime, long receivetime) {
-        this.messageid = messageid;
-        this.fromuserid = fromuserid;
-        this.targetuserid = targetuserid;
-        this.messagetype = messagetype;
-        this.status = status;
-        this.token = token;
-        this.content = content;
-        this.createtime = createtime;
-        this.receivetime = receivetime;
+    public long getContactid() {
+        return contactid;
+    }
+
+    public void setContactid(long contactid) {
+        this.contactid = contactid;
     }
 
     public String getToken() {
@@ -162,17 +158,16 @@ public class Message implements Parcelable {
     }
 
     public  Message valueOf(EMessageMudule.EMessage emessage) {
-        Message message = new Message();
-        message.setMessageid(emessage.getMessageid());
-        message.setFromuserid(emessage.getMessageid());
-        message.setTargetuserid(emessage.getMessageid());
-        message.setMessagetype(emessage.getMessagetype());
-        message.setToken(emessage.getToken());
-        message.setStatus(emessage.getStatus());
-        message.setContent(emessage.getContent());
-        message.setCreatetime(emessage.getCreatetime());
-        message.setReceivetime(System.currentTimeMillis());
-        return message;
+        this.setMessageid(emessage.getMessageid());
+        this.setFromuserid(emessage.getMessageid());
+        this.setTargetuserid(emessage.getMessageid());
+        this.setMessagetype(emessage.getMessagetype());
+        this.setToken(emessage.getToken());
+        this.setStatus(emessage.getStatus());
+        this.setContent(emessage.getContent());
+        this.setCreatetime(emessage.getCreatetime());
+        this.setReceivetime(System.currentTimeMillis());
+        return this;
     }
 
     @Override
@@ -203,6 +198,22 @@ public class Message implements Parcelable {
         this.content = in.readString();
         this.createtime = in.readLong();
         this.receivetime = in.readLong();
+    }
+
+    @Generated(hash = 2047741352)
+    public Message(Long messageid, long fromuserid, long targetuserid,
+            int messagetype, int status, long contactid, String token,
+            String content, long createtime, long receivetime) {
+        this.messageid = messageid;
+        this.fromuserid = fromuserid;
+        this.targetuserid = targetuserid;
+        this.messagetype = messagetype;
+        this.status = status;
+        this.contactid = contactid;
+        this.token = token;
+        this.content = content;
+        this.createtime = createtime;
+        this.receivetime = receivetime;
     }
 
     public static final Creator<Message> CREATOR = new Creator<Message>() {

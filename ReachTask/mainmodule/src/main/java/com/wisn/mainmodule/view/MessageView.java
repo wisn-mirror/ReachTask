@@ -24,6 +24,13 @@ public interface MessageView {
     void updateMoreMessage(List<Message> messageList, boolean isTop);
 
     /**
+     * 部分更新消息列表
+     *
+     * @param message 增量消息
+     */
+    void updateMoreMessage(Message message);
+
+    /**
      * 全部更新消息列表
      * @param messageList
      */

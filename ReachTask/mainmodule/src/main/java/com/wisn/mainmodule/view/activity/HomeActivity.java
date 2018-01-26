@@ -149,6 +149,11 @@ public class HomeActivity  extends BaseActivity implements RadioGroup.OnCheckedC
     }
 
     @Override
+    public void updateMoreMessage(Message message) {
+
+    }
+
+    @Override
     public void setMessageList(List<Message> messageList) {
 
     }

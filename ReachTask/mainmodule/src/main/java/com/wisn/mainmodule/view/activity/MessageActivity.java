@@ -115,6 +115,7 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
         message.setTargetuserid(user.getUserid());
         messagePresenter.sendMessage(ModuleId.chatMessage, CmdId.ChartMessage.sendMessageToAll,message);
         // TODO validate success, do something
+
     }
 
     @Override
@@ -132,6 +133,11 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void updateMoreMessage(List<Message> messageList, boolean isTop) {
+
+    }
+
+    @Override
+    public void updateMoreMessage(Message message) {
 
     }
 

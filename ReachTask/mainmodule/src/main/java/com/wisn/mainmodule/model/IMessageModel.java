@@ -13,8 +13,10 @@ import java.util.List;
 public interface IMessageModel {
     void saveMessage(Message message);
     List<Message> getMesssages();
+    List<Message> getMesssagesByTargetid(Long targerid);
     void updateMessage(Message message);
-    void deleteMessage(int messageid);
-    void deleteMessageByContactUserId(int userid);
+    Message getMesssage(Long messageId);
+    void deleteMessage(Long messageid);
+    void deleteMessageByContactUserId(Long userid);
     
 }
