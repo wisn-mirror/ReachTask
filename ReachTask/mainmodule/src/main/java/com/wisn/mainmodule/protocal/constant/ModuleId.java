@@ -1,4 +1,4 @@
-package com.wisn.mainmodule.utils;
+package com.wisn.mainmodule.protocal.constant;
 
 public interface ModuleId {
     short AuthMessage=1;

@@ -22,7 +22,7 @@ import org.greenrobot.greendao.annotation.Property;
  * `receivetime` bigint(13) NOT NULL COMMENT '接收时间'
  */
 @Entity
-public class Message implements Parcelable{
+public class Message implements Parcelable {
     @Property(nameInDb = "_id")
     @Id
     private Long messageid;
@@ -36,7 +36,9 @@ public class Message implements Parcelable{
     private long receivetime;
 
     public Message() {
+
     }
+
     @Generated(hash = 739975192)
     public Message(Long messageid, long fromuserid, long targetuserid, int messagetype, int status, String token, String content, long createtime, long receivetime) {
         this.messageid = messageid;
@@ -49,8 +51,9 @@ public class Message implements Parcelable{
         this.createtime = createtime;
         this.receivetime = receivetime;
     }
+
     public String getToken() {
-        if(TextUtils.isEmpty(token)){
+        if (TextUtils.isEmpty(token)) {
             return " ";
         }
         return token;
@@ -61,10 +64,8 @@ public class Message implements Parcelable{
     }
 
     public Long getMessageid() {
-        if(messageid==0){
-            return -1l;
-        }
-        return messageid;
+        return System.nanoTime();
+//        return messageid;
     }
 
     public void setMessageid(Long messageid) {
@@ -105,7 +106,7 @@ public class Message implements Parcelable{
     }
 
     public String getContent() {
-        if(TextUtils.isEmpty(content)){
+        if (TextUtils.isEmpty(content)) {
             return " ";
         }
         return content;
@@ -146,7 +147,7 @@ public class Message implements Parcelable{
     }
 
 
-    public EMessageMudule.EMessage buildEMessage(){
+    public EMessageMudule.EMessage buildEMessage() {
         EMessageMudule.EMessage eMessage = EMessageMudule.EMessage.newBuilder()
                 .setMessageid(-1)
                 .setFromuserid(this.getFromuserid())
@@ -158,6 +159,20 @@ public class Message implements Parcelable{
                 .setCreatetime(System.currentTimeMillis())
                 .setReceivetime(-1).build();
         return eMessage;
+    }
+
+    public  Message valueOf(EMessageMudule.EMessage emessage) {
+        Message message = new Message();
+        message.setMessageid(emessage.getMessageid());
+        message.setFromuserid(emessage.getMessageid());
+        message.setTargetuserid(emessage.getMessageid());
+        message.setMessagetype(emessage.getMessagetype());
+        message.setToken(emessage.getToken());
+        message.setStatus(emessage.getStatus());
+        message.setContent(emessage.getContent());
+        message.setCreatetime(emessage.getCreatetime());
+        message.setReceivetime(System.currentTimeMillis());
+        return message;
     }
 
     @Override

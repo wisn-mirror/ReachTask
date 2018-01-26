@@ -19,8 +19,8 @@ import com.wisn.mainmodule.entity.Message;
 import com.wisn.mainmodule.presenter.MessagePresenter;
 import com.wisn.mainmodule.protocal.service.HandleMessage;
 import com.wisn.mainmodule.protocal.service.MessageAService;
-import com.wisn.mainmodule.utils.CmdId;
-import com.wisn.mainmodule.utils.ModuleId;
+import com.wisn.mainmodule.protocal.constant.CmdId;
+import com.wisn.mainmodule.protocal.constant.ModuleId;
 import com.wisn.mainmodule.view.MessageView;
 import com.wisn.mainmodule.widget.TipRadioButton;
 

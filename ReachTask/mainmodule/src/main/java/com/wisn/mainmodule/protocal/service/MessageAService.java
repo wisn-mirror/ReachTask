@@ -10,10 +10,17 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.google.protobuf.InvalidProtocolBufferException;
+import com.wisn.mainmodule.entity.Message;
+import com.wisn.mainmodule.model.impl.MessageModel;
 import com.wisn.mainmodule.protocal.coder.Request;
 import com.wisn.mainmodule.protocal.coder.Response;
+import com.wisn.mainmodule.protocal.constant.ResponseCode;
+import com.wisn.mainmodule.protocal.protobuf.beans.EMessageMudule;
 import com.wisn.mainmodule.utils.Contants;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -24,16 +31,17 @@ import java.util.concurrent.Executors;
 
 
 public class MessageAService extends Service implements HandleMessage {
-
+    private List<MessageChangeListener> messageChangeListeners = new LinkedList<>();
 
     public static String TAG = "MessageAService";
     private HandleMessageImpl handleMessage;
     private BroadcastReceiver mReceiver;
     private HandlerByteToMessage handlerByteToMessage;
-    ExecutorService executorService = Executors.newCachedThreadPool();
+    private ExecutorService executorService = Executors.newCachedThreadPool();
+    private MessageModel messageModel;
+
     public MessageAService() {
         Log.e(TAG, "MessageAService ");
-
     }
 
     @Nullable
@@ -55,11 +63,34 @@ public class MessageAService extends Service implements HandleMessage {
     public void onCreate() {
         super.onCreate();
         Log.e(TAG, "onCreate ");
+        messageModel = new MessageModel();
         handleMessage = new HandleMessageImpl();
         handlerByteToMessage = new HandlerByteToMessage() {
             @Override
             public void receive(Response response) {
-                showMessage(response);
+                Log.e(TAG, "receiver:" + response.toString());
+                if (messageChangeListeners != null) {
+                    if (messageChangeListeners.size() > 0) {
+                        for (MessageChangeListener messageChangeListener : messageChangeListeners) {
+                            try {
+                                EMessageMudule.EMessage eMessage = EMessageMudule.EMessage.parseFrom(response.getData());
+                                //新的消息
+                                Message message = new Message().valueOf(eMessage);
+                                if (response.getResultCode() == ResponseCode.newMessage) {
+                                    // TODO: 2018/1/26 存数据库
+                                    messageModel.saveMessage(message);
+                                    messageChangeListener.newMessage(response.getModule(), response.getCmd(), message);
+                                } else {
+                                    //回执消息
+                                    messageChangeListener.receiptMessage(response.getModule(), response.getCmd(), message.getMessageid(), message.getReceivetime(), response.getResultCode());
+                                }
+                            } catch (InvalidProtocolBufferException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+
             }
         };
         mReceiver = new BroadcastReceiver() {
@@ -83,14 +114,10 @@ public class MessageAService extends Service implements HandleMessage {
         registerReceiver(mReceiver, intentFilter);
     }
 
-    public void showMessage(Response response) {
-        Log.e(TAG,"receiver:"+response.toString());
-    }
 
     @Override
     public int onStartCommand(@Nullable Intent intent, int flags, int startId) {
         Log.e(TAG, "onStartCommand ");
-
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -135,5 +162,21 @@ public class MessageAService extends Service implements HandleMessage {
                 }
             }
         });
+    }
+
+    @Override
+    public void addMessageListener(MessageChangeListener messageChangeListener) {
+        if (messageChangeListeners != null){
+            Log.e(TAG,messageChangeListener+" is added");
+            messageChangeListeners.add(messageChangeListener);
+        }
+    }
+
+    @Override
+    public void removeMessageListener(MessageChangeListener messageChangeListener) {
+        if (messageChangeListeners != null){
+            Log.e(TAG,messageChangeListener+" is removed");
+            messageChangeListeners.remove(messageChangeListener);
+        }
     }
 }

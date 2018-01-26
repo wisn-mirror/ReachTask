@@ -23,9 +23,10 @@ import com.wisn.mainmodule.entity.User;
 import com.wisn.mainmodule.presenter.MessagePresenter;
 import com.wisn.mainmodule.protocal.service.HandleMessage;
 import com.wisn.mainmodule.protocal.service.MessageAService;
-import com.wisn.mainmodule.utils.CmdId;
+import com.wisn.mainmodule.protocal.constant.CmdId;
+import com.wisn.mainmodule.protocal.service.MessageChangeListener;
 import com.wisn.mainmodule.utils.Contants;
-import com.wisn.mainmodule.utils.ModuleId;
+import com.wisn.mainmodule.protocal.constant.ModuleId;
 import com.wisn.mainmodule.view.MessageView;
 import com.wisn.utils.ToastUtils;
 
@@ -37,7 +38,7 @@ import java.util.List;
  */
 
 
-public class MessageActivity extends BaseActivity implements View.OnClickListener,MessageView {
+public class MessageActivity extends BaseActivity implements View.OnClickListener,MessageView,MessageChangeListener {
     public static String TAG="MessageActivity";
     private Button message_back;
     private TextView message_title;
@@ -63,11 +64,12 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
                 MessageAService.HandleMessageImpl service= (MessageAService.HandleMessageImpl) iBinder;
 //                DaemonService.HandleMessageImpl service= (DaemonService.HandleMessageImpl) iBinder;
                 handleMessage = (HandleMessage) service.getService();
+                handleMessage.addMessageListener(MessageActivity.this);
             }
 
             @Override
             public void onServiceDisconnected(ComponentName componentName) {
-
+                handleMessage.removeMessageListener(MessageActivity.this);
             }
         };
         Intent intent=new Intent(this, MessageAService.class);
@@ -117,10 +119,10 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         if(connection!=null){
             unbindService(connection);
         }
+        super.onDestroy();
     }
 
     @Override
@@ -138,4 +140,13 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
 
     }
 
+    @Override
+    public void newMessage(short module, short cmd, Message message) {
+        Log.e(TAG,"module:"+module+" cmd:"+cmd+" message："+message);
+    }
+
+    @Override
+    public void receiptMessage(short module, short cmd, long messageId, long receiveTime, short resultCode) {
+        Log.e(TAG,"module:"+module+" cmd:"+cmd+" messageId："+messageId+ "receiveTime:"+receiveTime+ "resultCode:"+resultCode);
+    }
 }

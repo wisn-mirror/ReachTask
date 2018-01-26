@@ -2,6 +2,10 @@ package com.wisn.mainmodule.protocal.constant;
 
 public interface ResponseCode {
     /**
+     * 新消息
+     */
+    short newMessage = 10000;
+    /**
      * 成功
      */
     int SUCCESS = 0;
