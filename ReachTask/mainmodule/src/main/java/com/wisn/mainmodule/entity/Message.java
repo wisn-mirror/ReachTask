@@ -60,8 +60,10 @@ public class Message implements Parcelable {
     }
 
     public Long getMessageid() {
-        return System.nanoTime();
-//        return messageid;
+        if(messageid==null){
+            return System.nanoTime();
+        }
+        return messageid;
     }
 
     public void setMessageid(Long messageid) {
@@ -145,7 +147,7 @@ public class Message implements Parcelable {
 
     public EMessageMudule.EMessage buildEMessage() {
         EMessageMudule.EMessage eMessage = EMessageMudule.EMessage.newBuilder()
-                .setMessageid(-1)
+                .setMessageid(this.getMessageid())
                 .setFromuserid(this.getFromuserid())
                 .setTargetuserid(this.getTargetuserid())
                 .setMessagetype(this.getMessagetype())
@@ -159,8 +161,8 @@ public class Message implements Parcelable {
 
     public  Message valueOf(EMessageMudule.EMessage emessage) {
         this.setMessageid(emessage.getMessageid());
-        this.setFromuserid(emessage.getMessageid());
-        this.setTargetuserid(emessage.getMessageid());
+        this.setFromuserid(emessage.getFromuserid());
+        this.setTargetuserid(emessage.getTargetuserid());
         this.setMessagetype(emessage.getMessagetype());
         this.setToken(emessage.getToken());
         this.setStatus(emessage.getStatus());

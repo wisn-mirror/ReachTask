@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -76,33 +78,42 @@ public class MessageAService extends Service implements HandleMessage {
 
         handlerByteToMessage = new HandlerByteToMessage() {
             @Override
-            public void receive(Response response) {
+            public void receive(final Response response) {
                 Log.e(TAG, "receiver:" + response.toString());
                 if (messageChangeListeners != null) {
                     if (messageChangeListeners.size() > 0) {
-                        for (MessageChangeListener messageChangeListener : messageChangeListeners) {
+                        for (final MessageChangeListener messageChangeListener : messageChangeListeners) {
                             try {
                                 EMessageMudule.EMessage eMessage = EMessageMudule.EMessage.parseFrom(response.getData());
                                 //新的消息
-                                Message message = new Message().valueOf(eMessage);
-                                // TODO: 2018/1/26 添加联系关系
-                                long contactid = Long.parseLong(String.valueOf(message.getTargetuserid()) + String.valueOf(message.getFromuserid()));
-                                Contact contact = contactMessageModel.getContactByTargetid(message.getFromuserid());
-                                if (contact == null) {
-                                    User userbyUserid = iUserModel.getUserbyUserid(message.getFromuserid());
-                                    contact = new Contact();
-                                    contact.setContactid(contactid);
-                                    contact.setFromuserid(message.getTargetuserid());
-                                    contact.setTargetuserid(userbyUserid.getUserid());
-                                    contact.setIcon(userbyUserid.getIconurl());
-                                    contact.setName(userbyUserid.getNickname());
-                                    contactMessageModel.saveContacts(contact);
-                                }
+                                final Message message = new Message().valueOf(eMessage);
+
                                 if (response.getResultCode() == ResponseCode.newMessage) {
+                                    Log.e(TAG, "newMessage ");
+                                    // TODO: 2018/1/26 添加联系关系
+                                    long contactid = Long.parseLong(String.valueOf(message.getTargetuserid()) + String.valueOf(message.getFromuserid()));
+                                    Contact contact = contactMessageModel.getContactByTargetid(message.getFromuserid());
+                                    if (contact == null) {
+                                        User userbyUserid = iUserModel.getUserbyUserid(message.getFromuserid());
+                                        contact = new Contact();
+                                        contact.setContactid(contactid);
+                                        contact.setFromuserid(message.getTargetuserid());
+                                        contact.setTargetuserid(userbyUserid.getUserid());
+                                        contact.setIcon(userbyUserid.getIconurl());
+                                        contact.setName(userbyUserid.getNickname());
+                                        contactMessageModel.saveContacts(contact);
+                                    }
                                     // TODO: 2018/1/26 存数据库
                                     messageModel.saveMessage(message);
-                                    messageChangeListener.newMessage(response.getModule(), response.getCmd(), message);
+                                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            messageChangeListener.newMessage(response.getModule(), response.getCmd(), message);
+                                        }
+                                    });
+
                                 } else {
+                                    Log.e(TAG, "receiptMessage ");
                                     //回执消息
                                     messageChangeListener.receiptMessage(response.getModule(), response.getCmd(), message.getMessageid(), message.getReceivetime(), response.getResultCode());
                                 }

@@ -146,4 +146,18 @@ public class Contact implements Parcelable {
             return new Contact[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "contactid=" + contactid +
+                ", fromuserid=" + fromuserid +
+                ", targetuserid=" + targetuserid +
+                ", icon='" + icon + '\'' +
+                ", name='" + name + '\'' +
+                ", lastmessage='" + lastmessage + '\'' +
+                ", lastcontacttime=" + lastcontacttime +
+                ", isremind=" + isremind +
+                '}';
+    }
 }

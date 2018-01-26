@@ -44,7 +44,9 @@ public class MessagePresenter {
         User activeUser = userModel.getActiveUser();
         if (activeUser != null && !TextUtils.isEmpty(activeUser.getToken())) {
             message.setToken(activeUser.getToken());
+            message.setMessageid(message.getMessageid());
             message.setFromuserid(activeUser.getUserid());
+            Log.e(TAG, "sendMessagetttttttttttt: " + message);
             EMessageMudule.EMessage eMessage = message.buildEMessage();
             Request request = Request.valueOf(module, cmd, eMessage.toByteArray());
             messageView.getHandleMessage().sendMessage(request);
