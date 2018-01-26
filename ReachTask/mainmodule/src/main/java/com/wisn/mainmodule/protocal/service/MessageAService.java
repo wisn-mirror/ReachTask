@@ -11,8 +11,12 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.google.protobuf.InvalidProtocolBufferException;
+import com.wisn.mainmodule.entity.Contact;
 import com.wisn.mainmodule.entity.Message;
+import com.wisn.mainmodule.entity.User;
+import com.wisn.mainmodule.model.impl.ContactMessageModel;
 import com.wisn.mainmodule.model.impl.MessageModel;
+import com.wisn.mainmodule.model.impl.UserModel;
 import com.wisn.mainmodule.protocal.coder.Request;
 import com.wisn.mainmodule.protocal.coder.Response;
 import com.wisn.mainmodule.protocal.constant.ResponseCode;
@@ -39,6 +43,8 @@ public class MessageAService extends Service implements HandleMessage {
     private HandlerByteToMessage handlerByteToMessage;
     private ExecutorService executorService = Executors.newCachedThreadPool();
     private MessageModel messageModel;
+    private ContactMessageModel contactMessageModel;
+    private UserModel iUserModel;
 
     public MessageAService() {
         Log.e(TAG, "MessageAService ");
@@ -64,7 +70,10 @@ public class MessageAService extends Service implements HandleMessage {
         super.onCreate();
         Log.e(TAG, "onCreate ");
         messageModel = new MessageModel();
+        iUserModel = new UserModel();
         handleMessage = new HandleMessageImpl();
+        contactMessageModel = new ContactMessageModel();
+
         handlerByteToMessage = new HandlerByteToMessage() {
             @Override
             public void receive(Response response) {
@@ -76,6 +85,19 @@ public class MessageAService extends Service implements HandleMessage {
                                 EMessageMudule.EMessage eMessage = EMessageMudule.EMessage.parseFrom(response.getData());
                                 //新的消息
                                 Message message = new Message().valueOf(eMessage);
+                                // TODO: 2018/1/26 添加联系关系
+                                long contactid = Long.parseLong(String.valueOf(message.getTargetuserid()) + String.valueOf(message.getFromuserid()));
+                                Contact contact = contactMessageModel.getContactByTargetid(message.getFromuserid());
+                                if (contact == null) {
+                                    User userbyUserid = iUserModel.getUserbyUserid(message.getFromuserid());
+                                    contact = new Contact();
+                                    contact.setContactid(contactid);
+                                    contact.setFromuserid(message.getTargetuserid());
+                                    contact.setTargetuserid(userbyUserid.getUserid());
+                                    contact.setIcon(userbyUserid.getIconurl());
+                                    contact.setName(userbyUserid.getNickname());
+                                    contactMessageModel.saveContacts(contact);
+                                }
                                 if (response.getResultCode() == ResponseCode.newMessage) {
                                     // TODO: 2018/1/26 存数据库
                                     messageModel.saveMessage(message);

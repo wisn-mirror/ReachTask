@@ -13,6 +13,8 @@ import com.wisn.mainmodule.protocal.coder.Request;
 import com.wisn.mainmodule.protocal.protobuf.beans.EMessageMudule;
 import com.wisn.mainmodule.view.MessageView;
 
+import java.util.List;
+
 /**
  * @author Wisn
  * @time 2018/1/25 16:59
@@ -30,9 +32,13 @@ public class MessagePresenter {
         messageModel = new MessageModel();
         userModel = new UserModel();
     }
-    public void loadMessage(Long targetUser){
 
-     }
+    public void loadMessage(Long contactid) {
+        List<Message> messsagesByContactid = messageModel.getMesssagesByContactid(contactid);
+        if (messsagesByContactid != null && messsagesByContactid.size() != 0) {
+            messageView.setMessageList(messsagesByContactid);
+        }
+    }
 
     public void sendMessage(short module, short cmd, Message message) {
         User activeUser = userModel.getActiveUser();

@@ -3,7 +3,7 @@ package com.wisn.mainmodule.model.impl;
 import com.wisn.mainmodule.app.MApplication;
 import com.wisn.mainmodule.entity.Contact;
 import com.wisn.mainmodule.entity.ContactDao;
-import com.wisn.mainmodule.model.IContactModel;
+import com.wisn.mainmodule.model.IContactMessageModel;
 
 import org.greenrobot.greendao.query.DeleteQuery;
 import org.greenrobot.greendao.query.Query;
@@ -15,10 +15,10 @@ import java.util.List;
  * @time 2018/1/26 15:42
  */
 
-public class ContactModel implements IContactModel {
+public class ContactMessageModel implements IContactMessageModel {
 
     @Override
-    public void savecontacts(Contact contact) {
+    public void saveContacts(Contact contact) {
         ContactDao contactDao = MApplication.getInstance().getDaoSession().getContactDao();
         contactDao.insertOrReplace(contact);
     }

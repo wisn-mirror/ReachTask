@@ -15,4 +15,5 @@ public class Contants {
     public static int messagePort=9999;
 
     public static String user_flag ="user_flag";
+    public static String contact_flag ="contact_flag";
 }

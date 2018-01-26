@@ -47,6 +47,20 @@ public class MessageModel implements IMessageModel {
         return list;
     }
 
+    @Override
+    public List<Message> getMesssagesByContactid(Long contactid) {
+        MessageDao messageDao = MApplication.getInstance().getDaoSession().getMessageDao();
+        Query<Message> build = messageDao.queryBuilder().where(MessageDao.Properties.Contactid.eq(contactid))
+                .orderDesc(MessageDao.Properties.Createtime)
+                .build();
+        List<Message> list = build.list();
+        for (Message message : list) {
+            System.err.println("  ddd:" + message);
+        }
+        System.err.println("  dddddd:" + list);
+        return list;
+    }
+
     public Message getMesssage(Long messageId) {
         MessageDao messageDao = MApplication.getInstance().getDaoSession().getMessageDao();
         Query<Message> build = messageDao.queryBuilder().where(MessageDao.Properties.Messageid.eq(messageId)).build();

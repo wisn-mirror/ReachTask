@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.wisn.mainmodule.R;
 import com.wisn.mainmodule.base.BaseActivity;
+import com.wisn.mainmodule.entity.Contact;
 import com.wisn.mainmodule.entity.Message;
 import com.wisn.mainmodule.entity.User;
 import com.wisn.mainmodule.presenter.MessagePresenter;
@@ -50,6 +51,7 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
     private ServiceConnection connection;
     private MessagePresenter  messagePresenter;
     private User user;
+    private Contact contact;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +59,7 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
         initView();
         messagePresenter=new MessagePresenter(this);
         user= (User) getIntent().getParcelableExtra(Contants.user_flag);
+        contact= (Contact) getIntent().getParcelableExtra(Contants.contact_flag);
         connection = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
@@ -74,6 +77,7 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
         };
         Intent intent=new Intent(this, MessageAService.class);
         bindService(intent, connection, Service.BIND_AUTO_CREATE);
+        messagePresenter.loadMessage(contact.getContactid());
     }
 
     private void initView() {
@@ -112,6 +116,7 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
         }
         Message  message=new Message();
         message.setContent(content);
+        message.setContactid(contact.getContactid());
         message.setTargetuserid(user.getUserid());
         messagePresenter.sendMessage(ModuleId.chatMessage, CmdId.ChartMessage.sendMessageToAll,message);
         // TODO validate success, do something

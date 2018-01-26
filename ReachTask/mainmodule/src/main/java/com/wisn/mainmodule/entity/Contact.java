@@ -1,5 +1,8 @@
 package com.wisn.mainmodule.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
@@ -11,7 +14,7 @@ import org.greenrobot.greendao.annotation.Property;
  */
 
 @Entity
-public class Contact {
+public class Contact implements Parcelable {
     @Property(nameInDb = "_id")
     @Id
     private Long contactid;
@@ -102,4 +105,45 @@ public class Contact {
     public boolean getIsremind() {
         return this.isremind;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.contactid);
+        dest.writeValue(this.fromuserid);
+        dest.writeValue(this.targetuserid);
+        dest.writeString(this.icon);
+        dest.writeString(this.name);
+        dest.writeString(this.lastmessage);
+        dest.writeValue(this.lastcontacttime);
+        dest.writeByte(this.isremind ? (byte) 1 : (byte) 0);
+    }
+
+    protected Contact(Parcel in) {
+        this.contactid = (Long) in.readValue(Long.class.getClassLoader());
+        this.fromuserid = (Long) in.readValue(Long.class.getClassLoader());
+        this.targetuserid = (Long) in.readValue(Long.class.getClassLoader());
+        this.icon = in.readString();
+        this.name = in.readString();
+        this.lastmessage = in.readString();
+        this.lastcontacttime = (Long) in.readValue(Long.class.getClassLoader());
+        this.isremind = in.readByte() != 0;
+    }
+
+    public static final Creator<Contact> CREATOR = new Creator<Contact>() {
+        @Override
+        public Contact createFromParcel(Parcel source) {
+            return new Contact(source);
+        }
+
+        @Override
+        public Contact[] newArray(int size) {
+            return new Contact[size];
+        }
+    };
 }

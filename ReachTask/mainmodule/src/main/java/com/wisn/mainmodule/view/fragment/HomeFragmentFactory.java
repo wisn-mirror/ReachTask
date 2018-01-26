@@ -19,7 +19,7 @@ public class HomeFragmentFactory {
     public static List<String> getFragmentTag() {
         data = new ArrayList<>();
         data.add("Message");
-        data.add("IContactModel");
+        data.add("IContactMessageModel");
         data.add("Work");
         data.add("Mine");
         return data;
@@ -46,7 +46,7 @@ public class HomeFragmentFactory {
             case "Message":
                 fragment = new MessageFragament();
                 break;
-            case "IContactModel":
+            case "IContactMessageModel":
                 fragment = new ContactFragament();
                 break;
             case "Work":

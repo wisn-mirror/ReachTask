@@ -10,8 +10,8 @@ import java.util.List;
  */
 
 
-public interface IContactModel {
-    void savecontacts(Contact contact);
+public interface IContactMessageModel {
+    void saveContacts(Contact contact);
     List<Contact> getContacts();
     Contact getContactByTargetid(Long targetid);
     void updateContact(Contact contact);

@@ -18,7 +18,7 @@ import com.wisn.mainmodule.entity.User;
 import com.wisn.mainmodule.presenter.ContactPresenter;
 import com.wisn.mainmodule.utils.Contants;
 import com.wisn.mainmodule.view.ContactView;
-import com.wisn.mainmodule.view.activity.MessageActivity;
+import com.wisn.mainmodule.view.activity.InfoActivity;
 import com.wisn.mainmodule.view.viewholder.ContactsItemHolder;
 
 import java.util.ArrayList;
@@ -97,7 +97,7 @@ public class ContactFragament extends BaseLazyFragment implements ContactView{
                     contactsItemHolder.contact_name.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent intent=   new Intent(getActivity(), MessageActivity.class);
+                            Intent intent=   new Intent(getActivity(), InfoActivity.class);
                             intent.putExtra(Contants.user_flag, users.get(position));
                             startActivity(intent);
                         }
