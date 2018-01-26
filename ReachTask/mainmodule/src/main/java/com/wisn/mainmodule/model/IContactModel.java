@@ -1,7 +1,6 @@
 package com.wisn.mainmodule.model;
 
 import com.wisn.mainmodule.entity.Contact;
-import com.wisn.mainmodule.utils.Contants;
 
 import java.util.List;
 
@@ -12,11 +11,13 @@ import java.util.List;
 
 
 public interface IContactModel {
+    void savecontacts(Contact contact);
     List<Contact> getContacts();
-    List<Contact> getContactByTargetid(Long targetid);
+    Contact getContactByTargetid(Long targetid);
     void updateContact(Contact contact);
-    Contants getContact(Long contantsid);
+    Contact getContact(Long contantsid);
     void deleteContact(Long contactid);
+    void deleteContact(Contact contact);
     void deleteContactByTargetid(Long targetid);
 
 }
