@@ -58,6 +58,7 @@ public class ClientManager {
         serverBootstrap = new ClientBootstrap(mNioSelectorRunnablePool);
         inetSocketAddress = new InetSocketAddress(ip, port);
         mConnect = serverBootstrap.connect(inetSocketAddress);
+
     }
 
     public void tryConnectServer() {

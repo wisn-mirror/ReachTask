@@ -14,5 +14,5 @@ public class Contants {
     public static String messageHost="192.168.1.6";
     public static int messagePort=9999;
 
-    public static String userid_flag="userid_flag";
+    public static String user_flag ="user_flag";
 }

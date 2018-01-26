@@ -19,8 +19,13 @@ import android.widget.Toast;
 import com.wisn.mainmodule.R;
 import com.wisn.mainmodule.base.BaseActivity;
 import com.wisn.mainmodule.entity.Message;
+import com.wisn.mainmodule.entity.User;
+import com.wisn.mainmodule.presenter.MessagePresenter;
 import com.wisn.mainmodule.protocal.service.HandleMessage;
 import com.wisn.mainmodule.protocal.service.MessageAService;
+import com.wisn.mainmodule.utils.CmdId;
+import com.wisn.mainmodule.utils.Contants;
+import com.wisn.mainmodule.utils.ModuleId;
 import com.wisn.mainmodule.view.MessageView;
 import com.wisn.utils.ToastUtils;
 
@@ -42,12 +47,15 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
     private Button message_send;
     private HandleMessage handleMessage;
     private ServiceConnection connection;
-
+    private MessagePresenter  messagePresenter;
+    private User user;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
         initView();
+        messagePresenter=new MessagePresenter(this);
+        user= (User) getIntent().getParcelableExtra(Contants.user_flag);
         connection = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
@@ -89,7 +97,7 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
         } else if (i == R.id.message_info) {
             ToastUtils.show("info");
         } else if (i == R.id.message_send) {
-
+            submit();
         }
     }
 
@@ -100,7 +108,10 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
             Toast.makeText(this, "content不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
-
+        Message  message=new Message();
+        message.setContent(content);
+        message.setTargetuserid(user.getUserid());
+        messagePresenter.sendMessage(ModuleId.chatMessage, CmdId.ChartMessage.sendMessageToAll,message);
         // TODO validate success, do something
     }
 
@@ -114,7 +125,7 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public HandleMessage getHandleMessage() {
-        return null;
+        return handleMessage;
     }
 
     @Override
@@ -127,8 +138,4 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
 
     }
 
-    @Override
-    public String getMessageContent() {
-        return null;
-    }
 }

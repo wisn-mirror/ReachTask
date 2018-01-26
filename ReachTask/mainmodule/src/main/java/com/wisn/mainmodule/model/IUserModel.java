@@ -31,6 +31,8 @@ public interface IUserModel {
 
     User getUserbyUserid(long userid);
 
+    User getActiveUser();
+
     void saveUsers(List<User> user);
 
     void deleteUser(User user);

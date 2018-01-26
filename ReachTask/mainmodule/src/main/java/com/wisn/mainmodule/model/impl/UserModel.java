@@ -226,6 +226,20 @@ public class UserModel implements IUserModel {
     }
 
     @Override
+    public User getActiveUser() {
+        UserDao userDao = MApplication.getInstance().getDaoSession().getUserDao();
+        Query<User> query = userDao.queryBuilder().where(UserDao.Properties.Isactive.eq(true))
+                .orderDesc(UserDao.Properties.Userid).build();
+        User user = query.unique();
+        if (user != null) {
+            System.err.println(user.getToken());
+            return user;
+        }
+        System.err.println(user);
+        return null;
+    }
+
+    @Override
     public String getTokenByActiveUser() {
         UserDao userDao = MApplication.getInstance().getDaoSession().getUserDao();
         Query<User> query = userDao.queryBuilder().where(UserDao.Properties.Isactive.eq(true))

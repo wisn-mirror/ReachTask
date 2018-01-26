@@ -8,9 +8,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.widget.RadioButton;
+import android.widget.ImageView;
 
 import com.wisn.mainmodule.R;
 
@@ -19,8 +18,7 @@ import com.wisn.mainmodule.R;
  * Created by wisn on 2017/9/12.
  */
 @SuppressLint("AppCompatCustomView")
-public class MyRadioButton extends RadioButton {
-    private int mDrawableSize;
+public class TipImageView extends ImageView {
     private int tipTextSize;
     private int tipRedius;
     private int tipTextRedius;
@@ -33,16 +31,16 @@ public class MyRadioButton extends RadioButton {
     private String textMsg=null;
     private boolean isTip=false;
 
-    public MyRadioButton(Context context) {
+    public TipImageView(Context context) {
         super(context);
     }
 
-    public MyRadioButton(Context context, AttributeSet attrs) {
+    public TipImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public MyRadioButton(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TipImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
 
@@ -50,9 +48,7 @@ public class MyRadioButton extends RadioButton {
 
 
     public void init(Context context, AttributeSet attrs) {
-        Drawable drawableLeft = null, drawableTop = null, drawableRight = null, drawableBottom = null;
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ButtonView);
-        mDrawableSize = a.getDimensionPixelSize(R.styleable.ButtonView_drawableSizes, 50);
         tipTextRedius = a.getDimensionPixelSize(R.styleable.ButtonView_tipTextRedius, 10);
         tipTextSize = a.getDimensionPixelSize(R.styleable.ButtonView_tipTextSize, 10);
         tipRedius = a.getDimensionPixelSize(R.styleable.ButtonView_tipRedius, 10);
@@ -63,12 +59,7 @@ public class MyRadioButton extends RadioButton {
         textMsg = a.getString(R.styleable.ButtonView_tipText);
         if(textMsg!=null)checkText(textMsg);
         isTip = a.getBoolean(R.styleable.ButtonView_isTip,false);
-        drawableTop= a.getDrawable(R.styleable.ButtonView_drawableTop);
-        drawableBottom= a.getDrawable(R.styleable.ButtonView_drawableBottom);
-        drawableRight= a.getDrawable(R.styleable.ButtonView_drawableRight);
-        drawableLeft= a.getDrawable(R.styleable.ButtonView_drawableLeft);
         a.recycle();
-        setCompoundDrawablesWithIntrinsicBounds(drawableLeft, drawableTop, drawableRight, drawableBottom);
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setFilterBitmap(true);
@@ -77,20 +68,7 @@ public class MyRadioButton extends RadioButton {
 
     }
 
-    /**
-     * RadioButton上、下、左、右设置图标
-     */
 
-    public void setCompoundDrawablesWithIntrinsicBounds(Drawable left,
-                                                        Drawable top,
-                                                        Drawable right,
-                                                        Drawable bottom) {
-        if (left != null)left.setBounds(0, 0, mDrawableSize, mDrawableSize);
-        if (right != null) right.setBounds(0, 0, mDrawableSize, mDrawableSize);
-        if (top != null) top.setBounds(0, 0, mDrawableSize, mDrawableSize);
-        if (bottom != null)bottom.setBounds(0, 0, mDrawableSize, mDrawableSize);
-        setCompoundDrawables(left, top, right, bottom);
-    }
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);

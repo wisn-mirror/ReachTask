@@ -43,6 +43,7 @@ public class MApplication extends SkinApplication implements ReactApplication {
         SoLoader.init(this, /* native exopackage */ false);
         Utils.init(this);
         setDatabase();
+        startMessageService();
     }
 
     public void setDatabase(){

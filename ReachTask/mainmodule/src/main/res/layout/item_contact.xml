@@ -1,10 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tipimageview="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:gravity="center"
+    android:padding="4dp"
+    android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
+    <com.wisn.mainmodule.widget.TipImageView
+        android:id="@+id/contact_imageView"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:padding="5dp"
+        android:src="@drawable/home_bottom_tab_icon_work_highlight"
+        tipimageview:drawableSizes="32dp"
+        tipimageview:drawableTop="@drawable/home_bottom_tab_icon_work_highlight"
+        tipimageview:isTip="true"
+        tipimageview:tipBackground="#e82540"
+        tipimageview:tipRedius="5dp"
+        tipimageview:tipRediusMarginRight="8dp"
+        tipimageview:tipRediusMarginTop="4dp"
+        tipimageview:tipText="44"
+        tipimageview:tipTextColor="#ffffff"
+        tipimageview:tipTextRedius="10dp"
+        tipimageview:tipTextSize="12dp" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|left"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/contact_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/contact_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/contact_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+    </LinearLayout>
+
 </LinearLayout>

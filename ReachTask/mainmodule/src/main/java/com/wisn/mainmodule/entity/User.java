@@ -1,12 +1,15 @@
 package com.wisn.mainmodule.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
 
 @Entity
-public class User {
+public class User implements Parcelable{
     @Property(nameInDb = "_id")
     @Id
     private Long userid;
@@ -160,5 +163,51 @@ public class User {
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.userid);
+        dest.writeString(this.nickname);
+        dest.writeString(this.nameid);
+        dest.writeString(this.iconurl);
+        dest.writeString(this.password);
+        dest.writeString(this.encryption);
+        dest.writeString(this.phonenumber);
+        dest.writeString(this.token);
+        dest.writeLong(this.expired);
+        dest.writeLong(this.registertime);
+        dest.writeLong(this.lastlogintime);
+        dest.writeByte(this.isactive ? (byte) 1 : (byte) 0);
+    }
+
+    protected User(Parcel in) {
+        this.userid = (Long) in.readValue(Long.class.getClassLoader());
+        this.nickname = in.readString();
+        this.nameid = in.readString();
+        this.iconurl = in.readString();
+        this.password = in.readString();
+        this.encryption = in.readString();
+        this.phonenumber = in.readString();
+        this.token = in.readString();
+        this.expired = in.readLong();
+        this.registertime = in.readLong();
+        this.lastlogintime = in.readLong();
+        this.isactive = in.readByte() != 0;
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel source) {
+            return new User(source);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 }

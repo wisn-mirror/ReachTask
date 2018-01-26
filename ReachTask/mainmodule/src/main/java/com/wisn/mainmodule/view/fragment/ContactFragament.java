@@ -93,12 +93,12 @@ public class ContactFragament extends BaseLazyFragment implements ContactView{
             public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
                 if(holder instanceof  ContactsItemHolder){
                     ContactsItemHolder contactsItemHolder= (ContactsItemHolder) holder;
-                    contactsItemHolder.textview.setText(users.get(position).getUserid()+" "+users.get(position).getNameid());
-                    contactsItemHolder.textview.setOnClickListener(new View.OnClickListener() {
+                    contactsItemHolder.contact_name.setText(users.get(position).getUserid()+" "+users.get(position).getNameid());
+                    contactsItemHolder.contact_name.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             Intent intent=   new Intent(getActivity(), MessageActivity.class);
-                            intent.putExtra(Contants.userid_flag, users.get(position).getUserid());
+                            intent.putExtra(Contants.user_flag, users.get(position));
                             startActivity(intent);
                         }
                     });

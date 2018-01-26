@@ -1,5 +1,11 @@
 package com.wisn.mainmodule.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.text.TextUtils;
+
+import com.wisn.mainmodule.protocal.protobuf.beans.EMessageMudule;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
@@ -16,7 +22,7 @@ import org.greenrobot.greendao.annotation.Property;
  * `receivetime` bigint(13) NOT NULL COMMENT '接收时间'
  */
 @Entity
-public class Message {
+public class Message implements Parcelable{
     @Property(nameInDb = "_id")
     @Id
     private Long messageid;
@@ -24,29 +30,40 @@ public class Message {
     private long targetuserid;
     private int messagetype;
     private int status;
+    private String token;
     private String content;
     private long createtime;
     private long receivetime;
 
     public Message() {
     }
-
-
-    @Generated(hash = 1612528557)
-    public Message(Long messageid, long fromuserid, long targetuserid, int messagetype, int status, String content, long createtime,
-            long receivetime) {
+    @Generated(hash = 739975192)
+    public Message(Long messageid, long fromuserid, long targetuserid, int messagetype, int status, String token, String content, long createtime, long receivetime) {
         this.messageid = messageid;
         this.fromuserid = fromuserid;
         this.targetuserid = targetuserid;
         this.messagetype = messagetype;
         this.status = status;
+        this.token = token;
         this.content = content;
         this.createtime = createtime;
         this.receivetime = receivetime;
     }
+    public String getToken() {
+        if(TextUtils.isEmpty(token)){
+            return " ";
+        }
+        return token;
+    }
 
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public Long getMessageid() {
+        if(messageid==0){
+            return -1l;
+        }
         return messageid;
     }
 
@@ -79,6 +96,7 @@ public class Message {
     }
 
     public int getStatus() {
+
         return status;
     }
 
@@ -87,6 +105,9 @@ public class Message {
     }
 
     public String getContent() {
+        if(TextUtils.isEmpty(content)){
+            return " ";
+        }
         return content;
     }
 
@@ -124,4 +145,60 @@ public class Message {
                 '}';
     }
 
+
+    public EMessageMudule.EMessage buildEMessage(){
+        EMessageMudule.EMessage eMessage = EMessageMudule.EMessage.newBuilder()
+                .setMessageid(-1)
+                .setFromuserid(this.getFromuserid())
+                .setTargetuserid(this.getTargetuserid())
+                .setMessagetype(this.getMessagetype())
+                .setStatus(this.getStatus())
+                .setContent(this.getContent())
+                .setToken(this.getToken())
+                .setCreatetime(System.currentTimeMillis())
+                .setReceivetime(-1).build();
+        return eMessage;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.messageid);
+        dest.writeLong(this.fromuserid);
+        dest.writeLong(this.targetuserid);
+        dest.writeInt(this.messagetype);
+        dest.writeInt(this.status);
+        dest.writeString(this.token);
+        dest.writeString(this.content);
+        dest.writeLong(this.createtime);
+        dest.writeLong(this.receivetime);
+    }
+
+    protected Message(Parcel in) {
+        this.messageid = (Long) in.readValue(Long.class.getClassLoader());
+        this.fromuserid = in.readLong();
+        this.targetuserid = in.readLong();
+        this.messagetype = in.readInt();
+        this.status = in.readInt();
+        this.token = in.readString();
+        this.content = in.readString();
+        this.createtime = in.readLong();
+        this.receivetime = in.readLong();
+    }
+
+    public static final Creator<Message> CREATOR = new Creator<Message>() {
+        @Override
+        public Message createFromParcel(Parcel source) {
+            return new Message(source);
+        }
+
+        @Override
+        public Message[] newArray(int size) {
+            return new Message[size];
+        }
+    };
 }

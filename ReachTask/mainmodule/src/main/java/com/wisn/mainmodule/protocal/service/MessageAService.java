@@ -24,6 +24,8 @@ import java.util.concurrent.Executors;
 
 
 public class MessageAService extends Service implements HandleMessage {
+
+
     public static String TAG = "MessageAService";
     private HandleMessageImpl handleMessage;
     private BroadcastReceiver mReceiver;
@@ -71,6 +73,7 @@ public class MessageAService extends Service implements HandleMessage {
             @Override
             public void run() {
                 ClientManager.getInstance().start(Contants.messageHost, Contants.messagePort, handlerByteToMessage);
+                Log.e(TAG, "connect  ");
             }
         });
         IntentFilter intentFilter = new IntentFilter();
@@ -81,7 +84,7 @@ public class MessageAService extends Service implements HandleMessage {
     }
 
     public void showMessage(Response response) {
-
+        Log.e(TAG,"receiver:"+response.toString());
     }
 
     @Override
@@ -127,7 +130,8 @@ public class MessageAService extends Service implements HandleMessage {
                     ClientManager.getInstance().write(request);
                 } else {
                     //保存未发送消息
-
+                    Log.e(TAG, "未发送消息sendMessage: " + request);
+                    ClientManager.getInstance().tryConnectServer();
                 }
             }
         });

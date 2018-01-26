@@ -29,6 +29,4 @@ public interface MessageView {
      */
     void setMessageList(List<Message> messageList);
 
-
-    String getMessageContent();
 }

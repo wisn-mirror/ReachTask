@@ -10,4 +10,6 @@ import com.wisn.mainmodule.protocal.coder.Request;
 
 public interface HandleMessage {
     void sendMessage(Request request);
+    void addMessageListener(MessageChangeListener  messageChangeListener);
+    void removeMessageListener(MessageChangeListener  messageChangeListener);
 }

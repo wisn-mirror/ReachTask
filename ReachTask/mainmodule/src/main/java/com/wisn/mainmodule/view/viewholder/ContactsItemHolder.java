@@ -14,10 +14,10 @@ import com.wisn.mainmodule.R;
 
 public class ContactsItemHolder extends RecyclerView.ViewHolder {
 
-    public TextView textview;
+    public TextView contact_name;
     public ContactsItemHolder(View  inflate){
         super(inflate);
-        textview = inflate.findViewById(R.id.textView);
+        contact_name = inflate.findViewById(R.id.contact_name);
     }
 
 }
