@@ -37,6 +37,10 @@ public class ContactFragament extends BaseLazyFragment implements ContactView{
     private LinearLayoutManager mLinearLayoutManager;
     private RecyclerView.Adapter<RecyclerView.ViewHolder> adapter;
     private List<User> users=new ArrayList<>();
+    @Override
+    public String getTAG() {
+        return "ContactFragament";
+    }
 
     @Override
     public View onCreateLazyView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -116,7 +120,15 @@ public class ContactFragament extends BaseLazyFragment implements ContactView{
             }
         };
         contact_list.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
 
+    @Override
+    public void onFragmentVisibleChange(boolean isVisible) {
+        super.onFragmentVisibleChange(isVisible);
+       if(adapter!=null){
+           adapter.notifyDataSetChanged();
+       }
     }
 
     @Override
@@ -128,7 +140,6 @@ public class ContactFragament extends BaseLazyFragment implements ContactView{
     @Override
     public void setUserData(List<User> userData) {
         users=userData;
-        adapter.notifyDataSetChanged();
     }
 
 

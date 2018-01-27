@@ -37,10 +37,10 @@ public class HomeActivity  extends BaseActivity implements RadioGroup.OnCheckedC
     public static String TAG="HomeActivity";
 
     private RadioGroup mRadioButton;
-    private TipRadioButton mRadiobutton_bg_home;
-    private TipRadioButton mRadiobutton_bg_gift;
-    private TipRadioButton mRadiobutton_bg_start;
-    private TipRadioButton mRadiobutton_bg_watch;
+    private TipRadioButton radiobutton_bg_message;
+    private TipRadioButton radiobutton_bg_contact;
+    private TipRadioButton radiobutton_bg_work;
+    private TipRadioButton radiobutton_bg_mine;
     private ViewPager mViewpager;
     private  MessagePresenter  messagePresenter;
     private ServiceConnection connection;
@@ -52,10 +52,10 @@ public class HomeActivity  extends BaseActivity implements RadioGroup.OnCheckedC
         setContentView(R.layout.activity_home);
         mRadioButton = (RadioGroup)findViewById(R.id.bottom_radiogroup);
         mViewpager = (ViewPager)findViewById(R.id.viewpager);
-        mRadiobutton_bg_home = (TipRadioButton)findViewById(R.id.radiobutton_bg_message);
-        mRadiobutton_bg_gift = (TipRadioButton)findViewById(R.id.radiobutton_bg_contact);
-        mRadiobutton_bg_start = (TipRadioButton)findViewById(R.id.radiobutton_bg_work);
-        mRadiobutton_bg_watch = (TipRadioButton)findViewById(R.id.radiobutton_bg_mine);
+        radiobutton_bg_message = (TipRadioButton)findViewById(R.id.radiobutton_bg_message);
+        radiobutton_bg_contact = (TipRadioButton)findViewById(R.id.radiobutton_bg_contact);
+        radiobutton_bg_work = (TipRadioButton)findViewById(R.id.radiobutton_bg_work);
+        radiobutton_bg_mine = (TipRadioButton)findViewById(R.id.radiobutton_bg_mine);
         mRadioButton.setOnCheckedChangeListener(this);
         setDefaultFragment();
         messagePresenter=new MessagePresenter(this);
@@ -83,7 +83,7 @@ public class HomeActivity  extends BaseActivity implements RadioGroup.OnCheckedC
     }
 
     private void setDefaultFragment() {
-        mRadiobutton_bg_home.setChecked(true);
+        radiobutton_bg_message.setChecked(true);
         HomeActivityAdapter fragmentAdapter=new HomeActivityAdapter(getSupportFragmentManager());
         mViewpager.setAdapter(fragmentAdapter);
         mViewpager.addOnPageChangeListener(this);
@@ -118,16 +118,16 @@ public class HomeActivity  extends BaseActivity implements RadioGroup.OnCheckedC
         mRadioButton.setOnCheckedChangeListener(null);
         switch (position){
             case 0:
-                mRadiobutton_bg_home.setChecked(true);
+                radiobutton_bg_message.setChecked(true);
                 break;
             case 1:
-                mRadiobutton_bg_gift.setChecked(true);
+                radiobutton_bg_contact.setChecked(true);
                 break;
             case 2:
-                mRadiobutton_bg_start.setChecked(true);
+                radiobutton_bg_work.setChecked(true);
                 break;
             case 3:
-                mRadiobutton_bg_watch.setChecked(true);
+                radiobutton_bg_mine.setChecked(true);
                 break;
         }
         mRadioButton.setOnCheckedChangeListener(this);

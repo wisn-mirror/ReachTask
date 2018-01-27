@@ -35,10 +35,14 @@ public class MessageFragament extends BaseLazyFragment implements MessageContact
     private LinearLayoutManager mLinearLayoutManager;
     private RecyclerView.Adapter<RecyclerView.ViewHolder> adapter;
     private List<Contact> contacts =new ArrayList<>();
+    @Override
+    public String getTAG() {
+        return "MessageFragament";
+    }
 
     @Override
     public View onCreateLazyView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_contact, container, false);
+        View view = inflater.inflate(R.layout.fragment_contactmessage, container, false);
         initView(view);
         return view;
     }
@@ -100,7 +104,15 @@ public class MessageFragament extends BaseLazyFragment implements MessageContact
             }
         };
         contact_list.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
 
+    @Override
+    public void onFragmentVisibleChange(boolean isVisible) {
+        super.onFragmentVisibleChange(isVisible);
+        if(adapter!=null){
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -111,11 +123,9 @@ public class MessageFragament extends BaseLazyFragment implements MessageContact
     }
 
 
-
     @Override
     public void setContactData(List<Contact> contactData) {
         contacts =contactData;
-        adapter.notifyDataSetChanged();
     }
 
     @Override

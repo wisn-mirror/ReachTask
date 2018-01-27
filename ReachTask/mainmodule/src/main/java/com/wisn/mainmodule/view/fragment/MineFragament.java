@@ -18,6 +18,10 @@ import com.wisn.mainmodule.base.BaseLazyFragment;
 
 public class MineFragament extends BaseLazyFragment{
     @Override
+    public String getTAG() {
+        return "MineFragament";
+    }
+    @Override
     public View onCreateLazyView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_content, container, false);
         Bundle bundle = this.getArguments();
