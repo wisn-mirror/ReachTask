@@ -91,24 +91,28 @@ public class MessageAService extends Service implements HandleMessage {
                                 if (response.getResultCode() == ResponseCode.newMessage) {
                                     Log.e(TAG, "newMessage ");
                                     // TODO: 2018/1/26 添加联系关系
-                                    long contactid = Long.parseLong(String.valueOf(message.getTargetuserid()) + String.valueOf(message.getFromuserid()));
                                     Contact contact = contactMessageModel.getContactByTargetid(message.getFromuserid());
                                     if (contact == null) {
                                         User userbyUserid = iUserModel.getUserbyUserid(message.getFromuserid());
+                                        long contactid = Long.parseLong(String.valueOf(message.getTargetuserid()) + String.valueOf(message.getFromuserid()));
                                         contact = new Contact();
                                         contact.setContactid(contactid);
                                         contact.setFromuserid(message.getTargetuserid());
                                         contact.setTargetuserid(userbyUserid.getUserid());
                                         contact.setIcon(userbyUserid.getIconurl());
                                         contact.setName(userbyUserid.getNickname());
+                                        contact.setLastmessage(message.getContent());
+                                        contact.setLastcontacttime(message.getReceivetime());
                                         contactMessageModel.saveContacts(contact);
                                     }
+                                    message.setContactid(contact.getContactid());
                                     // TODO: 2018/1/26 存数据库
                                     messageModel.saveMessage(message);
+                                    final Contact finalContact = contact;
                                     new Handler(Looper.getMainLooper()).post(new Runnable() {
                                         @Override
                                         public void run() {
-                                            messageChangeListener.newMessage(response.getModule(), response.getCmd(), message);
+                                            messageChangeListener.newMessage(finalContact,response.getModule(), response.getCmd(), message);
                                         }
                                     });
 

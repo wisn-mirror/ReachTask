@@ -89,25 +89,29 @@ public class CountdownView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        mPaint.setColor(mRingColor);
-        //空心
-        mPaint.setStyle(Paint.Style.STROKE);
-        //宽度
-        mPaint.setStrokeWidth(mRingWidth);
-        canvas.drawArc(mRectF, -90, mCurrentProgress - 360, false, mPaint);
-        //绘制文本
-        textPaint.setAntiAlias(true);
-        textPaint.setTextAlign(Paint.Align.CENTER);
-        String text = mCountdownTime - (int) (mCurrentProgress / 360f * mCountdownTime) + progressText;
-        textPaint.setTextSize(mRingProgessTextSize);
-        textPaint.setColor(mProgessTextColor);
-        //文字居中显示
-        Paint.FontMetricsInt fontMetrics = textPaint.getFontMetricsInt();
-        int baseline = (int) ((mRectF.bottom + mRectF.top - fontMetrics.bottom - fontMetrics.top) / 2);
-        canvas.drawText(text, mRectF.centerX(), baseline, textPaint);
-        //倒计时结束回调
-        if (mListener != null && mCurrentProgress == 360) {
-            mListener.countDownFinished();
+        try {
+            mPaint.setColor(mRingColor);
+            //空心
+            mPaint.setStyle(Paint.Style.STROKE);
+            //宽度
+            mPaint.setStrokeWidth(mRingWidth);
+            canvas.drawArc(mRectF, -90, mCurrentProgress - 360, false, mPaint);
+            //绘制文本
+            textPaint.setAntiAlias(true);
+            textPaint.setTextAlign(Paint.Align.CENTER);
+            String text = mCountdownTime - (int) (mCurrentProgress / 360f * mCountdownTime) + progressText;
+            textPaint.setTextSize(mRingProgessTextSize);
+            textPaint.setColor(mProgessTextColor);
+            //文字居中显示
+            Paint.FontMetricsInt fontMetrics = textPaint.getFontMetricsInt();
+            int baseline = (int) ((mRectF.bottom + mRectF.top - fontMetrics.bottom - fontMetrics.top) / 2);
+            canvas.drawText(text, mRectF.centerX(), baseline, textPaint);
+            //倒计时结束回调
+            if (mListener != null && mCurrentProgress == 360) {
+                mListener.countDownFinished();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

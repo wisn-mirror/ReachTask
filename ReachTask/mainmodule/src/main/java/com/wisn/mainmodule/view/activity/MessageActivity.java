@@ -226,7 +226,7 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
     }
 
     @Override
-    public void newMessage(short module, short cmd, Message message) {
+    public void newMessage(Contact contants, short module, short cmd, Message message) {
         Log.e(TAG, "module:" + module + " cmd:" + cmd + " message：" + message);
         if (message != null) {
             messageList.add(message);

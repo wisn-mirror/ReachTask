@@ -1,5 +1,6 @@
 package com.wisn.mainmodule.protocal.service;
 
+import com.wisn.mainmodule.entity.Contact;
 import com.wisn.mainmodule.entity.Message;
 
 /**
@@ -9,6 +10,6 @@ import com.wisn.mainmodule.entity.Message;
 
 
 public interface MessageChangeListener {
-    void newMessage(short module,short cmd,Message message);
+    void newMessage(Contact contants, short module, short cmd, Message message);
     void receiptMessage(short module,short cmd,long messageId,long receiveTime,short resultCode);
 }

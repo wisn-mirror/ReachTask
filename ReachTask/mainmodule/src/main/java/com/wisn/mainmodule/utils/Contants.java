@@ -16,4 +16,5 @@ public class Contants {
 
     public static String user_flag ="user_flag";
     public static String contact_flag ="contact_flag";
+    public static String sp_isstarted_Welcome_flag ="sp_isstarted_Welcome_flag";
 }

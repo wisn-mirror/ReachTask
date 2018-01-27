@@ -128,6 +128,13 @@ public class User implements Parcelable{
         return expired;
     }
 
+    /**
+     * 过期返回true,
+     * @return
+     */
+    public boolean isExpired(){
+        return this.getExpired()<System.currentTimeMillis();
+    }
     public void setExpired(long expired) {
         this.expired = expired;
     }

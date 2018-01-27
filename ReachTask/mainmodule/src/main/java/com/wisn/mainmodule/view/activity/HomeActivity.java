@@ -15,12 +15,14 @@ import android.widget.RadioGroup;
 import com.wisn.mainmodule.R;
 import com.wisn.mainmodule.adapter.HomeActivityAdapter;
 import com.wisn.mainmodule.base.BaseActivity;
+import com.wisn.mainmodule.entity.Contact;
 import com.wisn.mainmodule.entity.Message;
 import com.wisn.mainmodule.presenter.MessagePresenter;
 import com.wisn.mainmodule.protocal.service.HandleMessage;
 import com.wisn.mainmodule.protocal.service.MessageAService;
 import com.wisn.mainmodule.protocal.constant.CmdId;
 import com.wisn.mainmodule.protocal.constant.ModuleId;
+import com.wisn.mainmodule.protocal.service.MessageChangeListener;
 import com.wisn.mainmodule.view.MessageView;
 import com.wisn.mainmodule.widget.TipRadioButton;
 
@@ -33,7 +35,7 @@ import java.util.List;
 
 
 public class HomeActivity  extends BaseActivity implements RadioGroup.OnCheckedChangeListener,
-        ViewPager.OnPageChangeListener ,MessageView{
+        ViewPager.OnPageChangeListener ,MessageView, MessageChangeListener {
     public static String TAG="HomeActivity";
 
     private RadioGroup mRadioButton;
@@ -65,6 +67,7 @@ public class HomeActivity  extends BaseActivity implements RadioGroup.OnCheckedC
                 Log.e(TAG,"MessageAService ");
                 MessageAService.HandleMessageImpl service= (MessageAService.HandleMessageImpl) iBinder;
                 handleMessage = (HandleMessage) service.getService();
+                handleMessage.addMessageListener(HomeActivity.this);
                 messagePresenter.sendMessage(ModuleId.AuthMessage, CmdId.AuthMessage.register,new Message());
             }
 
@@ -165,5 +168,15 @@ public class HomeActivity  extends BaseActivity implements RadioGroup.OnCheckedC
         if(connection!=null){
             unbindService(connection);
         }
+    }
+
+    @Override
+    public void newMessage(Contact contants, short module, short cmd, Message message) {
+
+    }
+
+    @Override
+    public void receiptMessage(short module, short cmd, long messageId, long receiveTime, short resultCode) {
+
     }
 }
