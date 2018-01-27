@@ -24,8 +24,6 @@ public class TipView extends View {
     private int tipTextSize;
     private int tipRedius;
     private int tipTextRedius;
-    private int tipRediusMarginTop;
-    private int tipRediusMarginRight;
     private int tipTextColor;
     private int tipBackground;
     private Paint mPaint;
@@ -54,8 +52,6 @@ public class TipView extends View {
         tipTextRedius = a.getDimensionPixelSize(R.styleable.ButtonView_tipTextRedius, 10);
         tipTextSize = a.getDimensionPixelSize(R.styleable.ButtonView_tipTextSize, 10);
         tipRedius = a.getDimensionPixelSize(R.styleable.ButtonView_tipRedius, 10);
-        tipRediusMarginTop = a.getDimensionPixelSize(R.styleable.ButtonView_tipRediusMarginTop, 10);
-        tipRediusMarginRight = a.getDimensionPixelSize(R.styleable.ButtonView_tipRediusMarginRight, 10);
         tipTextColor = a.getColor(R.styleable.ButtonView_tipTextColor, Color.WHITE);
         tipBackground = a.getColor(R.styleable.ButtonView_tipBackground, Color.RED);
         textMsg = a.getString(R.styleable.ButtonView_tipText);
@@ -75,13 +71,13 @@ public class TipView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (mPaint == null) return;
-
-        int width = getMeasuredWidth();
+        int width = getMeasuredHeight();
         int height = getMeasuredHeight();
+
         if (textMsg != null && !isTip) {
             mPaint.setColor(tipBackground);
-            canvas.drawCircle( tipRediusMarginRight + tipTextRedius,
-                    tipRediusMarginTop + tipTextRedius,
+            canvas.drawCircle( width/2,
+                    height/2,
                               tipTextRedius,
                               mPaint);
             mPaint.setColor(tipTextColor);
@@ -90,21 +86,20 @@ public class TipView extends View {
             mPaint.getTextBounds(textMsg, 0, textMsg.length(), mRect);
             if ("1".equals(textMsg)) {
                 canvas.drawText(textMsg,
-                                (float) ( tipRediusMarginRight -
-                                         (mRect.width() + mRect.width() / 2.2) / 2 + tipTextRedius),
-                        tipRediusMarginTop + tipTextRedius + mRect.height() / 2,
-                                mPaint);
+                        (float) (width/2- mRect.width()/2.2),
+                        height /2+mRect.height()/2,
+                        mPaint);
             } else {
                 canvas.drawText(textMsg,
-                                 tipRediusMarginRight - mRect.width() / 2 + tipTextRedius,
-                        tipRediusMarginTop + tipTextRedius + mRect.height() / 2,
+                        (width- mRect.width())/2 ,
+                        height /2+mRect.height()/2,
                                 mPaint);
             }
 
         } else if (isTip) {
             mPaint.setColor(tipBackground);
-            canvas.drawCircle( tipRediusMarginRight + tipRedius,
-                    tipRediusMarginTop + tipRedius,
+            canvas.drawCircle( width/2,
+                    height/2,
                               tipRedius,
                               mPaint);
         }
