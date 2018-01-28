@@ -44,4 +44,13 @@
         <attr name="tipBackground" format="color" />
         <attr name="isTip" format="boolean" />
     </declare-styleable>
+    <declare-styleable name="CombinationListItemLayout">
+        <attr name="leftDrawable" format="reference" />
+        <attr name="leftDrawableVisable" format="boolean" />
+        <attr name="combinText" format="string" />
+        <attr name="rightDrawable" format="reference" />
+        <attr name="rightDrawableVisable" format="boolean" />
+        <attr name="bottomLineVisable" format="boolean" />
+        <attr name="combinTipText" format="string" />
+    </declare-styleable>
 </resources>

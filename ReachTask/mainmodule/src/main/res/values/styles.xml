@@ -22,6 +22,7 @@
         <item name="tipRedius">5dp</item>
         <item name="tipTextSize">12dp</item>
     </style>
+
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->

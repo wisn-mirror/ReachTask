@@ -75,6 +75,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#151414"
+
                 android:text="TextView" />
 
             <com.wisn.mainmodule.widget.TipView
@@ -85,7 +87,7 @@
                 tipimageview:isTip="false"
                 tipimageview:tipBackground="#e82540"
                 tipimageview:tipRedius="17dp"
-                tipimageview:tipText="14"
+                tipimageview:tipText="5"
                 tipimageview:tipTextColor="#ffffff"
                 tipimageview:tipTextRedius="10dp"
                 tipimageview:tipTextSize="12dp" />
@@ -95,4 +97,16 @@
             android:layout_height="30dp"
             android:background="@drawable/home_bottom_tab_icon_contact_highlight" />
     </LinearLayout>
+    <com.wisn.mainmodule.widget.CombinationListItemLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"/>
+    <com.wisn.mainmodule.widget.CombinationListItemLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"/>
+    <com.wisn.mainmodule.widget.CombinationListItemLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"/>
+    <com.wisn.mainmodule.widget.CombinationListItemLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"/>
 </LinearLayout>
