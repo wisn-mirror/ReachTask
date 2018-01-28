@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tipimageview="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:padding="10dp"
-    >
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tipimageview="http://schemas.android.com/apk/res-auto"  >
     <ImageView
         android:id="@+id/item_imageview"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_centerVertical="true"
         android:layout_marginRight="20dp"
-        android:background="@drawable/home_bottom_tab_icon_contact_highlight" />
+        android:src="@drawable/home_bottom_tab_icon_contact_highlight" />
 
     <TextView
         android:id="@+id/item_text"
@@ -49,11 +45,12 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="20dp"
         android:scaleType="center"
-        android:background="@drawable/table_arrow" />
+        android:src="@drawable/table_arrow" />
     <View
+        android:id="@+id/item_line"
         android:layout_width="match_parent"
         android:layout_height="0.1dp"
         android:layout_alignParentBottom="true"
         android:background="@android:color/black"
         />
-</RelativeLayout>
+</merge>
