@@ -50,10 +50,11 @@ ext {
     espressoVersion = '3.0.1'
     roomVersion = "1.0.0"
     constraint = "1.0.0"
-//    reactnative = "0.20.1"
     reactnative = "+"
     retrofit = "2.3.0"
     protobufjava = "2.4.1"
     greendao = "3.2.0"
     okhttp="3.8.1"
+    glide="4.3.1"
+    photoview="2.1.3"
 }
