@@ -139,4 +139,20 @@ public class Moment {
         }
         return list;
     }
+
+    @Override
+    public String toString() {
+        return "Moment{" +
+                "momentid=" + momentid +
+                ", userid=" + userid +
+                ", status=" + status +
+                ", content='" + content + '\'' +
+                ", imageres='" + imageres + '\'' +
+                ", videores='" + videores + '\'' +
+                ", location='" + location + '\'' +
+                ", createtime=" + createtime +
+                ", imagelist=" + imagelist +
+                ", videolist=" + videolist +
+                '}';
+    }
 }

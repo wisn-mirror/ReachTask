@@ -53,8 +53,8 @@ public interface HttpApi {
     @GET("userdata/getusers")
     Call<HttpResponse<List<User>>> getUsers(@Header("Authorization") String authorization, @Query("offset") int offset, @Query("limit") int limit);
 
-    @Multipart
-    @GET("moment/sendment")
+//    @Multipart
+    @POST("moment/sendment")
     Call<HttpResponse<String>> sendMents(
              @Header("Authorization") String authorization
             ,@Body RequestBody body);

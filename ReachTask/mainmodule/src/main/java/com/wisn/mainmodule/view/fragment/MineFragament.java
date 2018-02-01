@@ -9,9 +9,14 @@ import android.view.ViewGroup;
 
 import com.wisn.mainmodule.R;
 import com.wisn.mainmodule.base.BaseLazyFragment;
+import com.wisn.mainmodule.entity.Moment;
 import com.wisn.mainmodule.http.response.HttpResponse;
+import com.wisn.mainmodule.model.impl.MomentModel;
 import com.wisn.mainmodule.model.impl.UserModel;
 import com.wisn.mainmodule.presenter.HttpCallback;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Wisn
@@ -31,7 +36,55 @@ public class MineFragament extends BaseLazyFragment{
 ////        String tag = bundle.getString("TAG");
 //        TextView textView = (TextView) view.findViewById(R.id.fragment_textView);
 //        textView.setText("MineFragament");
-        UserModel  model=new UserModel();
+//        updateIcon();
+        sendMoment();
+        return view;
+    }
+
+    private void sendMoment() {
+        MomentModel model=new MomentModel();
+        List<String> data=new ArrayList<>();
+        data.add("/storage/emulated/0/aaa.jpg");
+        data.add("/storage/emulated/0/aaa.jpg");
+        data.add("/storage/emulated/0/aaa.jpg");
+        data.add("/storage/emulated/0/aaa.jpg");
+        data.add("/storage/emulated/0/aaa.jpg");
+        model.sendMoment("android test","日本",data,data, new HttpCallback<String>() {
+            @Override
+            public void onSuccess(HttpResponse<String> response) {
+                Log.e(getTAG(),"response:"+response);
+            }
+
+            @Override
+            public void onError(String msg) {
+                Log.e(getTAG(),"onError msg:"+msg);
+            }
+
+            @Override
+            public void onFinsh() {
+                Log.e(getTAG(),"onFinsh  ");
+            }
+        });
+        model.getMoments(0, 1000, new HttpCallback<List<Moment>>() {
+            @Override
+            public void onSuccess(HttpResponse<List<Moment>> response) {
+                Log.e(getTAG(),"response:"+response);
+            }
+
+            @Override
+            public void onError(String msg) {
+                Log.e(getTAG(),"onError msg:"+msg);
+            }
+
+            @Override
+            public void onFinsh() {
+
+            }
+        });
+    }
+
+    private void updateIcon() {
+        UserModel model=new UserModel();
         model.updateIcon("/storage/emulated/0/aaa.jpg", new HttpCallback<String>() {
             @Override
             public void onSuccess(HttpResponse<String> response) {
@@ -48,6 +101,5 @@ public class MineFragament extends BaseLazyFragment{
                 Log.e(getTAG(),"onFinsh  ");
             }
         });
-        return view;
     }
 }

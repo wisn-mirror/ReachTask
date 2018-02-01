@@ -12,7 +12,7 @@ import java.util.List;
 
 
 public interface IMomentModel {
-    List<Moment> getMoments(int offset ,int limit);
+    void getMoments(int offset ,int limit, HttpCallback<List<Moment>> callback);
     void sendMoment(String content,String location,List<String> imagepath,List<String> videopath, HttpCallback<String> callback);
 
 }

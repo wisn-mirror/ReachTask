@@ -33,18 +33,18 @@ public class MomentModel implements IMomentModel {
 
     }
     @Override
-    public List<Moment> getMoments(int offset, int limit) {
-        /*String tokenByActiveUser = getTokenByActiveUser();
+    public void getMoments(int offset, int limit,final HttpCallback<List<Moment>> callback) {
+        String tokenByActiveUser = userModel.getTokenByActiveUser();
         if (tokenByActiveUser == null) {
             callback.onError("请登录");
             callback.onFinsh();
         }
 
-        Call<HttpResponse<List<User>>> getUsers = httpApi.getUsers(tokenByActiveUser, offset, limit);
-        getUsers.enqueue(new Callback<HttpResponse<List<User>>>() {
+        Call<HttpResponse<List<Moment>>> getUsers = httpApi.getMents(tokenByActiveUser, offset, limit);
+        getUsers.enqueue(new Callback<HttpResponse<List<Moment>>>() {
             @Override
-            public void onResponse(Call<HttpResponse<List<User>>> call, retrofit2.Response<HttpResponse<List<User>>> response) {
-                HttpResponse<List<User>> body1 = response.body();
+            public void onResponse(Call<HttpResponse<List<Moment>>> call, retrofit2.Response<HttpResponse<List<Moment>>> response) {
+                HttpResponse<List<Moment>> body1 = response.body();
                 if (body1 != null && body1.getCode() == 200) {
                     callback.onSuccess(body1);
                 } else {
@@ -54,12 +54,11 @@ public class MomentModel implements IMomentModel {
             }
 
             @Override
-            public void onFailure(Call<HttpResponse<List<User>>> call, Throwable t) {
+            public void onFailure(Call<HttpResponse<List<Moment>>> call, Throwable t) {
                 callback.onError(t.getMessage());
                 callback.onFinsh();
             }
-        });*/
-        return null;
+        });
     }
 
     @Override
@@ -81,7 +80,7 @@ public class MomentModel implements IMomentModel {
             File file=new File(videoPath);
             builder.addFormDataPart("videores",file.getName(),RequestBody.create(MediaType.parse("multipart/form-data"),file));
         }
-        MultipartBody build = builder.build();
+        RequestBody build = builder.build();
         Call<HttpResponse<String>> sendMents = httpApi.sendMents(tokenByActiveUser, build);
         sendMents.enqueue(new Callback<HttpResponse<String>>() {
             @Override
