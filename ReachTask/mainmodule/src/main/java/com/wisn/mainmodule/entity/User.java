@@ -23,27 +23,26 @@ public class User implements Parcelable{
     private long expired;
     private long registertime;
     private long lastlogintime;
-    private boolean isactive;
+    private  boolean i_isactive;
 
     public User() {
     }
-
-    @Generated(hash = 832569860)
-    public User(Long userid, String nickname, String nameid, String iconurl, String password, String encryption, String phonenumber, String token, long expired, long registertime, long lastlogintime, boolean isactive) {
-        this.userid = userid;
-        this.nickname = nickname;
-        this.nameid = nameid;
-        this.iconurl = iconurl;
-        this.password = password;
-        this.encryption = encryption;
-        this.phonenumber = phonenumber;
-        this.token = token;
-        this.expired = expired;
-        this.registertime = registertime;
-        this.lastlogintime = lastlogintime;
-        this.isactive = isactive;
-    }
-
+        @Generated(hash = 1541080401)
+        public User(Long userid, String nickname, String nameid, String iconurl, String password, String encryption, String phonenumber, String token, long expired, long registertime, long lastlogintime,
+                boolean i_isactive) {
+            this.userid = userid;
+            this.nickname = nickname;
+            this.nameid = nameid;
+            this.iconurl = iconurl;
+            this.password = password;
+            this.encryption = encryption;
+            this.phonenumber = phonenumber;
+            this.token = token;
+            this.expired = expired;
+            this.registertime = registertime;
+            this.lastlogintime = lastlogintime;
+            this.i_isactive = i_isactive;
+        }
     public Long getUserid() {
         return userid;
     }
@@ -139,12 +138,12 @@ public class User implements Parcelable{
         this.expired = expired;
     }
 
-    public boolean isIsactive() {
-        return isactive;
+    public boolean isI_isactive() {
+        return i_isactive;
     }
 
-    public void setIsactive(boolean isactive) {
-        this.isactive = isactive;
+    public void setI_isactive(boolean i_isactive) {
+        this.i_isactive = i_isactive;
     }
 
     @Override
@@ -161,13 +160,11 @@ public class User implements Parcelable{
                 ", expired=" + expired +
                 ", registertime=" + registertime +
                 ", lastlogintime=" + lastlogintime +
-                ", isactive=" + isactive +
+                ", isactive=" + i_isactive +
                 '}';
     }
 
-    public boolean getIsactive() {
-        return this.isactive;
-    }
+
 
 
     @Override
@@ -188,7 +185,10 @@ public class User implements Parcelable{
         dest.writeLong(this.expired);
         dest.writeLong(this.registertime);
         dest.writeLong(this.lastlogintime);
-        dest.writeByte(this.isactive ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.i_isactive ? (byte) 1 : (byte) 0);
+    }
+    public boolean getI_isactive() {
+        return this.i_isactive;
     }
 
     protected User(Parcel in) {
@@ -203,7 +203,7 @@ public class User implements Parcelable{
         this.expired = in.readLong();
         this.registertime = in.readLong();
         this.lastlogintime = in.readLong();
-        this.isactive = in.readByte() != 0;
+        this.i_isactive = in.readByte() != 0;
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {

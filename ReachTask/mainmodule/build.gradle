@@ -14,6 +14,8 @@ android {
     greendao {
         //版本号，升级时可配置
         schemaVersion 1
+//        daoPackage 'com.wisn.mainmodule.entity'
+//        targetGenDir 'src/main/java'
     }
     buildTypes {
         release {
@@ -36,10 +38,11 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:$rootProject.glide"
     implementation "com.github.bumptech.glide:okhttp3-integration:$rootProject.glide"
     annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.glide"
-    implementation "com.github.chrisbanes:PhotoView:$rootProject.photoview"
+//    implementation "com.github.chrisbanes:PhotoView:$rootProject.photoview"
 //    implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
 //    implementation "com.squareup.retrofit2:adapter-rxjava:$rootProject.retrofit"
     implementation "org.greenrobot:greendao:$rootProject.greendao"
+    implementation "org.greenrobot:greendao-generator:$rootProject.greendao"
     testImplementation "junit:junit:$rootProject.junitVersion"
     implementation project(':skin')
     implementation project(':utils')

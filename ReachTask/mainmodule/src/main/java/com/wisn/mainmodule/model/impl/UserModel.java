@@ -18,8 +18,11 @@ import com.wisn.mainmodule.utils.GsonTool;
 
 import org.greenrobot.greendao.query.Query;
 
+import java.io.File;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,6 +53,37 @@ public class UserModel implements IUserModel {
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), GsonTool.toJson(changePassword));
         Call<HttpResponse<String>> updatepassword = httpApi.changePassword(tokenByActiveUser, body);
         updatepassword.enqueue(new Callback<HttpResponse<String>>() {
+            @Override
+            public void onResponse(Call<HttpResponse<String>> call, retrofit2.Response<HttpResponse<String>> response) {
+                HttpResponse<String> body1 = response.body();
+                if (body1 != null && body1.getCode() == 200) {
+                    callback.onSuccess(body1);
+                } else {
+                    callback.onError(body1.getMessage());
+                }
+                callback.onFinsh();
+            }
+
+            @Override
+            public void onFailure(Call<HttpResponse<String>> call, Throwable t) {
+                callback.onError(t.getMessage());
+                callback.onFinsh();
+            }
+        });
+    }
+
+    @Override
+    public void updateIcon(String filePath, final HttpCallback<String> callback) {
+        String tokenByActiveUser = getTokenByActiveUser();
+        if (tokenByActiveUser == null) {
+            callback.onError("请登录");
+            callback.onFinsh();
+        }
+        File file=new File(filePath);
+        RequestBody photoRequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part photo = MultipartBody.Part.createFormData("icon", file.getName(), photoRequestBody);
+        Call<HttpResponse<String>> updateIcon = httpApi.updateicon(tokenByActiveUser, photo);
+        updateIcon.enqueue(new Callback<HttpResponse<String>>() {
             @Override
             public void onResponse(Call<HttpResponse<String>> call, retrofit2.Response<HttpResponse<String>> response) {
                 HttpResponse<String> body1 = response.body();
@@ -180,14 +214,14 @@ public class UserModel implements IUserModel {
         Query<User> build = userDao.queryBuilder().where(UserDao.Properties.Phonenumber.eq(phoneNumber)).build();
         List<User> list = build.list();
         if (list == null || list.size() == 0) return false;
-        if (list.size() == 1 && list.get(0) != null && list.get(0).getPhonenumber().equals(phoneNumber) && list.get(0).isIsactive())
+        if (list.size() == 1 && list.get(0) != null && list.get(0).getPhonenumber().equals(phoneNumber) && list.get(0).isI_isactive())
             return true;
         return false;
     }
 
     @Override
     public void saveUser(final User user, boolean isActive) {
-        user.setIsactive(isActive);
+        user.setI_isactive(isActive);
         UserDao userDao = MApplication.getInstance().getDaoSession().getUserDao();
         userDao.insertOrReplace(user);
     }
@@ -228,7 +262,7 @@ public class UserModel implements IUserModel {
     @Override
     public User getActiveUser() {
         UserDao userDao = MApplication.getInstance().getDaoSession().getUserDao();
-        Query<User> query = userDao.queryBuilder().where(UserDao.Properties.Isactive.eq(true))
+        Query<User> query = userDao.queryBuilder().where(UserDao.Properties.I_isactive.eq(true))
                 .orderDesc(UserDao.Properties.Userid).build();
         User user = query.unique();
         if (user != null) {
@@ -242,7 +276,7 @@ public class UserModel implements IUserModel {
     @Override
     public String getTokenByActiveUser() {
         UserDao userDao = MApplication.getInstance().getDaoSession().getUserDao();
-        Query<User> query = userDao.queryBuilder().where(UserDao.Properties.Isactive.eq(true))
+        Query<User> query = userDao.queryBuilder().where(UserDao.Properties.I_isactive.eq(true))
                 .orderDesc(UserDao.Properties.Userid).build();
         User user = query.unique();
         if (user != null) {

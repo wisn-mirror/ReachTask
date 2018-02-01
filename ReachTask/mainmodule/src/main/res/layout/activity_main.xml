@@ -34,7 +34,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:hint="url"
-                        android:text="http://192.168.1.6:8080/"
+                        android:text="http://192.168.123.1:8080/"
                         android:textColor="#000"
                         android:textSize="16dp" />
                 </LinearLayout>
@@ -52,7 +52,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:hint="host"
-                        android:text="192.168.1.6"
+                        android:text="192.168.123.1"
                         android:textColor="#000"
                         android:textSize="16dp" />
                     <EditText
@@ -80,7 +80,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:hint="用户名"
-                        android:text=""
+                        android:text="1"
                         android:textColor="#000"
                         android:textSize="16dp" />
 
@@ -91,7 +91,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:hint="密码"
-                        android:text=""
+                        android:text="q"
                         android:textColor="#000"
                         android:textSize="16dp" />
 

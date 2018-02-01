@@ -13,7 +13,6 @@ import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.wisn.mainmodule.entity.User;
 import com.wisn.mainmodule.http.HttpApi;
 import com.wisn.mainmodule.http.HttpApiService;
@@ -25,6 +24,7 @@ import com.wisn.mainmodule.protocal.service.ClientManager;
 import com.wisn.mainmodule.protocal.service.HandleMessage;
 import com.wisn.mainmodule.protocal.service.HandlerByteToMessage;
 import com.wisn.mainmodule.protocal.service.MessageAService;
+import com.wisn.mainmodule.utils.GsonTool;
 import com.wisn.skinlib.utils.LogUtils;
 
 import okhttp3.RequestBody;
@@ -148,12 +148,27 @@ public class TestActivity extends Activity implements View.OnClickListener {
         } else if (view == shareTextdelete) {
             mTestResult.setText("");
         } else if (view == shareText) {
+           /* File file=new File(Environment.getRootDirectory()+"aaa.jpg");
+            RequestBody photoRequestBody = RequestBody.create(MediaType.parse("image/jpg"), file);
+            MultipartBody.Part photo = MultipartBody.Part.createFormData("icon", file.getName(), photoRequestBody);
+            Call<HttpResponse<String>> register = retrofitService.updateicon(photo);
+            register.enqueue(new Callback<HttpResponse<String>>() {
+                @Override
+                public void onResponse(Call<HttpResponse<String>> call, retrofit2.Response<HttpResponse<String>> response) {
+                    HttpResponse<String> body1 = response.body();
+                    updateView(body1.getMessage()+body1.getCode()+body1.getData(),true);
+                }
 
+                @Override
+                public void onFailure(Call<HttpResponse<String>> call, Throwable t) {
+
+                }
+            });*/
         } else if (view == register) {
             User user=new User();
             user.setPhonenumber(userName);
             user.setPassword(password);
-            String s = new Gson().toJson(user);
+            String s = GsonTool.toJson(user);
             LogUtils.e("TestActivity",s);
             RequestBody body=RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), s);
 

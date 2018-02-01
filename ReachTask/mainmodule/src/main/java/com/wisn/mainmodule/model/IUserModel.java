@@ -17,6 +17,8 @@ import java.util.List;
 public interface IUserModel {
     void updatePassword(ChangePassword changePassword, HttpCallback<String> callback);
 
+    void updateIcon(String filePath, HttpCallback<String> callback);
+
     void register(Register user, HttpCallback<String> callback);
 
     void login(Login user, HttpCallback<User> callback);
