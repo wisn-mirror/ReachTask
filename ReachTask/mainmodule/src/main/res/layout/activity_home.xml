@@ -22,8 +22,6 @@
             android:checked="true"
             radiobutton:drawableTop="@drawable/radiobutton_bg_message"
             style="@style/radiobutton_style"
-            radiobutton:tipText="44"
-            radiobutton:isTip="false"
             android:text="Message" />
 
         <com.wisn.mainmodule.widget.TipRadioButton
@@ -38,16 +36,12 @@
             android:id="@+id/radiobutton_bg_work"
             radiobutton:drawableTop="@drawable/radiobutton_bg_work"
             style="@style/radiobutton_style"
-            radiobutton:tipText="44"
-            radiobutton:isTip="true"
             android:text="Work" />
 
         <com.wisn.mainmodule.widget.TipRadioButton
             android:id="@+id/radiobutton_bg_mine"
             radiobutton:drawableTop="@drawable/radiobutton_bg_mine"
             style="@style/radiobutton_style"
-            radiobutton:tipText="99"
-            radiobutton:isTip="false"
             android:text="Mine" />
     </RadioGroup>
 

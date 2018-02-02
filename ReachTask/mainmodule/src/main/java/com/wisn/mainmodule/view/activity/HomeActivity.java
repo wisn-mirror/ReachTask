@@ -44,7 +44,7 @@ public class HomeActivity  extends BaseAppCompatActivity implements RadioGroup.O
     private TipRadioButton radiobutton_bg_work;
     private TipRadioButton radiobutton_bg_mine;
     private ViewPager mViewpager;
-    private  MessagePresenter  messagePresenter;
+    private MessagePresenter  messagePresenter;
     private ServiceConnection connection;
     private HandleMessage handleMessage;
 
