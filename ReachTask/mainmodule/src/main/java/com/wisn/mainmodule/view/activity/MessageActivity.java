@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -20,7 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wisn.mainmodule.R;
-import com.wisn.mainmodule.base.BaseActivity;
+import com.wisn.mainmodule.base.BaseAppCompatActivity;
 import com.wisn.mainmodule.entity.Contact;
 import com.wisn.mainmodule.entity.Message;
 import com.wisn.mainmodule.entity.User;
@@ -44,7 +45,7 @@ import java.util.List;
  */
 
 
-public class MessageActivity extends BaseActivity implements View.OnClickListener, MessageView, MessageChangeListener {
+public class MessageActivity extends BaseAppCompatActivity implements View.OnClickListener, MessageView, MessageChangeListener {
     public static String TAG = "MessageActivity";
     private Button message_back;
     private TextView message_title;
@@ -140,7 +141,7 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
 
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                final View inflate = View.inflate(MessageActivity.this, R.layout.item_textmessage_left, null);
+                final View inflate = LayoutInflater.from(MessageActivity.this).inflate(R.layout.item_chat_send_textmessage,parent,false);
                 TextMessageLeftHolder contactsItemHolder = new TextMessageLeftHolder(inflate);
                 return contactsItemHolder;
             }

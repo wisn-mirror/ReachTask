@@ -64,44 +64,41 @@
 
     </LinearLayout>
 
-
     <com.wisn.mainmodule.widget.CombinationListItemLayout
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="45dp"
+        android:background="@android:color/white"
+        android:paddingLeft="15dp"
         app:leftDrawable="@drawable/home_bottom_tab_icon_contact_highlight"
         app:leftDrawableVisable="true"
-        app:combinText="测试1"
-        app:rightDrawable="@drawable/table_arrow"
-        app:rightDrawableVisable="true"
-        app:bottomLineVisable="true"
-        app:combinTipText="2" />
-    <com.wisn.mainmodule.widget.CombinationListItemLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        app:leftDrawable="@drawable/home_bottom_tab_icon_contact_highlight"
-        app:leftDrawableVisable="true"
-        app:combinText="测试1"
+        app:combinText="相册"
         app:rightDrawable="@drawable/table_arrow"
         app:rightDrawableVisable="false"
-        app:bottomLineVisable="false"
-        app:combinTipText="2"/>
-    <com.wisn.mainmodule.widget.CombinationListItemLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        app:leftDrawable="@drawable/home_bottom_tab_icon_contact_highlight"
-        app:leftDrawableVisable="false"
-        app:combinText="测试1"
-        app:rightDrawable="@drawable/table_arrow"
-        app:rightDrawableVisable="false"
-        app:bottomLineVisable="false"
-        app:combinTipText="2"/>
-    <com.wisn.mainmodule.widget.CombinationListItemLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        app:leftDrawable="@drawable/home_bottom_tab_icon_contact_highlight"
-        app:leftDrawableVisable="true"
-        app:combinText="测试1"
-        app:rightDrawable="@drawable/table_arrow"
-        app:rightDrawableVisable="true"
         app:bottomLineVisable="true" />
+    <!--app:combinTipText="2"-->
+    <com.wisn.mainmodule.widget.CombinationListItemLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@android:color/white"
+        android:paddingLeft="15dp"
+        app:leftDrawable="@drawable/home_bottom_tab_icon_contact_highlight"
+        app:leftDrawableVisable="true"
+        app:combinText="收藏"
+        app:rightDrawable="@drawable/table_arrow"
+        app:rightDrawableVisable="false"
+        app:bottomLineVisable="false"  />
+    <com.wisn.mainmodule.widget.CombinationListItemLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@android:color/white"
+        android:paddingLeft="15dp"
+        app:leftDrawable="@drawable/home_bottom_tab_icon_contact_highlight"
+        app:leftDrawableVisable="true"
+        app:combinText="设置"
+        app:rightDrawable="@drawable/table_arrow"
+        app:rightDrawableVisable="false"
+        app:bottomLineVisable="false" />
+
 </LinearLayout>

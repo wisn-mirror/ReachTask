@@ -35,7 +35,7 @@ public class CombinationListItemLayout extends RelativeLayout {
         item_imageview_right=  findViewById(R.id.item_imageview_right);
         if(attributeSet==null)return ;
         TypedArray typedArray = context.obtainStyledAttributes(attributeSet, R.styleable.CombinationListItemLayout);
-        boolean leftDrawableVisable = typedArray.getBoolean(R.styleable.CombinationListItemLayout_bottomLineVisable, true);
+        boolean leftDrawableVisable = typedArray.getBoolean(R.styleable.CombinationListItemLayout_leftDrawableVisable, true);
         boolean rightDrawableVisable = typedArray.getBoolean(R.styleable.CombinationListItemLayout_rightDrawableVisable, true);
         boolean bottomLineVisable = typedArray.getBoolean(R.styleable.CombinationListItemLayout_bottomLineVisable, true);
         String combinText = typedArray.getString(R.styleable.CombinationListItemLayout_combinText);
