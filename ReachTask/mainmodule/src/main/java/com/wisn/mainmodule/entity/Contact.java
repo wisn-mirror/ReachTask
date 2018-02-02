@@ -2,6 +2,9 @@ package com.wisn.mainmodule.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
+
+import com.wisn.utils.DateUtils;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
@@ -25,11 +28,12 @@ public class Contact implements Parcelable {
     private String lastmessage;
     private Long lastcontacttime;
     private boolean isremind;
-
+    private String lastTime;
     public Contact() {
     }
-    @Generated(hash = 805730274)
-    public Contact(Long contactid, Long fromuserid, Long targetuserid, String icon, String name, String lastmessage, Long lastcontacttime, boolean isremind) {
+    @Generated(hash = 1995575108)
+    public Contact(Long contactid, Long fromuserid, Long targetuserid, String icon, String name, String lastmessage, Long lastcontacttime, boolean isremind,
+            String lastTime) {
         this.contactid = contactid;
         this.fromuserid = fromuserid;
         this.targetuserid = targetuserid;
@@ -38,7 +42,23 @@ public class Contact implements Parcelable {
         this.lastmessage = lastmessage;
         this.lastcontacttime = lastcontacttime;
         this.isremind = isremind;
+        this.lastTime = lastTime;
     }
+
+    public void setLastTime(String lastTime) {
+        this.lastTime = lastTime;
+    }
+
+    public String getLastTime() {
+        if(lastTime==null&&lastcontacttime==0){
+            return "";
+        }
+        if(TextUtils.isEmpty(lastTime)){
+            lastTime= DateUtils.getDateDespre(this.lastcontacttime);
+        }
+        return lastTime;
+    }
+
     public Long getContactid() {
         return contactid;
     }
@@ -72,6 +92,9 @@ public class Contact implements Parcelable {
     }
 
     public String getName() {
+        if(TextUtils.isEmpty(name)){
+            return "";
+        }
         return name;
     }
 
@@ -80,6 +103,9 @@ public class Contact implements Parcelable {
     }
 
     public String getLastmessage() {
+        if(TextUtils.isEmpty(lastmessage)){
+            return "";
+        }
         return lastmessage;
     }
 
@@ -93,6 +119,9 @@ public class Contact implements Parcelable {
 
     public void setLastcontacttime(Long lastcontacttime) {
         this.lastcontacttime = lastcontacttime;
+        if(lastcontacttime!=0){
+            lastTime= DateUtils.getDateDespre(this.lastcontacttime);
+        }
     }
 
     public boolean isIsremind() {

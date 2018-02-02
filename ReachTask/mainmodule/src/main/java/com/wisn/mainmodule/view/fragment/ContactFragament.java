@@ -88,7 +88,7 @@ public class ContactFragament extends BaseLazyFragment implements ContactView{
 
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                final View inflate = View.inflate(getActivity(), R.layout.item_contact, null);
+                final View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.item_contact,parent,false);
                 ContactsItemHolder contactsItemHolder=new ContactsItemHolder(inflate);
                 return contactsItemHolder;
             }

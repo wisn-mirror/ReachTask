@@ -3,10 +3,10 @@
     xmlns:tipimageview="http://schemas.android.com/apk/res-auto"  >
     <ImageView
         android:id="@+id/item_imageview"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_centerVertical="true"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="15dp"
         android:src="@drawable/home_bottom_tab_icon_contact_highlight" />
 
     <TextView
@@ -16,8 +16,7 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="4dp"
         android:textColor="#151414"
-        android:textSize="18sp"
-
+        android:textSize="16sp"
         android:layout_toEndOf="@+id/item_imageview"
         android:layout_toRightOf="@+id/item_imageview"
         android:text="TextView" />
@@ -35,15 +34,16 @@
         tipimageview:tipRedius="17dp"
         tipimageview:tipText="5"
         tipimageview:tipTextColor="#ffffff"
-        tipimageview:tipTextRedius="10dp"
-        tipimageview:tipTextSize="12dp" />
+        tipimageview:tipTextRedius="9dp"
+        tipimageview:tipTextSize="10dp" />
+
     <ImageView
         android:id="@+id/item_imageview_right"
         android:layout_width="14dp"
         android:layout_height="22dp"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="10dp"
         android:scaleType="center"
         android:src="@drawable/table_arrow" />
     <View

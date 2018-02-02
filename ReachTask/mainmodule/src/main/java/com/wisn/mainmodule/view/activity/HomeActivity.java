@@ -14,14 +14,14 @@ import android.widget.RadioGroup;
 
 import com.wisn.mainmodule.R;
 import com.wisn.mainmodule.adapter.HomeActivityAdapter;
-import com.wisn.mainmodule.base.BaseActivity;
+import com.wisn.mainmodule.base.BaseAppCompatActivity;
 import com.wisn.mainmodule.entity.Contact;
 import com.wisn.mainmodule.entity.Message;
 import com.wisn.mainmodule.presenter.MessagePresenter;
-import com.wisn.mainmodule.protocal.service.HandleMessage;
-import com.wisn.mainmodule.protocal.service.MessageAService;
 import com.wisn.mainmodule.protocal.constant.CmdId;
 import com.wisn.mainmodule.protocal.constant.ModuleId;
+import com.wisn.mainmodule.protocal.service.HandleMessage;
+import com.wisn.mainmodule.protocal.service.MessageAService;
 import com.wisn.mainmodule.protocal.service.MessageChangeListener;
 import com.wisn.mainmodule.view.MessageView;
 import com.wisn.mainmodule.widget.TipRadioButton;
@@ -34,7 +34,7 @@ import java.util.List;
  */
 
 
-public class HomeActivity  extends BaseActivity implements RadioGroup.OnCheckedChangeListener,
+public class HomeActivity  extends BaseAppCompatActivity implements RadioGroup.OnCheckedChangeListener,
         ViewPager.OnPageChangeListener ,MessageView, MessageChangeListener {
     public static String TAG="HomeActivity";
 

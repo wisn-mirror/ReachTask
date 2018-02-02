@@ -64,14 +64,15 @@ public class ClientManager {
     public void tryConnectServer() {
         if (timer != null) {
             timer.cancel();
-        } else {
-            timer = new Timer();
         }
+        timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                if (mNioSelectorRunnablePool != null && serverBootstrap != null && mConnect != null) {
+                if (mNioSelectorRunnablePool != null && serverBootstrap != null && mConnect != null&& ! mConnect.isConnected()) {
                     mConnect = serverBootstrap.connect(inetSocketAddress);
+                }else{
+                    timer.cancel();
                 }
             }
         }, new Date(), 2000);

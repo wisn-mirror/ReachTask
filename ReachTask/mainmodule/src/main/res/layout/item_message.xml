@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tipimageview="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:gravity="center"
+    android:padding="4dp"
+    android:orientation="horizontal">
+
+    <com.wisn.mainmodule.widget.TipImageView
+        android:id="@+id/contact_imageView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:padding="4dp"
+        android:paddingRight="6dp"
+        android:src="@drawable/home_bottom_tab_icon_work_highlight"
+        tipimageview:drawableSizes="38dp"
+        tipimageview:drawableTop="@drawable/home_bottom_tab_icon_work_highlight"
+        tipimageview:isTip="false"
+        tipimageview:tipBackground="#e82540"
+        tipimageview:tipRedius="5dp"
+        tipimageview:tipRediusMarginRight="7dp"
+        tipimageview:tipRediusMarginTop="0dp"
+        tipimageview:tipText="44"
+        tipimageview:tipTextColor="#ffffff"
+        tipimageview:tipTextRedius="9dp"
+        tipimageview:tipTextSize="10dp" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:padding="4dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|left"
+            android:paddingLeft="4dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/contact_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/contact_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="TextView" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/contact_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:text="TextView" />
+    </LinearLayout>
+
+</LinearLayout>

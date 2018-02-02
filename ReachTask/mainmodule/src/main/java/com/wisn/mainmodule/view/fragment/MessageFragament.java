@@ -18,7 +18,7 @@ import com.wisn.mainmodule.presenter.MessageContactPresenter;
 import com.wisn.mainmodule.utils.Contants;
 import com.wisn.mainmodule.view.MessageContactView;
 import com.wisn.mainmodule.view.activity.MessageActivity;
-import com.wisn.mainmodule.view.viewholder.ContactsItemHolder;
+import com.wisn.mainmodule.view.viewholder.MessageItemHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,22 +74,25 @@ public class MessageFragament extends BaseLazyFragment implements MessageContact
 
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                final View inflate = View.inflate(getActivity(), R.layout.item_contact, null);
-                ContactsItemHolder contactsItemHolder=new ContactsItemHolder(inflate);
-                return contactsItemHolder;
+//                final View inflate = View.inflate(getActivity(), R.layout.item_contact, null);
+                final View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.item_message,parent,false);
+                MessageItemHolder messageItemHolder=new MessageItemHolder(inflate);
+                return messageItemHolder;
             }
 
             @Override
             public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-                if(holder instanceof  ContactsItemHolder){
-                    ContactsItemHolder contactsItemHolder= (ContactsItemHolder) holder;
-                    contactsItemHolder.contact_name.setText(contacts.get(position).getContactid()+" name:"+contacts.get(position).getName());
-                    contactsItemHolder.contact_name.setOnClickListener(new View.OnClickListener() {
+                if(holder instanceof  MessageItemHolder){
+                    MessageItemHolder messageItemHolder= (MessageItemHolder) holder;
+                    messageItemHolder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onClick(View view) {
+                        public void onClick(View v) {
                             contactPresenter.toSendMessage(contacts.get(position));
                         }
                     });
+                    messageItemHolder.contact_name.setText(contacts.get(position).getName());
+                    messageItemHolder.contact_message.setText(contacts.get(position).getLastmessage());
+                    messageItemHolder.contact_time.setText(contacts.get(position).getLastTime());
                 }
             }
 

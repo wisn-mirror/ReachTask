@@ -2,11 +2,10 @@ package com.wisn.mainmodule.view.viewholder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wisn.mainmodule.R;
-import com.wisn.mainmodule.widget.TipView;
+import com.wisn.mainmodule.widget.TipImageView;
 
 /**
  * @author Wisn
@@ -14,16 +13,18 @@ import com.wisn.mainmodule.widget.TipView;
  */
 
 
-public class ContactsItemHolder extends RecyclerView.ViewHolder {
+public class MessageItemHolder extends RecyclerView.ViewHolder {
 
     public TextView contact_name;
-    public ImageView contact_imageView;
-    public TipView contact_tip;
-    public ContactsItemHolder(View  inflate){
+    public TextView contact_message;
+    public TextView contact_time;
+    public TipImageView contact_imageView;
+    public MessageItemHolder(View  inflate){
         super(inflate);
         contact_name = inflate.findViewById(R.id.contact_name);
+        contact_message = inflate.findViewById(R.id.contact_message);
+        contact_time = inflate.findViewById(R.id.contact_time);
         contact_imageView = inflate.findViewById(R.id.contact_imageView);
-        contact_tip = inflate.findViewById(R.id.contact_tip);
     }
 
 }
