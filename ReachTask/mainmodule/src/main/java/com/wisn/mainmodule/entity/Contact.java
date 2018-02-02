@@ -28,12 +28,16 @@ public class Contact implements Parcelable {
     private String lastmessage;
     private Long lastcontacttime;
     private boolean isremind;
+    /**
+     * 未读消息数  -1为提醒 正数为消息数，0为清空
+     */
+    private int unReadMessageNumber;
     private String lastTime;
     public Contact() {
     }
-    @Generated(hash = 1995575108)
-    public Contact(Long contactid, Long fromuserid, Long targetuserid, String icon, String name, String lastmessage, Long lastcontacttime, boolean isremind,
-            String lastTime) {
+
+    @Generated(hash = 1666086148)
+    public Contact(Long contactid, Long fromuserid, Long targetuserid, String icon, String name, String lastmessage, Long lastcontacttime, boolean isremind, int unReadMessageNumber, String lastTime) {
         this.contactid = contactid;
         this.fromuserid = fromuserid;
         this.targetuserid = targetuserid;
@@ -42,7 +46,16 @@ public class Contact implements Parcelable {
         this.lastmessage = lastmessage;
         this.lastcontacttime = lastcontacttime;
         this.isremind = isremind;
+        this.unReadMessageNumber = unReadMessageNumber;
         this.lastTime = lastTime;
+    }
+
+    public int getUnReadMessageNumber() {
+        return unReadMessageNumber;
+    }
+
+    public void setUnReadMessageNumber(int unReadMessageNumber) {
+        this.unReadMessageNumber = unReadMessageNumber;
     }
 
     public void setLastTime(String lastTime) {
@@ -53,9 +66,7 @@ public class Contact implements Parcelable {
         if(lastTime==null&&lastcontacttime==0){
             return "";
         }
-        if(TextUtils.isEmpty(lastTime)){
-            lastTime= DateUtils.getDateDespre(this.lastcontacttime);
-        }
+        lastTime= DateUtils.getDateDespre(this.lastcontacttime);
         return lastTime;
     }
 
@@ -106,6 +117,7 @@ public class Contact implements Parcelable {
         if(TextUtils.isEmpty(lastmessage)){
             return "";
         }
+
         return lastmessage;
     }
 

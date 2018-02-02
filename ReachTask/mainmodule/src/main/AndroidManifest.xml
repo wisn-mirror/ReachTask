@@ -27,7 +27,7 @@
         <activity android:name=".view.activity.LoginActivity"/>
         <activity android:name=".view.activity.HomeActivity"/>
         <activity android:name=".view.activity.WelcomeActivity"/>
-        <activity android:name=".view.activity.MessageActivity"/>
+        <activity android:name=".view.activity.ChartActivity"/>
         <activity android:name=".view.activity.RegisterActivity"/>
         <activity android:name=".view.activity.InfoActivity"/>
         <activity android:name="com.facebook.react.devsupport.DevSettingsActivity"/>

@@ -102,7 +102,13 @@ public class MessageAService extends Service implements HandleMessage {
                                         contact.setIcon(userbyUserid.getIconurl());
                                         contact.setName(userbyUserid.getNickname());
                                         contact.setLastmessage(message.getContent());
-                                        contact.setLastcontacttime(message.getReceivetime());
+                                        contact.setUnReadMessageNumber(1);
+                                        contact.setLastcontacttime(System.currentTimeMillis());
+                                        contactMessageModel.saveContacts(contact);
+                                    }else{
+                                        contact.setLastmessage(message.getContent());
+                                        contact.setLastcontacttime(System.currentTimeMillis());
+                                        contact.setUnReadMessageNumber(contact.getUnReadMessageNumber()+1);
                                         contactMessageModel.saveContacts(contact);
                                     }
                                     message.setContactid(contact.getContactid());
@@ -195,7 +201,7 @@ public class MessageAService extends Service implements HandleMessage {
                 } else {
                     //保存未发送消息
                     Log.e(TAG, "未发送消息sendMessage: " + request);
-                    ClientManager.getInstance().tryConnectServer();
+//                    ClientManager.getInstance().tryConnectServer();
                 }
             }
         });

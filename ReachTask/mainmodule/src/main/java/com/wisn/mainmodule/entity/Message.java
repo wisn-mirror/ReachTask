@@ -2,6 +2,7 @@ package com.wisn.mainmodule.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.wisn.mainmodule.protocal.protobuf.beans.EMessageMudule;
@@ -22,7 +23,7 @@ import org.greenrobot.greendao.annotation.Generated;
  * `receivetime` bigint(13) NOT NULL COMMENT '接收时间'
  */
 @Entity
-public class Message implements Parcelable {
+public class Message implements Parcelable ,Comparable<Message>{
     @Property(nameInDb = "_id")
     @Id
     private Long messageid;
@@ -229,4 +230,9 @@ public class Message implements Parcelable {
             return new Message[size];
         }
     };
+
+    @Override
+    public int compareTo(@NonNull Message o) {
+        return this.receivetime>o.receivetime?1:-1;
+    }
 }

@@ -17,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wisn.mainmodule.R;
@@ -34,7 +33,6 @@ import com.wisn.mainmodule.protocal.service.MessageChangeListener;
 import com.wisn.mainmodule.utils.Contants;
 import com.wisn.mainmodule.view.MessageView;
 import com.wisn.mainmodule.view.viewholder.TextMessageLeftHolder;
-import com.wisn.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,13 +43,10 @@ import java.util.List;
  */
 
 
-public class MessageActivity extends BaseAppCompatActivity implements View.OnClickListener, MessageView, MessageChangeListener {
-    public static String TAG = "MessageActivity";
-    private Button message_back;
-    private TextView message_title;
-    private Button message_info;
+public class ChartActivity extends BaseAppCompatActivity implements View.OnClickListener, MessageView, MessageChangeListener {
+    public static String TAG = "ChartActivity";
     private RecyclerView message_list;
-//    private SwipeRefreshLayout message_list_refresh;
+    //    private SwipeRefreshLayout message_list_refresh;
     private EditText message_content;
     private Button message_send;
     private HandleMessage handleMessage;
@@ -71,7 +66,7 @@ public class MessageActivity extends BaseAppCompatActivity implements View.OnCli
         messagePresenter = new MessagePresenter(this);
         user = (User) getIntent().getParcelableExtra(Contants.user_flag);
         contact = (Contact) getIntent().getParcelableExtra(Contants.contact_flag);
-        Log.e(TAG, "user: " + user+"  contact:"+contact);
+        Log.e(TAG, "user: " + user + "  contact:" + contact);
         connection = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
@@ -79,26 +74,20 @@ public class MessageActivity extends BaseAppCompatActivity implements View.OnCli
                 MessageAService.HandleMessageImpl service = (MessageAService.HandleMessageImpl) iBinder;
 //                DaemonService.HandleMessageImpl service= (DaemonService.HandleMessageImpl) iBinder;
                 handleMessage = (HandleMessage) service.getService();
-                handleMessage.addMessageListener(MessageActivity.this);
+                handleMessage.addMessageListener(ChartActivity.this);
             }
 
             @Override
             public void onServiceDisconnected(ComponentName componentName) {
-                handleMessage.removeMessageListener(MessageActivity.this);
+                handleMessage.removeMessageListener(ChartActivity.this);
             }
         };
         Intent intent = new Intent(this, MessageAService.class);
         bindService(intent, connection, Service.BIND_AUTO_CREATE);
-        messagePresenter.loadMessage(contact.getContactid());
+        messagePresenter.loadMessage(contact);
     }
 
     private void initView() {
-        message_back = (Button) findViewById(R.id.message_back);
-        message_back.setOnClickListener(this);
-        message_title = (TextView) findViewById(R.id.message_title);
-        message_title.setOnClickListener(this);
-        message_info = (Button) findViewById(R.id.message_info);
-        message_info.setOnClickListener(this);
 //        message_list_refresh = (SwipeRefreshLayout) findViewById(R.id.message_list_refresh);
         message_list = (RecyclerView) findViewById(R.id.message_list);
         message_list.setOnClickListener(this);
@@ -141,9 +130,16 @@ public class MessageActivity extends BaseAppCompatActivity implements View.OnCli
 
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                final View inflate = LayoutInflater.from(MessageActivity.this).inflate(R.layout.item_chat_send_textmessage,parent,false);
-                TextMessageLeftHolder contactsItemHolder = new TextMessageLeftHolder(inflate);
-                return contactsItemHolder;
+                if(viewType==1){
+                    View inflate = LayoutInflater.from(ChartActivity.this).inflate(R.layout.item_chat_send_textmessage, parent, false);
+                    TextMessageLeftHolder contactsItemHolder = new TextMessageLeftHolder(inflate);
+                    return contactsItemHolder;
+                }else{
+                    final View inflate = LayoutInflater.from(ChartActivity.this).inflate(R.layout.item_chat_received_textmessage, parent, false);
+                    TextMessageLeftHolder contactsItemHolder = new TextMessageLeftHolder(inflate);
+                    return contactsItemHolder;
+                }
+
             }
 
             @Override
@@ -161,23 +157,58 @@ public class MessageActivity extends BaseAppCompatActivity implements View.OnCli
 
             @Override
             public int getItemViewType(int position) {
-                return super.getItemViewType(position);
+                Message message = messageList.get(position);
+                if(message.getFromuserid()==user.getUserid()){
+                    return 2;
+                }else{
+                    return 1;
+                }
+//                return super.getItemViewType(position);
             }
         };
         message_list.setAdapter(adapter);
+    }
+    public  void dataChange(){
+        adapter.notifyDataSetChanged();
+        smoothMoveToPosition(messageList.size());
+    }
+    public void smoothMoveToPosition(int n){
+        int firstVisibleItemPosition=mLinearLayoutManager.findFirstVisibleItemPosition();
+        int lastVisibleItemPosition=mLinearLayoutManager.findLastVisibleItemPosition();
+        if(n<=firstVisibleItemPosition){
+            //在之前
+            message_list.smoothScrollToPosition(n);
+        }else if(n<=lastVisibleItemPosition){
+            //在中间
+            int top=message_list.getChildAt(n-firstVisibleItemPosition).getTop();//找出差值
+            message_list.smoothScrollBy(0,top);
+        }else{
+            message_list.smoothScrollToPosition(n);
+        }
+    }
+    public void moveToPosition(int n){
+        int firstVisibleItemPosition=mLinearLayoutManager.findFirstVisibleItemPosition();
+        int lastVisibleItemPosition=mLinearLayoutManager.findLastVisibleItemPosition();
+        if(n<=firstVisibleItemPosition){
+            //在之前
+            message_list.scrollToPosition(n);
+        }else if(n<=lastVisibleItemPosition){
+            //在中间
+            int top=message_list.getChildAt(n-firstVisibleItemPosition).getTop();//找出差值
+            message_list.scrollBy(0,top);
+        }else{
+            message_list.scrollToPosition(n);
+        }
     }
 
     @Override
     public void onClick(View v) {
         int i = v.getId();
-        if (i == R.id.message_back) {
-            this.finish();
-        } else if (i == R.id.message_info) {
-            ToastUtils.show("info");
-        } else if (i == R.id.message_send) {
+        if (i == R.id.message_send) {
             submit();
         }
     }
+
 
     private void submit() {
         // validate
@@ -215,14 +246,17 @@ public class MessageActivity extends BaseAppCompatActivity implements View.OnCli
 
     @Override
     public void updateMoreMessage(Message message) {
-
+        if (message != null) {
+            messageList.add(message);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override
     public void setMessageList(List<Message> messages) {
         if (messages != null && messages.size() != 0) {
             messageList.addAll(messages);
-            adapter.notifyDataSetChanged();
+           dataChange();
         }
     }
 
@@ -231,7 +265,7 @@ public class MessageActivity extends BaseAppCompatActivity implements View.OnCli
         Log.e(TAG, "module:" + module + " cmd:" + cmd + " message：" + message);
         if (message != null) {
             messageList.add(message);
-            adapter.notifyDataSetChanged();
+            dataChange();
         }
     }
 

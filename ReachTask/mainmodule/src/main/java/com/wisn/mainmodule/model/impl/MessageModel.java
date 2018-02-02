@@ -8,6 +8,7 @@ import com.wisn.mainmodule.model.IMessageModel;
 import org.greenrobot.greendao.query.DeleteQuery;
 import org.greenrobot.greendao.query.Query;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -27,6 +28,7 @@ public class MessageModel implements IMessageModel {
     public List<Message> getMesssages() {
         MessageDao messageDao = MApplication.getInstance().getDaoSession().getMessageDao();
         List<Message> messages = messageDao.loadAll();
+        Collections.sort(messages);
         for (Message message : messages) {
             System.err.println("  ddd:" + message);
         }
@@ -37,7 +39,7 @@ public class MessageModel implements IMessageModel {
     public List<Message> getMesssagesByTargetid(Long targerid) {
         MessageDao messageDao = MApplication.getInstance().getDaoSession().getMessageDao();
         Query<Message> build = messageDao.queryBuilder().where(MessageDao.Properties.Targetuserid.eq(targerid))
-                .orderDesc(MessageDao.Properties.Createtime)
+                .orderDesc(MessageDao.Properties.Receivetime)
                 .build();
         List<Message> list = build.list();
         for (Message message : list) {
@@ -51,7 +53,7 @@ public class MessageModel implements IMessageModel {
     public List<Message> getMesssagesByContactid(Long contactid) {
         MessageDao messageDao = MApplication.getInstance().getDaoSession().getMessageDao();
         Query<Message> build = messageDao.queryBuilder().where(MessageDao.Properties.Contactid.eq(contactid))
-                .orderDesc(MessageDao.Properties.Createtime)
+                .orderDesc(MessageDao.Properties.Receivetime)
                 .build();
         List<Message> list = build.list();
         for (Message message : list) {

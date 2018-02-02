@@ -21,7 +21,6 @@
         tipimageview:tipRedius="5dp"
         tipimageview:tipRediusMarginRight="7dp"
         tipimageview:tipRediusMarginTop="0dp"
-        tipimageview:tipText="44"
         tipimageview:tipTextColor="#ffffff"
         tipimageview:tipTextRedius="9dp"
         tipimageview:tipTextSize="10dp" />

@@ -58,7 +58,12 @@ public class WelcomeActivity extends BaseActivity implements LauncherView {
         Viewpager = (ViewPager) findViewById(R.id.Viewpager);
         CountdownView = (CountdownView) findViewById(R.id.CountdownView);
         IndicatorScrollView = (IndicatorScrollView) findViewById(R.id.IndicatorScrollView);
-
+        CountdownView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launcherPresenter.updateLauncherFlag(true);
+            }
+        });
         Viewpager.setAdapter(new GuidePageAdapter());
         Viewpager.addOnPageChangeListener(IndicatorScrollView);
         Viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

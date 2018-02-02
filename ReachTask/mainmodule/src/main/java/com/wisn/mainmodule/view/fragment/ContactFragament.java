@@ -140,6 +140,9 @@ public class ContactFragament extends BaseLazyFragment implements ContactView{
     @Override
     public void setUserData(List<User> userData) {
         users=userData;
+        if(adapter!=null){
+            adapter.notifyDataSetChanged();
+        }
     }
 
 

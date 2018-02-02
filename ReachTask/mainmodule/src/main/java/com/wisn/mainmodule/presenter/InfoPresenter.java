@@ -37,7 +37,7 @@ public class InfoPresenter {
             contact.setTargetuserid(targetUser.getUserid());
             contact.setIcon(targetUser.getIconurl());
             contact.setName(targetUser.getNickname());
-            contact.setLastcontacttime(0l);
+            contact.setLastcontacttime(System.currentTimeMillis());
             contactMessageModel.saveContacts(contact);
         }
 

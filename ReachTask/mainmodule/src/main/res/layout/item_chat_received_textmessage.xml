@@ -21,10 +21,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_chat_receive"
+        android:layout_marginTop="4dp"
+        android:minHeight="35dp"
         android:layout_marginLeft="5dp"
-        android:layout_marginRight="50dp"
+        android:layout_marginRight="60dp"
         android:textSize="15sp"
         android:textColor="@color/text_black"
-        android:text="你好吗你好吗你好吗你好吗你你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗你好吗" />
+        android:text="rewqrew" />
 
 </LinearLayout>

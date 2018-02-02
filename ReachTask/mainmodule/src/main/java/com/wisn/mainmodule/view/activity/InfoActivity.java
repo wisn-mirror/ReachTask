@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.wisn.mainmodule.R;
-import com.wisn.mainmodule.base.BaseActivity;
+import com.wisn.mainmodule.base.BaseAppCompatActivity;
 import com.wisn.mainmodule.entity.Contact;
 import com.wisn.mainmodule.entity.User;
 import com.wisn.mainmodule.presenter.InfoPresenter;
@@ -21,7 +21,7 @@ import com.wisn.mainmodule.view.InfoView;
  */
 
 
-public class InfoActivity extends BaseActivity implements View.OnClickListener,InfoView {
+public class InfoActivity extends BaseAppCompatActivity implements View.OnClickListener,InfoView {
     private ImageView imageView;
     private Button sendMessage;
     private User user;
@@ -56,7 +56,7 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener,I
 
     @Override
     public void startMessage(Contact contact) {
-        Intent intent=   new Intent(this, MessageActivity.class);
+        Intent intent=   new Intent(this, ChartActivity.class);
         intent.putExtra(Contants.user_flag, user);
         intent.putExtra(Contants.contact_flag, contact);
         startActivity(intent);

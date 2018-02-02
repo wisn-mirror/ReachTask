@@ -17,7 +17,7 @@ import com.wisn.mainmodule.entity.User;
 import com.wisn.mainmodule.presenter.MessageContactPresenter;
 import com.wisn.mainmodule.utils.Contants;
 import com.wisn.mainmodule.view.MessageContactView;
-import com.wisn.mainmodule.view.activity.MessageActivity;
+import com.wisn.mainmodule.view.activity.ChartActivity;
 import com.wisn.mainmodule.view.viewholder.MessageItemHolder;
 
 import java.util.ArrayList;
@@ -84,15 +84,23 @@ public class MessageFragament extends BaseLazyFragment implements MessageContact
             public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
                 if(holder instanceof  MessageItemHolder){
                     MessageItemHolder messageItemHolder= (MessageItemHolder) holder;
+                    final Contact contact = contacts.get(position);
                     messageItemHolder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            contactPresenter.toSendMessage(contacts.get(position));
+                            contactPresenter.toSendMessage(contact);
                         }
                     });
-                    messageItemHolder.contact_name.setText(contacts.get(position).getName());
-                    messageItemHolder.contact_message.setText(contacts.get(position).getLastmessage());
-                    messageItemHolder.contact_time.setText(contacts.get(position).getLastTime());
+                    if(contact.getUnReadMessageNumber()==0){
+                        messageItemHolder.contact_imageView.clearTip();
+                    }else if(contact.getUnReadMessageNumber()>0){
+                        messageItemHolder.contact_imageView.setTipText(String.valueOf(contact.getUnReadMessageNumber()));
+                    }else{
+                        messageItemHolder.contact_imageView.setTip();
+                    }
+                    messageItemHolder.contact_name.setText(contact.getName());
+                    messageItemHolder.contact_message.setText(contact.getLastmessage());
+                    messageItemHolder.contact_time.setText(contact.getLastTime());
                 }
             }
 
@@ -141,7 +149,7 @@ public class MessageFragament extends BaseLazyFragment implements MessageContact
 
     @Override
     public void toSendMessage(Contact contact, User user) {
-        Intent intent=   new Intent(getActivity(), MessageActivity.class);
+        Intent intent=   new Intent(getActivity(), ChartActivity.class);
         intent.putExtra(Contants.user_flag, user);
         intent.putExtra(Contants.contact_flag, contact);
         startActivity(intent);

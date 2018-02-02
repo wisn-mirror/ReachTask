@@ -93,6 +93,7 @@ public class ClientManager {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            mConnect = serverBootstrap.connect(inetSocketAddress);
         }
         return false;
     }
