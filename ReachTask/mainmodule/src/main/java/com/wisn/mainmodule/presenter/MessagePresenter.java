@@ -13,7 +13,7 @@ import com.wisn.mainmodule.model.impl.MessageModel;
 import com.wisn.mainmodule.model.impl.UserModel;
 import com.wisn.mainmodule.protocal.coder.Request;
 import com.wisn.mainmodule.protocal.protobuf.beans.EMessageMudule;
-import com.wisn.mainmodule.view.MessageView;
+import com.wisn.mainmodule.view.ChatView;
 
 import java.util.List;
 
@@ -25,12 +25,12 @@ import java.util.List;
 
 public class MessagePresenter {
     public static String TAG = "MessagePresenter";
-    MessageView messageView;
+    ChatView messageView;
     IMessageModel messageModel;
     IUserModel userModel;
     ContactMessageModel contactMessageModel;
 
-    public MessagePresenter(MessageView messageView) {
+    public MessagePresenter(ChatView messageView) {
         this.messageView = messageView;
         messageModel = new MessageModel();
         userModel = new UserModel();

@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.wisn.mainmodule.R;
 import com.wisn.mainmodule.base.BaseLazyFragment;
 import com.wisn.mainmodule.entity.User;
@@ -30,13 +32,14 @@ import java.util.List;
  */
 
 
-public class ContactFragament extends BaseLazyFragment implements ContactView{
+public class ContactFragament extends BaseLazyFragment implements ContactView {
     private RecyclerView contact_list;
     private SwipeRefreshLayout contact_list_refresh;
     private ContactPresenter contactPresenter;
     private LinearLayoutManager mLinearLayoutManager;
     private RecyclerView.Adapter<RecyclerView.ViewHolder> adapter;
-    private List<User> users=new ArrayList<>();
+    private List<User> users = new ArrayList<>();
+
     @Override
     public String getTAG() {
         return "ContactFragament";
@@ -46,13 +49,18 @@ public class ContactFragament extends BaseLazyFragment implements ContactView{
     public View onCreateLazyView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_contact, container, false);
         initView(view);
-        contactPresenter=new ContactPresenter(this);
         return view;
     }
 
     private void initView(View view) {
-        contact_list_refresh = (SwipeRefreshLayout)view.findViewById(R.id.contact_list_refresh);
-        contact_list =(RecyclerView) view.findViewById(R.id.contact_list);
+        final RequestOptions options = new RequestOptions();
+        options.centerCrop()
+                .placeholder(R.drawable.radiobutton_bg_message)
+                .error(R.drawable.photo)
+                .fallback(R.drawable.radiobutton_bg_work);
+
+        contact_list_refresh = (SwipeRefreshLayout) view.findViewById(R.id.contact_list_refresh);
+        contact_list = (RecyclerView) view.findViewById(R.id.contact_list);
 
         contact_list_refresh.setProgressViewOffset(false, 0,
                 (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
@@ -68,12 +76,13 @@ public class ContactFragament extends BaseLazyFragment implements ContactView{
         contact_list.setItemAnimator(new DefaultItemAnimator());
         contact_list.addOnScrollListener(new RecyclerView.OnScrollListener() {
             private int mLastVisibleItem;
+
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if(newState==RecyclerView.SCROLL_STATE_IDLE
-                        &&mLastVisibleItem+5>mLinearLayoutManager.getItemCount()){
-                        contactPresenter.addMore();
+                if (newState == RecyclerView.SCROLL_STATE_IDLE
+                        && mLastVisibleItem + 5 > mLinearLayoutManager.getItemCount()) {
+                    contactPresenter.addMore();
                 }
             }
 
@@ -84,28 +93,33 @@ public class ContactFragament extends BaseLazyFragment implements ContactView{
                 mLastVisibleItem = mLinearLayoutManager.findLastVisibleItemPosition();
             }
         });
-        adapter = new RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+        adapter = new RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                final View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.item_contact,parent,false);
-                ContactsItemHolder contactsItemHolder=new ContactsItemHolder(inflate);
+                final View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.item_contact, parent, false);
+                ContactsItemHolder contactsItemHolder = new ContactsItemHolder(inflate);
                 return contactsItemHolder;
             }
 
             @Override
             public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-                if(holder instanceof  ContactsItemHolder){
-                    ContactsItemHolder contactsItemHolder= (ContactsItemHolder) holder;
-                    contactsItemHolder.contact_name.setText(users.get(position).getUserid()+" "+users.get(position).getNameid());
-                    contactsItemHolder.contact_name.setOnClickListener(new View.OnClickListener() {
+                if (holder instanceof ContactsItemHolder) {
+                    final User user = users.get(position);
+                    ContactsItemHolder contactsItemHolder = (ContactsItemHolder) holder;
+                    contactsItemHolder.contact_name.setText(user.getNameid());
+                    contactsItemHolder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent intent=   new Intent(getActivity(), InfoActivity.class);
-                            intent.putExtra(Contants.user_flag, users.get(position));
+                            Intent intent = new Intent(getActivity(), InfoActivity.class);
+                            intent.putExtra(Contants.user_flag, user);
                             startActivity(intent);
                         }
                     });
+                    Glide.with(ContactFragament.this)
+                            .load(Contants.baseImage + user.getIconurl())
+                            .apply(options).into(contactsItemHolder.contact_imageView);
+
                 }
             }
 
@@ -126,23 +140,26 @@ public class ContactFragament extends BaseLazyFragment implements ContactView{
     @Override
     public void onFragmentVisibleChange(boolean isVisible) {
         super.onFragmentVisibleChange(isVisible);
-       if(adapter!=null){
-           adapter.notifyDataSetChanged();
-       }
+        dataChange();
+    }
+
+    private void dataChange() {
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override
     public void firstVisible() {
         super.firstVisible();
+        contactPresenter = new ContactPresenter(this);
         contactPresenter.getUsers();
     }
 
     @Override
     public void setUserData(List<User> userData) {
-        users=userData;
-        if(adapter!=null){
-            adapter.notifyDataSetChanged();
-        }
+        users = userData;
+        dataChange();
     }
 
 

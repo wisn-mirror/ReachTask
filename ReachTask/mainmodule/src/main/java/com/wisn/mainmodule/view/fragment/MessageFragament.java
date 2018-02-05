@@ -10,12 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.wisn.mainmodule.R;
 import com.wisn.mainmodule.base.BaseLazyFragment;
 import com.wisn.mainmodule.entity.Contact;
 import com.wisn.mainmodule.entity.User;
 import com.wisn.mainmodule.presenter.MessageContactPresenter;
 import com.wisn.mainmodule.utils.Contants;
+import com.wisn.mainmodule.view.HomeView;
 import com.wisn.mainmodule.view.MessageContactView;
 import com.wisn.mainmodule.view.activity.ChartActivity;
 import com.wisn.mainmodule.view.viewholder.MessageItemHolder;
@@ -35,6 +38,8 @@ public class MessageFragament extends BaseLazyFragment implements MessageContact
     private LinearLayoutManager mLinearLayoutManager;
     private RecyclerView.Adapter<RecyclerView.ViewHolder> adapter;
     private List<Contact> contacts =new ArrayList<>();
+    private HomeView homeView;
+
     @Override
     public String getTAG() {
         return "MessageFragament";
@@ -48,6 +53,11 @@ public class MessageFragament extends BaseLazyFragment implements MessageContact
     }
 
     private void initView(View view) {
+        final RequestOptions options = new RequestOptions();
+        options.centerCrop()
+                .placeholder(R.drawable.radiobutton_bg_message)
+                .error(R.drawable.photo)
+                .fallback(R.drawable.radiobutton_bg_work);
         contact_list =(RecyclerView) view.findViewById(R.id.contact_list);
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         contact_list.setLayoutManager(mLinearLayoutManager);
@@ -98,6 +108,10 @@ public class MessageFragament extends BaseLazyFragment implements MessageContact
                     }else{
                         messageItemHolder.contact_imageView.setTip();
                     }
+                    Glide.with(MessageFragament.this)
+                            .load(Contants.baseImage+ contact.getIcon())
+                            .apply(options).into( messageItemHolder.contact_imageView);
+
                     messageItemHolder.contact_name.setText(contact.getName());
                     messageItemHolder.contact_message.setText(contact.getLastmessage());
                     messageItemHolder.contact_time.setText(contact.getLastTime());
@@ -121,15 +135,15 @@ public class MessageFragament extends BaseLazyFragment implements MessageContact
     @Override
     public void onFragmentVisibleChange(boolean isVisible) {
         super.onFragmentVisibleChange(isVisible);
-        if(adapter!=null){
-            adapter.notifyDataSetChanged();
-        }
+        dataChange();
+
     }
 
     @Override
     public void firstVisible() {
         super.firstVisible();
         contactPresenter=new MessageContactPresenter(this);
+        homeView = (HomeView) getActivity();
         contactPresenter.getContacts();
     }
 
@@ -143,6 +157,18 @@ public class MessageFragament extends BaseLazyFragment implements MessageContact
     public void updateContactData(List<Contact> contactData) {
         if(contactData!=null){
             contacts.addAll(contactData);
+            dataChange();
+        }
+    }
+    private void dataChange(){
+        if(adapter!=null){
+            int count=0;
+            for(Contact contact:contacts){
+                count=count+contact.getUnReadMessageNumber();
+            }
+            if(homeView!=null){
+                homeView.updateTipMessage(0,count);
+            }
             adapter.notifyDataSetChanged();
         }
     }
@@ -153,5 +179,12 @@ public class MessageFragament extends BaseLazyFragment implements MessageContact
         intent.putExtra(Contants.user_flag, user);
         intent.putExtra(Contants.contact_flag, contact);
         startActivity(intent);
+    }
+
+    @Override
+    public void update() {
+        if(contactPresenter!=null){
+            contactPresenter.getContacts();
+        }
     }
 }

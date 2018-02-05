@@ -137,8 +137,9 @@ public class UserModel implements IUserModel {
             public void onResponse(Call<HttpResponse<User>> call, retrofit2.Response<HttpResponse<User>> response) {
                 HttpResponse<User> body1 = response.body();
 
-                Log.e("login", body1.toString());
                 if (body1 != null && body1.getCode() == 200) {
+                    Log.e("login", body1.toString());
+
                     callback.onSuccess(body1);
                 } else {
 

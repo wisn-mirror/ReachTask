@@ -31,7 +31,7 @@ import com.wisn.mainmodule.protocal.service.HandleMessage;
 import com.wisn.mainmodule.protocal.service.MessageAService;
 import com.wisn.mainmodule.protocal.service.MessageChangeListener;
 import com.wisn.mainmodule.utils.Contants;
-import com.wisn.mainmodule.view.MessageView;
+import com.wisn.mainmodule.view.ChatView;
 import com.wisn.mainmodule.view.viewholder.TextMessageLeftHolder;
 
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ import java.util.List;
  */
 
 
-public class ChartActivity extends BaseAppCompatActivity implements View.OnClickListener, MessageView, MessageChangeListener {
+public class ChartActivity extends BaseAppCompatActivity implements View.OnClickListener, ChatView, MessageChangeListener {
     public static String TAG = "ChartActivity";
     private RecyclerView message_list;
     //    private SwipeRefreshLayout message_list_refresh;

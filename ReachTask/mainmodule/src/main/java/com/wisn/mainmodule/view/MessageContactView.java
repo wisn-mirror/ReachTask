@@ -11,7 +11,7 @@ import java.util.List;
  */
 
 
-public interface MessageContactView {
+public interface MessageContactView extends BaseUpdateView{
     void setContactData(List<Contact> contactData);
     void updateContactData(List<Contact> contactData);
     void toSendMessage(Contact contact,User user);

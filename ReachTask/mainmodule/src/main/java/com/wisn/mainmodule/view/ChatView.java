@@ -11,7 +11,7 @@ import java.util.List;
  */
 
 
-public interface MessageView {
+public interface ChatView {
 
     HandleMessage getHandleMessage();
 

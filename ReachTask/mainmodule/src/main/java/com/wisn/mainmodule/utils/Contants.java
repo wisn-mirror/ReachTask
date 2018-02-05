@@ -10,8 +10,11 @@ public class Contants {
     static {
 
     }
-    public static String messageHost="192.168.123.1";
-    public static  String baseUrl="http://192.168.123.1:8080/";
+//    public static String messageHost="192.168.123.1";
+//    public static  String baseUrl="http://192.168.123.1:8080/";
+    public static String messageHost="192.168.43.215";
+    public static  String baseUrl="http://192.168.43.215:8080/";
+    public static  String baseImage="http://192.168.43.215:8080/resource/icon?path=";
     public static int messagePort=9999;
 
     public static String user_flag ="user_flag";

@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name=".app.MApplication">
-        <activity android:name=".view.activity.LaunchActivity">
+        <!--<activity android:name=".view.activity.LaunchActivity">-->
+        <activity android:name=".view.activity.ChrooseImageListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,6 +31,9 @@
         <activity android:name=".view.activity.ChartActivity"/>
         <activity android:name=".view.activity.RegisterActivity"/>
         <activity android:name=".view.activity.InfoActivity"/>
+        <activity android:name=".view.activity.SettingActivity"/>
+        <activity android:name=".view.activity.SkinChangeActivity"/>
+        <!--<activity android:name=".view.activity.ChrooseImageListActivity"/>-->
         <activity android:name="com.facebook.react.devsupport.DevSettingsActivity"/>
         <service
             android:enabled="true"

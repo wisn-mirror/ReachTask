@@ -51,9 +51,7 @@ public class ContactPresenter implements HttpCallback<List<User>> {
         List<User> data = response.getData();
         userModel.saveUsers(data);
         List<User> users = userModel.getUsers(null);
-        if(offset==0){
-            contactView.setUserData(users);
-        }
+        contactView.setUserData(users);
     }
 
     @Override

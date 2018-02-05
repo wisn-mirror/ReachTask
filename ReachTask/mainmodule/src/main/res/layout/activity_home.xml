@@ -28,8 +28,6 @@
             android:id="@+id/radiobutton_bg_contact"
             radiobutton:drawableTop="@drawable/radiobutton_bg_contact"
             style="@style/radiobutton_style"
-            radiobutton:tipText="434"
-            radiobutton:isTip="false"
             android:text="Contacts" />
 
         <com.wisn.mainmodule.widget.TipRadioButton
