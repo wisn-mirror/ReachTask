@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tipimageview="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:gravity="center"
+    android:padding="2dp" >
+    <ImageView
+        android:id="@+id/image_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+    <ImageView
+        android:id="@+id/mark"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#9c9b9b"
+        />
+    <ImageView
+        android:id="@+id/image_select"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:padding="5dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="10dp"
+        android:layout_gravity="right"
+        android:src="@drawable/icon_image_un_select"/>
+
+
+</FrameLayout>
