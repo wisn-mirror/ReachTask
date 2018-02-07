@@ -16,6 +16,7 @@ import com.wisn.mainmodule.entity.bean.Folder;
 import com.wisn.mainmodule.entity.bean.Image;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,6 +41,9 @@ public class SelectImageFolderAdapter extends RecyclerView.Adapter<SelectImageFo
     public void refresh(List<Folder> fileItems){
         this.imageFolderList=fileItems;
         notifyDataSetChanged();
+        if(selectImageFolderListener!=null){
+            selectImageFolderListener.select(fileItems.get(0).getName(),fileItems.get(0).getImages());
+        }
     }
 
     public void setSelectImageFolderListener(SelectImageFolderListener selectImageFolderListener) {
@@ -65,7 +69,9 @@ public class SelectImageFolderAdapter extends RecyclerView.Adapter<SelectImageFo
                     selectIndex=position;
                     notifyItemChanged(temp);
                     notifyItemChanged(selectIndex);
-                    selectImageFolderListener.select(imgFolderBean.getName(),imgFolderBean.getImages());
+                    if(selectImageFolderListener!=null){
+                        selectImageFolderListener.select(imgFolderBean.getName(),imgFolderBean.getImages());
+                    }
                 }
             });
             Glide.with(context).load(new File(imgFolderBean.getImages().get(0).getPath()))
@@ -89,7 +95,7 @@ public class SelectImageFolderAdapter extends RecyclerView.Adapter<SelectImageFo
         return 0;
     }
     public interface SelectImageFolderListener{
-        void select(String name, List<Image> imageList);
+        void select(String name, ArrayList<Image> imageList);
     }
      class ImageViewHolder extends RecyclerView.ViewHolder{
 

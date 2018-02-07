@@ -78,11 +78,11 @@
         android:id="@+id/image_date"
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:textSize="10sp"
+        android:textSize="12sp"
         android:background="#9e111212"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:gravity="center"
+        android:gravity="left|center"
         android:layout_below="@id/chrooseimage_title"
         android:textColor="@android:color/white"/>
     <View

@@ -20,4 +20,10 @@ public class Contants {
     public static String user_flag ="user_flag";
     public static String contact_flag ="contact_flag";
     public static String sp_isstarted_Welcome_flag ="sp_isstarted_Welcome_flag";
+
+    public static String  Select_MaxCount ="Select_MaxCount";
+    public static String  Select_Select_ImageList ="Select_Select_ImageList";
+    public static String  Select_ImageList ="Select_ImageList";
+    public static String  Select_Result ="Select_Result";
+    public static String  Select_Preview_isSubmit ="Select_Preview_isSubmit";
 }

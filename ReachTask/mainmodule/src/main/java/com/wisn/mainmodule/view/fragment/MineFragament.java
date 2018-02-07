@@ -1,5 +1,6 @@
 package com.wisn.mainmodule.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -14,6 +15,8 @@ import com.wisn.mainmodule.http.response.HttpResponse;
 import com.wisn.mainmodule.model.impl.MomentModel;
 import com.wisn.mainmodule.model.impl.UserModel;
 import com.wisn.mainmodule.presenter.HttpCallback;
+import com.wisn.mainmodule.utils.Contants;
+import com.wisn.mainmodule.view.activity.SelectImageListActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +40,20 @@ public class MineFragament extends BaseLazyFragment{
 //        TextView textView = (TextView) view.findViewById(R.id.fragment_textView);
 //        textView.setText("MineFragament");
 //        updateIcon();
-        sendMoment();
+//        sendMoment();
+
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(data!=null){
+            ArrayList<String> parcelableArrayListExtra =   data.getStringArrayListExtra(Contants.Select_Result);
+            for(String str:parcelableArrayListExtra){
+                System.err.println("file:"+str);
+            }
+        }
     }
 
     private void sendMoment() {

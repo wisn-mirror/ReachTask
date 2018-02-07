@@ -14,10 +14,15 @@ import android.widget.Toast;
 import com.wisn.mainmodule.R;
 import com.wisn.mainmodule.TestActivity;
 import com.wisn.mainmodule.base.BaseActivity;
+import com.wisn.mainmodule.entity.bean.Image;
 import com.wisn.mainmodule.http.request.Login;
 import com.wisn.mainmodule.presenter.LoginPresenter;
+import com.wisn.mainmodule.utils.Contants;
 import com.wisn.mainmodule.view.LoginView;
+import com.wisn.skinlib.utils.LogUtils;
 import com.wisn.utils.ToastUtils;
+
+import java.util.ArrayList;
 
 /**
  * @author Wisn
@@ -27,6 +32,7 @@ import com.wisn.utils.ToastUtils;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener,LoginView {
 
+    private static final String TAG = "LoginActivity";
     private Button login;
     private EditText password;
     private EditText username;
@@ -53,11 +59,23 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         register.setOnClickListener(this);
 //        startActivity(new Intent(this,HomeActivity.class));
     }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        LogUtils.e(TAG,"feeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:");
+        if(data!=null){
+            ArrayList<String> parcelableArrayListExtra =   data.getStringArrayListExtra(Contants.Select_Result);
+            for(String str:parcelableArrayListExtra){
+               LogUtils.e(TAG,"file:"+str);
+            }
+        }
+    }
 
     @Override
     public void onClick(View v) {
 
         if (v == login) {
+            SelectImageListActivity.start(this,100,2,new ArrayList<Image>());
             submit();
         } else if (v == register) {
             startActivity(new Intent(this,TestActivity.class));
