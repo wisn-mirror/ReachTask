@@ -13,23 +13,25 @@ public class NioSelectorRunnablePool {
     private Boss[] bosses;
     private AtomicInteger workInteger = new AtomicInteger();
     private Worker[] workers;
-    private AtomicInteger businessInteger = new AtomicInteger();
-    private Business[] business;
+//    private AtomicInteger businessInteger = new AtomicInteger();
+//    private Business[] business;
 
 
-    public NioSelectorRunnablePool(Executor bossExecutor, Executor workExecutor, Executor businessExecutor, HandlerByteToMessage handlerByteToMessage) {
+    public NioSelectorRunnablePool(Executor bossExecutor, Executor workExecutor
+//            , Executor businessExecutor
+            , HandlerByteToMessage handlerByteToMessage) {
         initBoss(bossExecutor, 1);
         initWorke(workExecutor, 3);
-        initBusiness(businessExecutor, 9);
+       // initBusiness(businessExecutor, 9);
         this.handlerByteToMessage = handlerByteToMessage;
     }
 
-    private void initBusiness(Executor businessExecutor, int count) {
-        business = new NioSocketBusiness[count];
-        for (int i = 0; i < count; i++) {
-            business[i] = new NioSocketBusiness(businessExecutor, "business" + i, this);
-        }
-    }
+//    private void initBusiness(Executor businessExecutor, int count) {
+//        business = new NioSocketBusiness[count];
+//        for (int i = 0; i < count; i++) {
+//            business[i] = new NioSocketBusiness(businessExecutor, "business" + i, this);
+//        }
+//    }
 
 
     private void initBoss(Executor bossExecutor, int count) {
@@ -54,9 +56,9 @@ public class NioSelectorRunnablePool {
         return workers[Math.abs(workInteger.incrementAndGet() % workers.length)];
     }
 
-    public Business nextBusiness() {
-        return business[Math.abs(businessInteger.incrementAndGet() % business.length)];
-    }
+//    public Business nextBusiness() {
+//        return business[Math.abs(businessInteger.incrementAndGet() % business.length)];
+//    }
 
     public HandlerByteToMessage getHandlerByteToMessage() {
         return handlerByteToMessage;

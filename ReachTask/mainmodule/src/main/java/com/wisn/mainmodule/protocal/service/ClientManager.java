@@ -51,7 +51,7 @@ public class ClientManager {
         if (mNioSelectorRunnablePool == null) {
             mNioSelectorRunnablePool = new NioSelectorRunnablePool(Executors.newCachedThreadPool(),
                     Executors.newCachedThreadPool(),
-                    Executors.newCachedThreadPool(),
+//                    Executors.newCachedThreadPool(),
                     this.handlerByteToMessage);
         }
 

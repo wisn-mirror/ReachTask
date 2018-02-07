@@ -33,10 +33,12 @@ public class NioSocketWorker extends AbstractNioSelector implements Worker {
             while (iterator.hasNext()) {
                 SelectionKey next = iterator.next();
                 iterator.remove();
-                SocketChannel channel = (SocketChannel) next.channel();
-                channel.configureBlocking(false);
-                Business business = nioSelectorRunnablePool.nextBusiness();
-                business.registerBusinessChannelTask(channel);
+                nioSelectorRunnablePool.getHandlerByteToMessage().read(next);
+
+//                SocketChannel channel = (SocketChannel) next.channel();
+//                channel.configureBlocking(false);
+//                Business business = nioSelectorRunnablePool.nextBusiness();
+//                business.registerBusinessChannelTask(channel);
             }
         } catch ( Exception e) {
             e.printStackTrace();

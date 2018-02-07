@@ -10,6 +10,9 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.Executor;
 
+/**
+ * @deprecated
+ */
 public class NioSocketBusiness extends AbstractNioSelector implements Business {
 
     public NioSocketBusiness(Executor executor, String threadName, NioSelectorRunnablePool nioSelectorRunnablePool) {
