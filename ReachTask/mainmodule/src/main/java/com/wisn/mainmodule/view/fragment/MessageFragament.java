@@ -81,7 +81,6 @@ public class MessageFragament extends BaseLazyFragment implements MessageContact
             }
         });
         adapter = new RecyclerView.Adapter<RecyclerView.ViewHolder>(){
-
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 //                final View inflate = View.inflate(getActivity(), R.layout.item_contact, null);

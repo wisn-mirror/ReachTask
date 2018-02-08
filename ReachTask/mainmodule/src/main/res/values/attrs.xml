@@ -50,6 +50,8 @@
         <attr name="combinText" format="string" />
         <attr name="rightDrawable" format="reference" />
         <attr name="rightDrawableVisable" format="boolean" />
+        <attr name="rightTextViewVisable" format="boolean" />
+        <attr name="rightText" format="string" />
         <attr name="bottomLineVisable" format="boolean" />
         <attr name="combinTipText" format="string" />
     </declare-styleable>

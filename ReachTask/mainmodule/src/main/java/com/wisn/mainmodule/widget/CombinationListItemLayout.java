@@ -20,11 +20,12 @@ import com.wisn.mainmodule.R;
 
 
 public class CombinationListItemLayout extends RelativeLayout {
-    private ImageView item_imageview;
-    private TextView item_text;
-    private TipView item_tipview;
-    private ImageView item_imageview_right;
-    private View item_line;
+    public ImageView item_imageview;
+    public TextView item_text;
+    public TextView item_text_right;
+    public TipView item_tipview;
+    public ImageView item_imageview_right;
+    public View item_line;
     private void init(Context context, AttributeSet attributeSet) {
         LayoutInflater.from(context).inflate(R.layout.combination_item_list, this, true);
         item_imageview=  findViewById(R.id.item_imageview);
@@ -33,15 +34,24 @@ public class CombinationListItemLayout extends RelativeLayout {
         item_tipview=  findViewById(R.id.item_tipview);
         item_line=  findViewById(R.id.item_line);
         item_imageview_right=  findViewById(R.id.item_imageview_right);
+        item_text_right=  findViewById(R.id.item_text_right);
         if(attributeSet==null)return ;
         TypedArray typedArray = context.obtainStyledAttributes(attributeSet, R.styleable.CombinationListItemLayout);
         boolean leftDrawableVisable = typedArray.getBoolean(R.styleable.CombinationListItemLayout_leftDrawableVisable, true);
         boolean rightDrawableVisable = typedArray.getBoolean(R.styleable.CombinationListItemLayout_rightDrawableVisable, true);
         boolean bottomLineVisable = typedArray.getBoolean(R.styleable.CombinationListItemLayout_bottomLineVisable, true);
+        boolean rightTextViewVisable = typedArray.getBoolean(R.styleable.CombinationListItemLayout_rightTextViewVisable, false);
         String combinText = typedArray.getString(R.styleable.CombinationListItemLayout_combinText);
         String combinTipText = typedArray.getString(R.styleable.CombinationListItemLayout_combinTipText);
+        String rightText = typedArray.getString(R.styleable.CombinationListItemLayout_rightText);
         Drawable leftDrawable = typedArray.getDrawable(R.styleable.CombinationListItemLayout_leftDrawable);
         Drawable rightDrawable = typedArray.getDrawable(R.styleable.CombinationListItemLayout_rightDrawable);
+        if(rightTextViewVisable){
+            item_text_right.setVisibility(View.VISIBLE);
+            item_text_right.setText(rightText);
+        }else{
+            item_text_right.setVisibility(View.GONE);
+        }
         if(leftDrawableVisable){
             item_imageview.setVisibility(View.VISIBLE);
         }else{
