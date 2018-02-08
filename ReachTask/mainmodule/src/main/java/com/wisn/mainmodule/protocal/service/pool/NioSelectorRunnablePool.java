@@ -21,7 +21,7 @@ public class NioSelectorRunnablePool {
 //            , Executor businessExecutor
             , HandlerByteToMessage handlerByteToMessage) {
         initBoss(bossExecutor, 1);
-        initWorke(workExecutor, 3);
+        initWorke(workExecutor, 2);
        // initBusiness(businessExecutor, 9);
         this.handlerByteToMessage = handlerByteToMessage;
     }

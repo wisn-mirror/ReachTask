@@ -17,7 +17,7 @@ import com.wisn.mainmodule.adapter.HomeActivityAdapter;
 import com.wisn.mainmodule.base.BaseAppCompatActivity;
 import com.wisn.mainmodule.entity.Contact;
 import com.wisn.mainmodule.entity.Message;
-import com.wisn.mainmodule.presenter.MessagePresenter;
+import com.wisn.mainmodule.presenter.MessageChatPresenter;
 import com.wisn.mainmodule.protocal.constant.CmdId;
 import com.wisn.mainmodule.protocal.constant.ModuleId;
 import com.wisn.mainmodule.protocal.service.HandleMessage;
@@ -46,7 +46,7 @@ public class HomeActivity extends BaseAppCompatActivity implements RadioGroup.On
     private TipRadioButton radiobutton_bg_work;
     private TipRadioButton radiobutton_bg_mine;
     private ViewPager mViewpager;
-    private MessagePresenter messagePresenter;
+    private MessageChatPresenter messagePresenter;
     private ServiceConnection connection;
     private HandleMessage handleMessage;
     private HomeActivityAdapter fragmentAdapter;
@@ -63,7 +63,7 @@ public class HomeActivity extends BaseAppCompatActivity implements RadioGroup.On
         radiobutton_bg_mine = (TipRadioButton) findViewById(R.id.radiobutton_bg_mine);
         mRadioButton.setOnCheckedChangeListener(this);
         setDefaultFragment();
-        messagePresenter = new MessagePresenter(this);
+        messagePresenter = new MessageChatPresenter(this);
         connection = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName componentName, IBinder iBinder) {

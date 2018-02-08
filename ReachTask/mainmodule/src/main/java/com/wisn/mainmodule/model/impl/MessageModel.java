@@ -4,12 +4,14 @@ import com.wisn.mainmodule.app.MApplication;
 import com.wisn.mainmodule.entity.Message;
 import com.wisn.mainmodule.entity.MessageDao;
 import com.wisn.mainmodule.model.IMessageModel;
+import com.wisn.skinlib.utils.LogUtils;
 
 import org.greenrobot.greendao.query.DeleteQuery;
 import org.greenrobot.greendao.query.Query;
 
 import java.util.Collections;
 import java.util.List;
+
 
 /**
  * @author Wisn
@@ -18,8 +20,10 @@ import java.util.List;
 
 
 public class MessageModel implements IMessageModel {
+    public  static String TAG="MessageModel";
     @Override
     public void saveMessage(Message message) {
+        LogUtils.e(TAG,"  saveMessage:" + message);
         MessageDao messageDao = MApplication.getInstance().getDaoSession().getMessageDao();
         messageDao.insertOrReplace(message);
     }
@@ -30,22 +34,20 @@ public class MessageModel implements IMessageModel {
         List<Message> messages = messageDao.loadAll();
         Collections.sort(messages);
         for (Message message : messages) {
-            System.err.println("  ddd:" + message);
+           LogUtils.e(TAG,"  ddd:" + message);
         }
-        System.err.println("  dddddd:" + messages);
         return messages;
     }
 
     public List<Message> getMesssagesByTargetid(Long targerid) {
         MessageDao messageDao = MApplication.getInstance().getDaoSession().getMessageDao();
         Query<Message> build = messageDao.queryBuilder().where(MessageDao.Properties.Targetuserid.eq(targerid))
-                .orderDesc(MessageDao.Properties.Receivetime)
+                .orderAsc(MessageDao.Properties._id)
                 .build();
         List<Message> list = build.list();
         for (Message message : list) {
-            System.err.println("  ddd:" + message);
+           LogUtils.e(TAG,"  ddd:" + message);
         }
-        System.err.println("  dddddd:" + list);
         return list;
     }
 
@@ -53,13 +55,12 @@ public class MessageModel implements IMessageModel {
     public List<Message> getMesssagesByContactid(Long contactid) {
         MessageDao messageDao = MApplication.getInstance().getDaoSession().getMessageDao();
         Query<Message> build = messageDao.queryBuilder().where(MessageDao.Properties.Contactid.eq(contactid))
-                .orderDesc(MessageDao.Properties.Receivetime)
+                .orderAsc(MessageDao.Properties._id)
                 .build();
         List<Message> list = build.list();
         for (Message message : list) {
-            System.err.println("  ddd:" + message);
+           LogUtils.e(TAG,"  ddd:" + message);
         }
-        System.err.println("  dddddd:" + list);
         return list;
     }
 
@@ -68,7 +69,7 @@ public class MessageModel implements IMessageModel {
         Query<Message> build = messageDao.queryBuilder().where(MessageDao.Properties.Messageid.eq(messageId)).build();
         Message unique = build.unique();
         if (unique != null) {
-            System.err.println(unique);
+           LogUtils.e(TAG,"getMesssage"+unique);
             return unique;
         }
         return null;
@@ -76,6 +77,7 @@ public class MessageModel implements IMessageModel {
 
     @Override
     public void updateMessage(Message message) {
+        LogUtils.e(TAG,"updateMessage");
         MessageDao messageDao = MApplication.getInstance().getDaoSession().getMessageDao();
         messageDao.update(message);
     }

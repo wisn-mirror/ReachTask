@@ -24,6 +24,7 @@ import com.wisn.mainmodule.protocal.coder.Response;
 import com.wisn.mainmodule.protocal.constant.ResponseCode;
 import com.wisn.mainmodule.protocal.protobuf.beans.EMessageMudule;
 import com.wisn.mainmodule.utils.Contants;
+import com.wisn.skinlib.utils.LogUtils;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -82,7 +83,6 @@ public class MessageAService extends Service implements HandleMessage {
                 Log.e(TAG, "receiver:" + response.toString());
                 if (messageChangeListeners != null) {
                     if (messageChangeListeners.size() > 0) {
-                        for (final MessageChangeListener messageChangeListener : messageChangeListeners) {
                             try {
                                 EMessageMudule.EMessage eMessage = EMessageMudule.EMessage.parseFrom(response.getData());
                                 //新的消息
@@ -112,25 +112,30 @@ public class MessageAService extends Service implements HandleMessage {
                                         contactMessageModel.saveContacts(contact);
                                     }
                                     message.setContactid(contact.getContactid());
+                                    LogUtils.e(TAG,"saveMessage:"+message);
                                     // TODO: 2018/1/26 存数据库
                                     messageModel.saveMessage(message);
                                     final Contact finalContact = contact;
                                     new Handler(Looper.getMainLooper()).post(new Runnable() {
                                         @Override
                                         public void run() {
-                                            messageChangeListener.newMessage(finalContact,response.getModule(), response.getCmd(), message);
+                                            for (final MessageChangeListener messageChangeListener : messageChangeListeners) {
+                                                messageChangeListener.newMessage(finalContact,response.getModule(), response.getCmd(), message);
+                                            }
                                         }
                                     });
 
                                 } else {
                                     Log.e(TAG, "receiptMessage ");
                                     //回执消息
-                                    messageChangeListener.receiptMessage(response.getModule(), response.getCmd(), message.getMessageid(), message.getReceivetime(), response.getResultCode());
+                                    for (final MessageChangeListener messageChangeListener : messageChangeListeners) {
+                                        messageChangeListener.receiptMessage(response.getModule(), response.getCmd(), message.getMessageid(), message.getReceivetime(), response.getResultCode());
+                                    }
                                 }
                             } catch (InvalidProtocolBufferException e) {
                                 e.printStackTrace();
                             }
-                        }
+
                     }
                 }
 

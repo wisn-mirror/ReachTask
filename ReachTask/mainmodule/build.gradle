@@ -30,6 +30,7 @@ dependencies {
     implementation "com.facebook.react:react-native:$rootProject.reactnative"
     implementation "com.android.support.constraint:constraint-layout:$rootProject.constraint"
     implementation "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
     implementation "com.google.protobuf:protobuf-java:$rootProject.protobufjava"
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofit"
     implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofit"

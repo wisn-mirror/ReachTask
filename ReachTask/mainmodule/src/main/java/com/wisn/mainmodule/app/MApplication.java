@@ -49,6 +49,7 @@ public class MApplication extends SkinApplication implements ReactApplication {
     public void setDatabase(){
         DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(this, "reachtask.db", null);
         SQLiteDatabase writableDatabase = devOpenHelper.getWritableDatabase();
+//        Database encryptedWritableDb = devOpenHelper.getEncryptedWritableDb("kmk");
         DaoMaster  daoMaster=new DaoMaster(writableDatabase);
         daoSession = daoMaster.newSession();
     }

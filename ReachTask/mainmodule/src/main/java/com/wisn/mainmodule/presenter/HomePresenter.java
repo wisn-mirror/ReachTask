@@ -18,7 +18,7 @@ import java.util.List;
 
 
 public class HomePresenter {
-    public static String TAG = "MessagePresenter";
+    public static String TAG = "MessageChatPresenter";
     ChatView messageView;
     IMessageModel messageModel;
     IUserModel userModel;

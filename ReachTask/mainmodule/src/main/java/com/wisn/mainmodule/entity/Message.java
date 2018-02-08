@@ -8,9 +8,9 @@ import android.text.TextUtils;
 import com.wisn.mainmodule.protocal.protobuf.beans.EMessageMudule;
 
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
-import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * `messageid` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '消息id',
@@ -26,6 +26,7 @@ import org.greenrobot.greendao.annotation.Generated;
 public class Message implements Parcelable ,Comparable<Message>{
     @Property(nameInDb = "_id")
     @Id
+    private Long _id;
     private Long messageid;
     private long fromuserid;
     private long targetuserid;
@@ -39,6 +40,27 @@ public class Message implements Parcelable ,Comparable<Message>{
 
     public Message() {
 
+    }
+    @Generated(hash = 103101968)
+    public Message(Long _id, Long messageid, long fromuserid, long targetuserid, int messagetype, int status, long contactid, String token, String content, long createtime, long receivetime) {
+        this._id = _id;
+        this.messageid = messageid;
+        this.fromuserid = fromuserid;
+        this.targetuserid = targetuserid;
+        this.messagetype = messagetype;
+        this.status = status;
+        this.contactid = contactid;
+        this.token = token;
+        this.content = content;
+        this.createtime = createtime;
+        this.receivetime = receivetime;
+    }
+    public Long get_id() {
+        return _id;
+    }
+
+    public void set_id(Long _id) {
+        this._id = _id;
     }
 
     public long getContactid() {
@@ -131,19 +153,6 @@ public class Message implements Parcelable ,Comparable<Message>{
         this.receivetime = receivetime;
     }
 
-    @Override
-    public String toString() {
-        return "Message{" +
-                "messageid=" + messageid +
-                ", fromuserid=" + fromuserid +
-                ", targetuserid=" + targetuserid +
-                ", type=" + messagetype +
-                ", status=" + status +
-                ", content='" + content + '\'' +
-                ", createtime=" + createtime +
-                ", receivetime=" + receivetime +
-                '}';
-    }
 
 
     public EMessageMudule.EMessage buildEMessage() {
@@ -203,21 +212,6 @@ public class Message implements Parcelable ,Comparable<Message>{
         this.receivetime = in.readLong();
     }
 
-    @Generated(hash = 2047741352)
-    public Message(Long messageid, long fromuserid, long targetuserid,
-            int messagetype, int status, long contactid, String token,
-            String content, long createtime, long receivetime) {
-        this.messageid = messageid;
-        this.fromuserid = fromuserid;
-        this.targetuserid = targetuserid;
-        this.messagetype = messagetype;
-        this.status = status;
-        this.contactid = contactid;
-        this.token = token;
-        this.content = content;
-        this.createtime = createtime;
-        this.receivetime = receivetime;
-    }
 
     public static final Creator<Message> CREATOR = new Creator<Message>() {
         @Override
@@ -233,6 +227,23 @@ public class Message implements Parcelable ,Comparable<Message>{
 
     @Override
     public int compareTo(@NonNull Message o) {
-        return this.receivetime>o.receivetime?1:-1;
+        return this._id>o._id?1:-1;
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "_id=" + _id +
+                ", messageid=" + messageid +
+                ", fromuserid=" + fromuserid +
+                ", targetuserid=" + targetuserid +
+                ", messagetype=" + messagetype +
+                ", status=" + status +
+                ", contactid=" + contactid +
+                ", token='" + token + '\'' +
+                ", content='" + content + '\'' +
+                ", createtime=" + createtime +
+                ", receivetime=" + receivetime +
+                '}';
     }
 }

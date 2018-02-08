@@ -14,6 +14,7 @@ import com.wisn.mainmodule.model.impl.UserModel;
 import com.wisn.mainmodule.protocal.coder.Request;
 import com.wisn.mainmodule.protocal.protobuf.beans.EMessageMudule;
 import com.wisn.mainmodule.view.ChatView;
+import com.wisn.skinlib.utils.LogUtils;
 
 import java.util.List;
 
@@ -23,14 +24,14 @@ import java.util.List;
  */
 
 
-public class MessagePresenter {
-    public static String TAG = "MessagePresenter";
+public class MessageChatPresenter {
+    public static String TAG = "MessageChatPresenter";
     ChatView messageView;
     IMessageModel messageModel;
     IUserModel userModel;
     ContactMessageModel contactMessageModel;
 
-    public MessagePresenter(ChatView messageView) {
+    public MessageChatPresenter(ChatView messageView) {
         this.messageView = messageView;
         messageModel = new MessageModel();
         userModel = new UserModel();
@@ -56,6 +57,7 @@ public class MessagePresenter {
             EMessageMudule.EMessage eMessage = message.buildEMessage();
             Request request = Request.valueOf(module, cmd, eMessage.toByteArray());
             messageView.getHandleMessage().sendMessage(request);
+            LogUtils.e(TAG,"saveMessage:"+message);
             messageModel.saveMessage(message);
             messageView.updateMoreMessage(message);
         } else {

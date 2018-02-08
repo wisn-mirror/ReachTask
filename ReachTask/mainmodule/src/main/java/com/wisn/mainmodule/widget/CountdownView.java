@@ -127,7 +127,7 @@ public class CountdownView extends View {
      * 开始倒计时
      */
     public void startCountDown() {
-        setClickable(false);
+//        setClickable(false);
         mValueAnimator = getValA(mCountdownTime * 1000);
         mValueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override

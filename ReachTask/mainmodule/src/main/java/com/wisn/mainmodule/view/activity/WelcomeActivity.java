@@ -17,6 +17,7 @@ import com.wisn.mainmodule.presenter.LauncherPresenter;
 import com.wisn.mainmodule.view.LauncherView;
 import com.wisn.mainmodule.widget.CountdownView;
 import com.wisn.mainmodule.widget.IndicatorScrollView;
+import com.wisn.skinlib.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +29,9 @@ import java.util.List;
 
 
 public class WelcomeActivity extends BaseActivity implements LauncherView {
+    private static final String TAG ="WelcomeActivity" ;
     private ViewPager Viewpager;
-    private CountdownView CountdownView;
+    private CountdownView countdownView;
     private IndicatorScrollView IndicatorScrollView;
     private int[] ids= {R.mipmap.start_launcher,R.mipmap.start_launcher,R.mipmap.start_launcher,R.mipmap.start_launcher};
     private List<ImageView> imageViewList=new ArrayList<>();
@@ -56,11 +58,12 @@ public class WelcomeActivity extends BaseActivity implements LauncherView {
 
     private void initView() {
         Viewpager = (ViewPager) findViewById(R.id.Viewpager);
-        CountdownView = (CountdownView) findViewById(R.id.CountdownView);
+        countdownView = (CountdownView) findViewById(R.id.CountdownView);
         IndicatorScrollView = (IndicatorScrollView) findViewById(R.id.IndicatorScrollView);
-        CountdownView.setOnClickListener(new View.OnClickListener() {
+        countdownView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LogUtils.e(TAG,"点击了");
                 launcherPresenter.updateLauncherFlag(true);
             }
         });
@@ -70,17 +73,17 @@ public class WelcomeActivity extends BaseActivity implements LauncherView {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if(position>=imageViewList.size()-1){
-                    CountdownView.setVisibility(View.VISIBLE);
-                    CountdownView.startCountDown();
-                    CountdownView.setAddCountDownListener(new CountdownView.OnCountDownFinishListener() {
+                    countdownView.setVisibility(View.VISIBLE);
+                    countdownView.startCountDown();
+                    countdownView.setAddCountDownListener(new CountdownView.OnCountDownFinishListener() {
                         @Override
                         public void countDownFinished() {
                             launcherPresenter.updateLauncherFlag(true);
                         }
                     });
                 }else if(position==imageViewList.size()-2){
-                    CountdownView.cancelCountDown();
-                    CountdownView.setVisibility(View.GONE);
+                    countdownView.cancelCountDown();
+                    countdownView.setVisibility(View.INVISIBLE);
                 }
             }
 

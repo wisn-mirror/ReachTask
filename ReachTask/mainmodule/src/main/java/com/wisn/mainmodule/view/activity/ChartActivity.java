@@ -24,7 +24,7 @@ import com.wisn.mainmodule.base.BaseAppCompatActivity;
 import com.wisn.mainmodule.entity.Contact;
 import com.wisn.mainmodule.entity.Message;
 import com.wisn.mainmodule.entity.User;
-import com.wisn.mainmodule.presenter.MessagePresenter;
+import com.wisn.mainmodule.presenter.MessageChatPresenter;
 import com.wisn.mainmodule.protocal.constant.CmdId;
 import com.wisn.mainmodule.protocal.constant.ModuleId;
 import com.wisn.mainmodule.protocal.service.HandleMessage;
@@ -51,7 +51,7 @@ public class ChartActivity extends BaseAppCompatActivity implements View.OnClick
     private Button message_send;
     private HandleMessage handleMessage;
     private ServiceConnection connection;
-    private MessagePresenter messagePresenter;
+    private MessageChatPresenter messagePresenter;
     private RecyclerView.Adapter<RecyclerView.ViewHolder> adapter;
     List<Message> messageList = new ArrayList<>();
     private User user;
@@ -63,7 +63,7 @@ public class ChartActivity extends BaseAppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
         initView();
-        messagePresenter = new MessagePresenter(this);
+        messagePresenter = new MessageChatPresenter(this);
         user = (User) getIntent().getParcelableExtra(Contants.user_flag);
         contact = (Contact) getIntent().getParcelableExtra(Contants.contact_flag);
         Log.e(TAG, "user: " + user + "  contact:" + contact);

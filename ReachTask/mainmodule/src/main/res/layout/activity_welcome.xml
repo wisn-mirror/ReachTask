@@ -9,20 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
-
-    <com.wisn.mainmodule.widget.CountdownView
-        android:id="@+id/CountdownView"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_alignParentRight="true"
-        android:visibility="gone"
-        app:countdownTime="5"
-        app:progressText="@string/tiaoguo"
-        app:progressTextColor="#FF4081"
-        app:progressTextSize="16dp"
-        app:ringColor="#3F51B5"
-        app:ringWidth="10" />
-
     <com.wisn.mainmodule.widget.IndicatorScrollView
         android:id="@+id/IndicatorScrollView"
         android:layout_width="wrap_content"
@@ -36,4 +22,16 @@
         app:drawableUnSelect="@drawable/ic_dot_selected"
         app:isScroll="true"
         app:scrollCount="4" />
+    <com.wisn.mainmodule.widget.CountdownView
+        android:id="@+id/CountdownView"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentRight="true"
+        android:visibility="invisible"
+        app:countdownTime="5"
+        app:progressText="@string/tiaoguo"
+        app:progressTextColor="#FF4081"
+        app:progressTextSize="16dp"
+        app:ringColor="#3F51B5"
+        app:ringWidth="10" />
 </RelativeLayout>
