@@ -31,7 +31,7 @@
     </RelativeLayout>
 
     <com.wisn.mainmodule.widget.CombinationListItemLayout
-        android:id="@+id/moment"
+        android:id="@+id/info_nickname"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginTop="20dp"
@@ -46,7 +46,7 @@
         app:rightTextViewVisable="true" />
 
     <com.wisn.mainmodule.widget.CombinationListItemLayout
-        android:id="@+id/scan"
+        android:id="@+id/info_id"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@android:color/white"
@@ -60,7 +60,7 @@
         app:rightTextViewVisable="true" />
     <!--app:combinTipText="2"-->
     <com.wisn.mainmodule.widget.CombinationListItemLayout
-        android:id="@+id/mycollection"
+        android:id="@+id/in_mycode"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@android:color/white"
@@ -73,7 +73,7 @@
         app:rightText="false"
         app:rightTextViewVisable="false" />
     <com.wisn.mainmodule.widget.CombinationListItemLayout
-        android:id="@+id/myword"
+        android:id="@+id/info_myword"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@android:color/white"
@@ -85,7 +85,7 @@
         app:rightText="aa"
         app:rightTextViewVisable="true" />
     <com.wisn.mainmodule.widget.CombinationListItemLayout
-        android:id="@+id/sex"
+        android:id="@+id/info_sex"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@android:color/white"
@@ -98,7 +98,7 @@
         app:rightTextViewVisable="true" />
 
     <com.wisn.mainmodule.widget.CombinationListItemLayout
-        android:id="@+id/location"
+        android:id="@+id/info_location"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@android:color/white"

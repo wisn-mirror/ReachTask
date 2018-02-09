@@ -1,4 +1,5 @@
 <resources>
+
     <style name="radiobutton_style">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
@@ -24,12 +25,37 @@
     </style>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!-- 添加这一句， 即可改变toolbar menu 图标的颜色-->
+        <item name="android:textColorSecondary">#ffffff</item>
+        <!--toolbar标题文字颜色-->
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="toolbarNavigationButtonStyle">@style/myToolbarNavigationButtonStyle</item>
     </style>
 
+    <!--修改左边的Navigation-->
+    <style name="myToolbarNavigationButtonStyle" parent="@style/Widget.AppCompat.Toolbar.Button.Navigation">
+        <item name="android:minWidth">0dp</item>
+        <item name="android:padding">2dp</item>
+        <item name="android:scaleType">centerInside</item>
+    </style>
+
+    <style name="ToolbarPopupTheme" parent="Widget.AppCompat.Light.PopupMenu.Overflow">
+        <item name="android:colorBackground">#90000000</item>  <!-- 设置背景颜色-->
+        <item name="overlapAnchor">false</item>  <!--设置不覆盖锚点-->
+    </style>
+    <!-- toolbar菜单样式 -->
+    <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <!-- 修改字体大小 -->
+        <item name="android:textSize">15sp</item>
+        <!-- 修改字体颜色 -->
+        <item name="android:textColor">@android:color/white</item>
+        <item name="contentInsetStart">0dp</item>
+        <item name="contentInsetStartWithNavigation">0dp</item>
+    </style>
 
 </resources>

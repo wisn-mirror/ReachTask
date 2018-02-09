@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/search"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="Search"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/select_newphoto"
+        android:icon="@drawable/home_bottom_tab_icon_work_normal"
+        android:title="从相册中选择"
+        app:showAsAction="never"
+        android:visible="true" />
+    <item
+        android:id="@+id/save_photo"
+        android:icon="@drawable/home_bottom_tab_icon_work_normal"
+        android:title="保存到手机"
+        android:visible="true" />
+</menu>
