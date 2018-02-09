@@ -30,7 +30,7 @@ public class MyPhotoActivity extends BaseAppCompatActivity implements MyPhotoVie
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher_round);
-        getSupportActionBar().setTitle("hahah");
+        getSupportActionBar().setTitle("啊哈哈hahah");
 //        getSupportActionBar().setSubtitle("www");
 //        toolbar.setSubtitle("啊哈哈哈哈哈");
         toolbar.setNavigationIcon(R.drawable.back);

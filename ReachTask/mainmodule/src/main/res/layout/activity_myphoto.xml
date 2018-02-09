@@ -15,7 +15,12 @@
         android:paddingLeft="13dp"
         android:theme="@style/ToolbarTheme"
         app:popupTheme="@style/ToolbarPopupTheme"
-        app:contentInsetLeft="2dp">
+        app:titleTextAppearance="@style/myToolbarTitleText"
+        app:titleTextColor="#c90303"
+        app:titleMargin="10dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStartWithNavigation="0dp"
+        app:contentInsetStart="0dp">
         <TextView
             android:id="@+id/toolbar_title"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
