@@ -2,14 +2,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:radiobutton="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center">
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/include_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true"
+        layout="@layout/toolbar"/>
+
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
+        android:layout_below="@id/include_toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottom_radiogroup"
-        />
+        android:layout_above="@+id/bottom_radiogroup" />
+
     <RadioGroup
         android:id="@+id/bottom_radiogroup"
         android:layout_width="match_parent"
@@ -19,28 +27,28 @@
 
         <com.wisn.mainmodule.widget.TipRadioButton
             android:id="@+id/radiobutton_bg_message"
-            android:checked="true"
-            radiobutton:drawableTop="@drawable/radiobutton_bg_message"
             style="@style/radiobutton_style"
-            android:text="Message" />
+            android:checked="true"
+            android:text="Message"
+            radiobutton:drawableTop="@drawable/radiobutton_bg_message" />
 
         <com.wisn.mainmodule.widget.TipRadioButton
             android:id="@+id/radiobutton_bg_contact"
-            radiobutton:drawableTop="@drawable/radiobutton_bg_contact"
             style="@style/radiobutton_style"
-            android:text="Contacts" />
+            android:text="Contacts"
+            radiobutton:drawableTop="@drawable/radiobutton_bg_contact" />
 
         <com.wisn.mainmodule.widget.TipRadioButton
             android:id="@+id/radiobutton_bg_work"
-            radiobutton:drawableTop="@drawable/radiobutton_bg_work"
             style="@style/radiobutton_style"
-            android:text="Work" />
+            android:text="Work"
+            radiobutton:drawableTop="@drawable/radiobutton_bg_work" />
 
         <com.wisn.mainmodule.widget.TipRadioButton
             android:id="@+id/radiobutton_bg_mine"
-            radiobutton:drawableTop="@drawable/radiobutton_bg_mine"
             style="@style/radiobutton_style"
-            android:text="Mine" />
+            android:text="Mine"
+            radiobutton:drawableTop="@drawable/radiobutton_bg_mine" />
     </RadioGroup>
 
 </RelativeLayout>

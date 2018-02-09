@@ -19,6 +19,7 @@ import com.wisn.mainmodule.presenter.MineFragmentPresenter;
 import com.wisn.mainmodule.utils.Contants;
 import com.wisn.mainmodule.view.MineFragmentView;
 import com.wisn.mainmodule.view.activity.MyInfoActivity;
+import com.wisn.mainmodule.view.activity.MyPhotoActivity;
 import com.wisn.mainmodule.widget.CombinationListItemLayout;
 import com.wisn.utils.ToastUtils;
 
@@ -101,6 +102,7 @@ public class MineFragament extends BaseLazyFragment implements View.OnClickListe
             startActivity(new Intent(getActivity(),MyInfoActivity.class));
         } else if (v == info_photo) {
             ToastUtils.show("infoPhoto");
+            startActivity(new Intent(getActivity(), MyPhotoActivity.class));
         } else if (v == info_code) {
             ToastUtils.show("info_code");
         } else if (v == moment) {

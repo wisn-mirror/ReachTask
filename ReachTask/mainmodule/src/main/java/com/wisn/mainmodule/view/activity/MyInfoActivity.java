@@ -2,6 +2,7 @@ package com.wisn.mainmodule.view.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 
 import com.wisn.mainmodule.R;
@@ -26,8 +27,17 @@ public class MyInfoActivity extends BaseAppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_activity_myinfo);
         initView();
+    }
+
+    @Override
+    public void initToolbarView(Toolbar toolbar) {
+
+    }
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.activity_activity_myinfo;
     }
 
     private void initView() {

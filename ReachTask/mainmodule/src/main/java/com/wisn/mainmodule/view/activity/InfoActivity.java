@@ -3,6 +3,7 @@ package com.wisn.mainmodule.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -29,10 +30,19 @@ public class InfoActivity extends BaseAppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_info);
         initView();
         user= (User) getIntent().getParcelableExtra(Contants.user_flag);
         infoPresenter=new InfoPresenter(this);
+    }
+
+    @Override
+    public void initToolbarView(Toolbar toolbar) {
+
+    }
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.activity_info;
     }
 
     private void initView() {

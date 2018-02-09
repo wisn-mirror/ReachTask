@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,7 +18,7 @@ import android.widget.TextView;
 
 import com.wisn.mainmodule.R;
 import com.wisn.mainmodule.adapter.PreviewImagePageAdapter;
-import com.wisn.mainmodule.base.BaseActivity;
+import com.wisn.mainmodule.base.BaseAppCompatActivity;
 import com.wisn.mainmodule.entity.bean.Image;
 import com.wisn.mainmodule.utils.Contants;
 import com.wisn.mainmodule.widget.MViewPager;
@@ -31,7 +32,7 @@ import java.util.ArrayList;
  */
 
 
-public class PreviewImageActivity extends BaseActivity implements View.OnClickListener {
+public class PreviewImageActivity extends BaseAppCompatActivity implements View.OnClickListener {
     private MViewPager vp_image;
     private TextView image_back;
     private TextView image_title;
@@ -60,7 +61,6 @@ public class PreviewImageActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_previewimage);
         Intent intent = getIntent();
         maxCount = intent.getIntExtra(Contants.Select_MaxCount, 1);
         selectImageList = intent.getParcelableArrayListExtra(Contants.Select_Select_ImageList);
@@ -68,6 +68,16 @@ public class PreviewImageActivity extends BaseActivity implements View.OnClickLi
         setStatusBarVisible(true);
         initView();
         initListener();
+    }
+
+    @Override
+    public void initToolbarView(Toolbar toolbar) {
+
+    }
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.activity_previewimage;
     }
 
     @Override

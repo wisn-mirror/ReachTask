@@ -36,35 +36,43 @@
         <item name="android:textColorPrimary">@android:color/white</item>
         <item name="toolbarNavigationButtonStyle">@style/myToolbarNavigationButtonStyle</item>
         <item name="toolbarStyle">@style/NoSpaceActionBarTheme</item>
+        <!--改变右边更多3个点的图标-->
+        <!--<item name="actionOverflowButtonStyle">@style/OverflowButtonStyle</item>-->
+    </style>
+    <!--改变右边更多3个点的图标-->
+    <style name="OverflowButtonStyle" parent="@android:style/Widget.ActionButton.Overflow">
+        <item name="android:src">@drawable/radiobutton_bg_work</item>
+    </style>
+    <!--修改左边的Navigation-->
+    <style name="myToolbarNavigationButtonStyle" parent="@style/Widget.AppCompat.Toolbar.Button.Navigation">
+        <item name="android:minWidth">30dp</item>
+        <item name="android:padding">4dp</item>
+        <item name="android:scaleType">centerInside</item>
     </style>
     <!--修改title和左边navigation button的间距-->
     <style name="NoSpaceActionBarTheme" parent="Base.Widget.AppCompat.Toolbar">
         <item name="contentInsetStart">0dp</item>
         <item name="contentInsetStartWithNavigation">0dp</item>
-        <item name="titleMargin">0dp</item>
+        <item name="titleMargin">2dp</item>
     </style>
 
-    <!--修改左边的Navigation-->
-    <style name="myToolbarNavigationButtonStyle" parent="@style/Widget.AppCompat.Toolbar.Button.Navigation">
-        <item name="android:minWidth">0dp</item>
-        <item name="android:padding">2dp</item>
-        <item name="android:scaleType">centerInside</item>
-    </style>
+
+
     <!--TitleText字体大小-->
     <style name="myToolbarTitleText" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="android:textSize">5sp</item>
+        <item name="android:textSize">18sp</item>
     </style>
     <!--修改PopupTheme-->
     <style name="ToolbarPopupTheme" parent="Widget.AppCompat.Light.PopupMenu.Overflow">
-        <!--修改字体大小-->
-        <item name="android:textSize">4sp</item>
+        <!--修改PopupTheme字体大小-->
+        <item name="android:textSize">15sp</item>
         <item name="android:colorBackground">#90000000</item>  <!-- 设置背景颜色-->
         <item name="overlapAnchor">false</item>  <!--设置不覆盖锚点-->
     </style>
     <!-- toolbar菜单样式 -->
     <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
         <!-- 修改字体大小 -->
-        <item name="android:textSize">4sp</item>
+        <item name="android:textSize">14sp</item>
         <!-- 修改字体颜色 -->
         <item name="android:textColor">@android:color/white</item>
     </style>

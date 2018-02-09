@@ -3,6 +3,7 @@ package com.wisn.mainmodule.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -11,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wisn.mainmodule.R;
-import com.wisn.mainmodule.base.BaseActivity;
+import com.wisn.mainmodule.base.BaseAppCompatActivity;
 import com.wisn.mainmodule.http.request.Register;
 import com.wisn.mainmodule.presenter.RegisterPresenter;
 import com.wisn.mainmodule.view.RegisterView;
@@ -23,7 +24,7 @@ import com.wisn.utils.ToastUtils;
  */
 
 
-public class RegisterActivity extends BaseActivity implements View.OnClickListener ,RegisterView{
+public class RegisterActivity extends BaseAppCompatActivity implements View.OnClickListener ,RegisterView{
     private TextView login;
     private EditText password;
     private EditText username;
@@ -34,10 +35,19 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
         initView();
         registerPresenter=new RegisterPresenter(this);
 
+    }
+
+    @Override
+    public void initToolbarView(Toolbar toolbar) {
+
+    }
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.activity_register;
     }
 
     private void initView() {

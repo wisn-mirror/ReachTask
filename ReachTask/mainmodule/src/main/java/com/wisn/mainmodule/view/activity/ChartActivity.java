@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -61,7 +62,6 @@ public class ChartActivity extends BaseAppCompatActivity implements View.OnClick
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_message);
         initView();
         messagePresenter = new MessageChatPresenter(this);
         user = (User) getIntent().getParcelableExtra(Contants.user_flag);
@@ -85,6 +85,16 @@ public class ChartActivity extends BaseAppCompatActivity implements View.OnClick
         Intent intent = new Intent(this, MessageAService.class);
         bindService(intent, connection, Service.BIND_AUTO_CREATE);
         messagePresenter.loadMessage(contact);
+    }
+
+    @Override
+    public void initToolbarView(Toolbar toolbar) {
+
+    }
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.activity_message;
     }
 
     private void initView() {

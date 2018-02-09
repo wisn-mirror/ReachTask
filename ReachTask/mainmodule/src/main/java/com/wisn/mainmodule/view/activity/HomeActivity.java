@@ -9,7 +9,11 @@ import android.os.IBinder;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.support.v7.view.menu.MenuBuilder;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.RadioGroup;
 
 import com.wisn.mainmodule.R;
@@ -27,7 +31,9 @@ import com.wisn.mainmodule.view.BaseUpdateView;
 import com.wisn.mainmodule.view.ChatView;
 import com.wisn.mainmodule.view.HomeView;
 import com.wisn.mainmodule.widget.TipRadioButton;
+import com.wisn.utils.ToastUtils;
 
+import java.lang.reflect.Method;
 import java.util.List;
 
 /**
@@ -50,11 +56,19 @@ public class HomeActivity extends BaseAppCompatActivity implements RadioGroup.On
     private ServiceConnection connection;
     private HandleMessage handleMessage;
     private HomeActivityAdapter fragmentAdapter;
+    @Override
+    public void initToolbarView(Toolbar toolbar) {
+        toolbar.setTitle("任务通");
 
+    }
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.activity_home;
+    }
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
         mRadioButton = (RadioGroup) findViewById(R.id.bottom_radiogroup);
         mViewpager = (ViewPager) findViewById(R.id.viewpager);
         radiobutton_bg_message = (TipRadioButton) findViewById(R.id.radiobutton_bg_message);
@@ -82,6 +96,8 @@ public class HomeActivity extends BaseAppCompatActivity implements RadioGroup.On
         Intent intent = new Intent(this, MessageAService.class);
         bindService(intent, connection, Service.BIND_AUTO_CREATE);
     }
+
+
 
     @Override
     protected void onStart() {
@@ -223,6 +239,43 @@ public class HomeActivity extends BaseAppCompatActivity implements RadioGroup.On
     public void receiptMessage(short module, short cmd, long messageId, long receiveTime, short resultCode) {
 
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.home_menu,menu);
 
+        if (menu != null) {
+            if (menu.getClass() == MenuBuilder.class) {
+                try {
+                    Method m = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
+                    m.setAccessible(true);
+                    m.invoke(menu, true);
+                } catch (Exception e) {
+                }
+            }
+        }
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int i = item.getItemId();
+        if (i == R.id.search) {
+            ToastUtils.show("search");
+            return true;
+        } else if (i == R.id.addfrends) {
+            ToastUtils.show("addfrends");
+//            SelectImageListActivity.start(this,100,1,null);
+            return true;
+        } else if (i == R.id.myinfo_code) {
+            ToastUtils.show("myinfo_code");
+            return true;
+        }else if (i == R.id.scan_code) {
+            ToastUtils.show("scan_code");
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
 
 }

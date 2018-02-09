@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -19,12 +20,11 @@ import android.widget.TextView;
 import com.wisn.mainmodule.R;
 import com.wisn.mainmodule.adapter.SelectImageAdapter;
 import com.wisn.mainmodule.adapter.SelectImageFolderAdapter;
-import com.wisn.mainmodule.base.BaseActivity;
+import com.wisn.mainmodule.base.BaseAppCompatActivity;
 import com.wisn.mainmodule.entity.bean.Folder;
 import com.wisn.mainmodule.entity.bean.Image;
 import com.wisn.mainmodule.model.impl.MediaModel;
 import com.wisn.mainmodule.utils.Contants;
-import com.wisn.skinlib.utils.LogUtils;
 import com.wisn.utils.DateUtils;
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ import java.util.ArrayList;
  */
 
 
-public class SelectImageListActivity extends BaseActivity implements View.OnClickListener, SelectImageAdapter.SelectImageListener, SelectImageFolderAdapter.SelectImageFolderListener {
+public class SelectImageListActivity extends BaseAppCompatActivity implements View.OnClickListener, SelectImageAdapter.SelectImageListener, SelectImageFolderAdapter.SelectImageFolderListener {
     private static final String TAG ="SelectImageListActivity" ;
     private TextView image_back;
     private TextView image_title;
@@ -66,7 +66,6 @@ public class SelectImageListActivity extends BaseActivity implements View.OnClic
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chrooseimage);
         Intent intent = getIntent();
         maxCount = intent.getIntExtra(Contants.Select_MaxCount, 4);
         ArrayList<Image> imageslist = intent.getParcelableArrayListExtra(Contants.Select_ImageList);
@@ -75,6 +74,16 @@ public class SelectImageListActivity extends BaseActivity implements View.OnClic
         mediaModel = new MediaModel();
         initView();
         initListener();
+    }
+
+    @Override
+    public void initToolbarView(Toolbar toolbar) {
+
+    }
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.activity_chrooseimage;
     }
 
     @Override

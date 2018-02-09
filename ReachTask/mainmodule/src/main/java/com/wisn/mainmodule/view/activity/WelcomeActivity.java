@@ -7,12 +7,13 @@ import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.wisn.mainmodule.R;
-import com.wisn.mainmodule.base.BaseActivity;
+import com.wisn.mainmodule.base.BaseAppCompatActivity;
 import com.wisn.mainmodule.presenter.LauncherPresenter;
 import com.wisn.mainmodule.view.LauncherView;
 import com.wisn.mainmodule.widget.CountdownView;
@@ -28,7 +29,7 @@ import java.util.List;
  */
 
 
-public class WelcomeActivity extends BaseActivity implements LauncherView {
+public class WelcomeActivity extends BaseAppCompatActivity implements LauncherView {
     private static final String TAG ="WelcomeActivity" ;
     private ViewPager Viewpager;
     private CountdownView countdownView;
@@ -39,10 +40,19 @@ public class WelcomeActivity extends BaseActivity implements LauncherView {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcome);
         launcherPresenter=new LauncherPresenter(this);
         initData();
         initView();
+    }
+
+    @Override
+    public void initToolbarView(Toolbar toolbar) {
+
+    }
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.activity_welcome;
     }
 
     private void initData() {

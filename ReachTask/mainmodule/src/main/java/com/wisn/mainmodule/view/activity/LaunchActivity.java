@@ -5,9 +5,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 
 import com.wisn.mainmodule.R;
-import com.wisn.mainmodule.base.BaseActivity;
+import com.wisn.mainmodule.base.BaseAppCompatActivity;
 import com.wisn.mainmodule.presenter.LauncherPresenter;
 import com.wisn.mainmodule.view.LauncherView;
 
@@ -17,14 +18,23 @@ import com.wisn.mainmodule.view.LauncherView;
  */
 
 
-public class LaunchActivity  extends BaseActivity implements LauncherView {
+public class LaunchActivity  extends BaseAppCompatActivity implements LauncherView {
     LauncherPresenter launcherPresenter;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_launcher);
         launcherPresenter=new LauncherPresenter(this);
         launcherPresenter.launcher();
+    }
+
+    @Override
+    public void initToolbarView(Toolbar toolbar) {
+
+    }
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.activity_launcher;
     }
 
     @Override

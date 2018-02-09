@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/search"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="Search"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/kong"
+        android:icon="@null"
+        android:title=" "
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/addfrends"
+        android:icon="@drawable/home_bottom_tab_icon_work_normal"
+        android:title="添加朋友"
+        android:visible="true"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/myinfo_code"
+        android:icon="@drawable/home_bottom_tab_icon_work_normal"
+        android:title="我的二维码"
+        android:visible="true" />
+
+    <item
+        android:id="@+id/scan_code"
+        android:icon="@drawable/home_bottom_tab_icon_work_normal"
+        android:title="扫一扫"
+        android:visible="true" />
+
+</menu>
