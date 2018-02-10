@@ -19,6 +19,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.wisn.mainmodule.R;
 import com.wisn.mainmodule.base.BaseAppCompatActivity;
 import com.wisn.mainmodule.entity.Contact;
@@ -44,8 +46,8 @@ import java.util.List;
  */
 
 
-public class ChartActivity extends BaseAppCompatActivity implements View.OnClickListener, ChatView, MessageChangeListener {
-    public static String TAG = "ChartActivity";
+public class ChatActivity extends BaseAppCompatActivity implements View.OnClickListener, ChatView, MessageChangeListener {
+    public static String TAG = "ChatActivity";
     private RecyclerView message_list;
     //    private SwipeRefreshLayout message_list_refresh;
     private EditText message_content;
@@ -55,18 +57,20 @@ public class ChartActivity extends BaseAppCompatActivity implements View.OnClick
     private MessageChatPresenter messagePresenter;
     private RecyclerView.Adapter<RecyclerView.ViewHolder> adapter;
     List<Message> messageList = new ArrayList<>();
-    private User user;
+    private User targetUser;
     private Contact contact;
     private LinearLayoutManager mLinearLayoutManager;
+    private User activeUser;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        targetUser = (User) getIntent().getParcelableExtra(Contants.user_flag);
+        contact = (Contact) getIntent().getParcelableExtra(Contants.contact_flag);
         super.onCreate(savedInstanceState);
         initView();
         messagePresenter = new MessageChatPresenter(this);
-        user = (User) getIntent().getParcelableExtra(Contants.user_flag);
-        contact = (Contact) getIntent().getParcelableExtra(Contants.contact_flag);
-        Log.e(TAG, "user: " + user + "  contact:" + contact);
+        activeUser = messagePresenter.getActiveUser();
+        Log.e(TAG, "targetUser: " + targetUser + "  contact:" + contact);
         connection = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
@@ -74,12 +78,12 @@ public class ChartActivity extends BaseAppCompatActivity implements View.OnClick
                 MessageAService.HandleMessageImpl service = (MessageAService.HandleMessageImpl) iBinder;
 //                DaemonService.HandleMessageImpl service= (DaemonService.HandleMessageImpl) iBinder;
                 handleMessage = (HandleMessage) service.getService();
-                handleMessage.addMessageListener(ChartActivity.this);
+                handleMessage.addMessageListener(ChatActivity.this);
             }
 
             @Override
             public void onServiceDisconnected(ComponentName componentName) {
-                handleMessage.removeMessageListener(ChartActivity.this);
+                handleMessage.removeMessageListener(ChatActivity.this);
             }
         };
         Intent intent = new Intent(this, MessageAService.class);
@@ -89,7 +93,8 @@ public class ChartActivity extends BaseAppCompatActivity implements View.OnClick
 
     @Override
     public void initToolbarView(ToolbarHolder toolbar) {
-
+        toolbar.getToolbar().setTitle(targetUser.getNickname());
+        toolbar.getToolbar().setNavigationIcon(R.drawable.back);
     }
 
     @Override
@@ -98,6 +103,10 @@ public class ChartActivity extends BaseAppCompatActivity implements View.OnClick
     }
 
     private void initView() {
+        final RequestOptions options = new RequestOptions().centerCrop()
+                .placeholder(R.drawable.photo)
+                .error(R.drawable.photo)
+                .fallback(R.drawable.photo);
 //        message_list_refresh = (SwipeRefreshLayout) findViewById(R.id.message_list_refresh);
         message_list = (RecyclerView) findViewById(R.id.message_list);
         message_list.setOnClickListener(this);
@@ -141,12 +150,18 @@ public class ChartActivity extends BaseAppCompatActivity implements View.OnClick
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
                 if(viewType==1){
-                    View inflate = LayoutInflater.from(ChartActivity.this).inflate(R.layout.item_chat_send_textmessage, parent, false);
+                    View inflate = LayoutInflater.from(ChatActivity.this).inflate(R.layout.item_chat_send_textmessage, parent, false);
                     TextMessageLeftHolder contactsItemHolder = new TextMessageLeftHolder(inflate);
+                    Glide.with(ChatActivity.this)
+                            .load(Contants.baseImage + activeUser.getIconurl())
+                            .apply(options).into(contactsItemHolder.photo);
                     return contactsItemHolder;
                 }else{
-                    final View inflate = LayoutInflater.from(ChartActivity.this).inflate(R.layout.item_chat_received_textmessage, parent, false);
+                    final View inflate = LayoutInflater.from(ChatActivity.this).inflate(R.layout.item_chat_received_textmessage, parent, false);
                     TextMessageLeftHolder contactsItemHolder = new TextMessageLeftHolder(inflate);
+                    Glide.with(ChatActivity.this)
+                            .load(Contants.baseImage + targetUser.getIconurl())
+                            .apply(options).into(contactsItemHolder.photo);
                     return contactsItemHolder;
                 }
 
@@ -156,7 +171,8 @@ public class ChartActivity extends BaseAppCompatActivity implements View.OnClick
             public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
                 if (holder instanceof TextMessageLeftHolder) {
                     TextMessageLeftHolder contactsItemHolder = (TextMessageLeftHolder) holder;
-                    contactsItemHolder.contact_text.setText(messageList.get(position).getContent() + " ");
+                    Message message = messageList.get(position);
+                    contactsItemHolder.contact_text.setText(message .getContent() + " ");
                 }
             }
 
@@ -168,12 +184,11 @@ public class ChartActivity extends BaseAppCompatActivity implements View.OnClick
             @Override
             public int getItemViewType(int position) {
                 Message message = messageList.get(position);
-                if(message.getFromuserid()==user.getUserid()){
+                if(message.getFromuserid()== targetUser.getUserid()){
                     return 2;
                 }else{
                     return 1;
                 }
-//                return super.getItemViewType(position);
             }
         };
         message_list.setAdapter(adapter);
@@ -230,7 +245,7 @@ public class ChartActivity extends BaseAppCompatActivity implements View.OnClick
         Message message = new Message();
         message.setContent(content);
         message.setContactid(contact.getContactid());
-        message.setTargetuserid(user.getUserid());
+        message.setTargetuserid(targetUser.getUserid());
         messagePresenter.sendMessage(ModuleId.chatMessage, CmdId.ChartMessage.sendMessageToAll, message);
         // TODO validate success, do something
 

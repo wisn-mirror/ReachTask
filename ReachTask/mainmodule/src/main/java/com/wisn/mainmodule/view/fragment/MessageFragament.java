@@ -20,7 +20,7 @@ import com.wisn.mainmodule.presenter.MessageContactPresenter;
 import com.wisn.mainmodule.utils.Contants;
 import com.wisn.mainmodule.view.HomeView;
 import com.wisn.mainmodule.view.MessageContactView;
-import com.wisn.mainmodule.view.activity.ChartActivity;
+import com.wisn.mainmodule.view.activity.ChatActivity;
 import com.wisn.mainmodule.view.viewholder.MessageItemHolder;
 
 import java.util.ArrayList;
@@ -175,7 +175,7 @@ public class MessageFragament extends BaseLazyFragment implements MessageContact
 
     @Override
     public void toSendMessage(Contact contact, User user) {
-        Intent intent=   new Intent(getActivity(), ChartActivity.class);
+        Intent intent=   new Intent(getActivity(), ChatActivity.class);
         intent.putExtra(Contants.user_flag, user);
         intent.putExtra(Contants.contact_flag, contact);
         startActivity(intent);

@@ -126,7 +126,7 @@ public class RegisterActivity extends BaseAppCompatActivity implements View.OnCl
     @Override
     public void registerSuccess(String msg) {
         ToastUtils.show(msg);
-//        startActivity(new Intent(this,LoginActivity.class));
+        startActivity(new Intent(this,LoginActivity.class));
         this.finish();
     }
 

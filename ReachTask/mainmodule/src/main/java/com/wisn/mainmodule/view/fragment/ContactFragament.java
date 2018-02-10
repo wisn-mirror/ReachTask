@@ -53,11 +53,11 @@ public class ContactFragament extends BaseLazyFragment implements ContactView {
     }
 
     private void initView(View view) {
-        final RequestOptions options = new RequestOptions();
-        options.centerCrop()
-                .placeholder(R.drawable.radiobutton_bg_message)
+        final RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.drawable.photo)
                 .error(R.drawable.photo)
-                .fallback(R.drawable.radiobutton_bg_work);
+                .fallback(R.drawable.photo);
 
         contact_list_refresh = (SwipeRefreshLayout) view.findViewById(R.id.contact_list_refresh);
         contact_list = (RecyclerView) view.findViewById(R.id.contact_list);

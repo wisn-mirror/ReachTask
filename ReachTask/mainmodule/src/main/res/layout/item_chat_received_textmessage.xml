@@ -14,14 +14,14 @@
         android:layout_gravity="top|center"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:background="@drawable/home_bottom_tab_icon_contact_highlight" />
+        android:src="@drawable/home_bottom_tab_icon_contact_highlight" />
 
     <TextView
         android:id="@+id/contact_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_chat_receive"
-        android:padding="2dp"
+        android:padding="10dp"
         android:minHeight="35dp"
         android:layout_marginTop="4dp"
         android:layout_marginLeft="5dp"
@@ -29,6 +29,6 @@
         android:layout_marginBottom="4dp"
         android:textSize="15sp"
         android:textColor="@color/text_black"
-        android:text="rewqrew" />
+        android:text="info_nicknameinfo_nicknameinfo_nicknameinfo_nicknameinfo_nicknameinfo_nicknameinfo_nicknameinfo_nicknameinfo_nicknameinfo_nicknameinfo_nicknameinfo_nicknameinfo_nicknameinfo_nicknameinfo_nicknameinfo_nickname" />
 
 </LinearLayout>

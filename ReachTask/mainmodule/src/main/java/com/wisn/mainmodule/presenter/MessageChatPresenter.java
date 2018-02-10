@@ -46,6 +46,9 @@ public class MessageChatPresenter {
         contact.setUnReadMessageNumber(0);
         contactMessageModel.saveContacts(contact);
     }
+    public User getActiveUser(){
+       return  userModel.getActiveUser();
+    }
 
     public void sendMessage(short module, short cmd, Message message) {
         User activeUser = userModel.getActiveUser();
