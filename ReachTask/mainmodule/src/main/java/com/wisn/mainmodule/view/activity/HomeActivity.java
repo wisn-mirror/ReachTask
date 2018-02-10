@@ -29,6 +29,7 @@ import com.wisn.mainmodule.protocal.service.MessageChangeListener;
 import com.wisn.mainmodule.view.BaseUpdateView;
 import com.wisn.mainmodule.view.ChatView;
 import com.wisn.mainmodule.view.HomeView;
+import com.wisn.mainmodule.view.fragment.HomeFragmentFactory;
 import com.wisn.mainmodule.view.viewholder.ToolbarHolder;
 import com.wisn.mainmodule.widget.TipRadioButton;
 import com.wisn.utils.ToastUtils;
@@ -223,13 +224,12 @@ public class HomeActivity extends BaseAppCompatActivity implements RadioGroup.On
 
     @Override
     public void newMessage(Contact contants, short module, short cmd, Message message) {
-
         switch (module){
             case ModuleId.AuthMessage:
                 //
                 break;
             case ModuleId.chatMessage:
-                BaseUpdateView item = (BaseUpdateView) fragmentAdapter.getItem(0);
+                BaseUpdateView item = (BaseUpdateView) HomeFragmentFactory.getFragment("Message");
                 item.update();
                 break;
         }

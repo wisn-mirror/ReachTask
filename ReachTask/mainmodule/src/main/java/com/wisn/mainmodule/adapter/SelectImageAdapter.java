@@ -33,17 +33,35 @@ public class SelectImageAdapter extends RecyclerView.Adapter<SelectImageAdapter.
     private final RequestOptions requestOptions;
     private SelectImageListener selectImageListener;
     private int lastSelectIndex = 0;
+    private int headView;
+    private int footerView;
+    private final int headType = 100;
+    private final int footerType = 200;
+    private final int nomalType = 300;
+    private View.OnClickListener headViewOnClickLister;
 
-    public SelectImageAdapter(Context context, int maxSelect,ArrayList<Image> imageslist) {
+    public SelectImageAdapter(Context context, int maxSelect, ArrayList<Image> imageslist) {
         this.context = context;
         inflater = LayoutInflater.from(context);
         this.maxSelect = maxSelect;
         requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE);
         selectImageList = new ArrayList<>();
-        if(imageslist!=null){
+        if (imageslist != null) {
             selectImageList.addAll(selectImageList);
         }
     }
+
+    public void setHeadView(int headView, View.OnClickListener onClickListener) {
+        this.headView = headView;
+        this.headViewOnClickLister = onClickListener;
+        notifyItemChanged(0);
+    }
+
+    public void setFooterView(int footerView) {
+        this.footerView = footerView;
+        notifyItemChanged(getItemCount() - 1);
+    }
+
 
     public void setSelectImageList(ArrayList<Image> selectImageList) {
         this.selectImageList = selectImageList;
@@ -69,81 +87,125 @@ public class SelectImageAdapter extends RecyclerView.Adapter<SelectImageAdapter.
 
     @Override
     public SelectImageAdapter.ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.item_select_image, parent, false);
-        return new ImageViewHolder(view);
+        if (viewType == headType) {
+            View view = inflater.inflate(headView, parent, false);
+            return new ImageViewHolder(view);
+//            return new ImageViewHolder(headView);
+        } else if (viewType == footerType) {
+            View view = inflater.inflate(footerView, parent, false);
+            return new ImageViewHolder(view);
+        } else {
+            View view = inflater.inflate(R.layout.item_select_image, parent, false);
+            return new ImageViewHolder(view);
+        }
+
     }
 
-    public long getFirstVisibleTime(int position){
-        if(position<imageList.size()){
+    public long getFirstVisibleTime(int position) {
+        if (imageList != null && position < imageList.size()) {
             //秒
-           return  imageList.get(position).getTime();
+            if (position < 0) position = 0;
+            return imageList.get(position).getTime();
         }
         return -1;
     }
+
     @Override
     public void onBindViewHolder(ImageViewHolder holder, final int position) {
-        if (imageList != null) {
-            final Image fileItem = imageList.get(position);
-            holder.image_select.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (selectImageList.contains(fileItem)) {
-                        selectImageList.remove(fileItem);
-                        notifyItemChanged(position);
-                    } else if (maxSelect == 1) {
-                        selectImageList.clear();
-                        selectImageList.add(fileItem);
-                        notifyItemChanged(lastSelectIndex);
-                        notifyItemChanged(position);
-                        lastSelectIndex = position;
-                    } else if (selectImageList.size() < maxSelect) {
-                        selectImageList.add(fileItem);
-                        notifyItemChanged(position);
-                        lastSelectIndex = position;
-                    } else {
-                        ToastUtils.show("最多选中" + maxSelect + "张");
-                    }
+        int itemViewType = getItemViewType(position);
+        if (itemViewType == nomalType) {
+            if (imageList != null) {
+                int scrollIndex = 0;
+                if (headView != 0) scrollIndex = 1;
+                final Image fileItem = imageList.get(position - scrollIndex);
+                holder.image_select.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (selectImageList.contains(fileItem)) {
+                            selectImageList.remove(fileItem);
+                            notifyItemChanged(position);
+                        } else if (maxSelect == 1) {
+                            selectImageList.clear();
+                            selectImageList.add(fileItem);
+                            notifyItemChanged(lastSelectIndex);
+                            notifyItemChanged(position);
+                            lastSelectIndex = position;
+                        } else if (selectImageList.size() < maxSelect) {
+                            selectImageList.add(fileItem);
+                            notifyItemChanged(position);
+                            lastSelectIndex = position;
+                        } else {
+                            ToastUtils.show("最多选中" + maxSelect + "张");
+                        }
 
-                    if (selectImageListener != null) {
-                        selectImageListener.imageSelect(selectImageList.size(), maxSelect, selectImageList);
+                        if (selectImageListener != null) {
+                            selectImageListener.imageSelect(selectImageList.size(), maxSelect, selectImageList);
+                        }
                     }
-                }
-            });
-            holder.mark.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (selectImageListener != null) {
-                        selectImageListener.imageSelectPreview(maxSelect, selectImageList,imageList);
+                });
+                holder.mark.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (selectImageListener != null) {
+                            selectImageListener.imageSelectPreview(maxSelect, selectImageList, imageList);
+                        }
                     }
+                });
+                if (selectImageList.contains(fileItem)) {
+                    holder.mark.setAlpha(0.8f);
+                    holder.image_select.setImageResource(R.drawable.icon_image_select);
+                } else {
+                    holder.mark.setAlpha(0.2f);
+                    holder.image_select.setImageResource(R.drawable.icon_image_un_select);
                 }
-            });
-            if (selectImageList.contains(fileItem)) {
-                holder.mark.setAlpha(0.8f);
-                holder.image_select.setImageResource(R.drawable.icon_image_select);
-            } else {
-                holder.mark.setAlpha(0.2f);
-                holder.image_select.setImageResource(R.drawable.icon_image_un_select);
+
+                Glide.with(context).load(new File(fileItem.getPath()))
+                        .apply(requestOptions)
+                        .into(holder.image_view);
+
             }
-
-            Glide.with(context).load(new File(fileItem.getPath()))
-                    .apply(requestOptions)
-                    .into(holder.image_view);
+        } else if (itemViewType == headType) {
+            holder.image_view.setImageResource(R.drawable.xiangji);
+            holder.image_select.setVisibility(View.GONE);
+            holder.mark.setVisibility(View.GONE);
+            holder.itemView.setOnClickListener(headViewOnClickLister);
+        } else if (itemViewType == footerType) {
 
         }
 
+
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (position == 0 && headView != 0) {
+            return headType;
+        }
+        if (headView != 0 && position == getItemCount()) {
+            return footerType;
+        }
+        return nomalType;
     }
 
     @Override
     public int getItemCount() {
-        if (imageList != null) {
-            return imageList.size();
+        int count = 0;
+        if (headView != 0) {
+            count++;
         }
-        return 0;
+        if (footerView != 0) {
+            count++;
+        }
+        if (imageList != null) {
+            count = count + imageList.size();
+        }
+        return count;
     }
 
     public interface SelectImageListener {
         void imageSelect(int current, int max, ArrayList<Image> images);
-        void imageSelectPreview( int max, ArrayList<Image> selectImages,ArrayList<Image> allImage);
+
+        void imageSelectPreview(int max, ArrayList<Image> selectImages, ArrayList<Image> allImage);
     }
 
     class ImageViewHolder extends RecyclerView.ViewHolder {

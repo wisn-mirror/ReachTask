@@ -32,7 +32,7 @@ import java.util.List;
  */
 
 
-public class MessageFragament extends BaseLazyFragment implements MessageContactView {
+public class MessageFragament extends BaseLazyFragment implements MessageContactView{
     private RecyclerView contact_list;
     private MessageContactPresenter contactPresenter;
     private LinearLayoutManager mLinearLayoutManager;
@@ -150,6 +150,7 @@ public class MessageFragament extends BaseLazyFragment implements MessageContact
     @Override
     public void setContactData(List<Contact> contactData) {
         contacts =contactData;
+        dataChange();
     }
 
     @Override

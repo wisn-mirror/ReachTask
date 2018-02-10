@@ -68,6 +68,7 @@ public class PreviewImageActivity extends BaseAppCompatActivity implements View.
         setStatusBarVisible(true);
         initView();
         initListener();
+        updateSelect();
     }
 
     @Override
@@ -115,13 +116,7 @@ public class PreviewImageActivity extends BaseAppCompatActivity implements View.
             public void onPageSelected(int position) {
                 toolbarHolder.getToolbar().setTitle("预览("+(position + 1) + "/" + imageslist.size()+")");
                 viewPageIndex = position;
-                Image image = imageslist.get(viewPageIndex);
-                if (selectImageList.contains(image)) {
-                    iv_select.setImageResource(R.drawable.icon_image_select);
-                } else {
-                    iv_select.setImageResource(R.drawable.icon_image_un_select);
-                }
-
+                updateSelect();
             }
 
             @Override
@@ -146,14 +141,14 @@ public class PreviewImageActivity extends BaseAppCompatActivity implements View.
             submitfinsh=true;
             this.finish();
         } else if (v == pre_review) {
-            if (selectImageList.size() >= maxCount) {
-                toolbarHolder.toolbar_ib_right.setEnabled(true);
-                ToastUtils.show("最多选择" + maxCount + "张");
-                return;
-            }
             toolbarHolder.toolbar_ib_right.setEnabled(false);
             Image image = imageslist.get(viewPageIndex);
             if (!selectImageList.contains(image)) {
+                if (selectImageList.size() >= maxCount) {
+                    toolbarHolder.toolbar_ib_right.setEnabled(true);
+                    ToastUtils.show("最多选择" + maxCount + "张");
+                    return;
+                }
                 selectImageList.add(image);
                 iv_select.setImageResource(R.drawable.icon_image_select);
             } else {
@@ -166,8 +161,17 @@ public class PreviewImageActivity extends BaseAppCompatActivity implements View.
             toolbarHolder.toolbar_ib_right.setText("确定(" + selectImageList.size() + "/" + maxCount + ")");
         }
     }
+    private void updateSelect(){
+        Image image = imageslist.get(viewPageIndex);
+        if (selectImageList.contains(image)) {
+            iv_select.setImageResource(R.drawable.icon_image_select);
+        } else {
+            iv_select.setImageResource(R.drawable.icon_image_un_select);
+        }
+        toolbarHolder.toolbar_ib_right.setText("确定(" + selectImageList.size() + "/" + maxCount + ")");
+    }
 
-    public static int getStatusBarHeight(Context context) {
+    public  int getStatusBarHeight(Context context) {
         int result = 0;
         int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
         if (resourceId > 0) {

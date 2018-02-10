@@ -38,14 +38,24 @@
         android:inputType="phone" />
 
     <EditText
-        android:id="@+id/userid"
+        android:id="@+id/nickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/username"
         android:layout_alignLeft="@+id/username"
         android:layout_alignStart="@+id/username"
         android:layout_marginBottom="10dp"
-        android:hint="Name"
+        android:ems="10"
+        android:hint="nickname" />
+    <EditText
+        android:id="@+id/userid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/nickname"
+        android:layout_alignLeft="@+id/nickname"
+        android:layout_alignStart="@+id/nickname"
+        android:layout_marginBottom="10dp"
+        android:hint="NameId"
         android:ems="10"   />
     <LinearLayout
         android:layout_width="match_parent"

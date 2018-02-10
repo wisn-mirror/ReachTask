@@ -12,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wisn.mainmodule.R;
-import com.wisn.mainmodule.TestActivity;
 import com.wisn.mainmodule.base.BaseAppCompatActivity;
 import com.wisn.mainmodule.http.request.Login;
 import com.wisn.mainmodule.presenter.LoginPresenter;
@@ -82,14 +81,11 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
-
         if (v == login) {
-//            SelectImageListActivity.start(this,100,2,new ArrayList<Image>());
             submit();
         } else if (v == register) {
-            startActivity(new Intent(this,TestActivity.class));
-//            startActivity(new Intent(this,RegisterActivity.class));
-//            this.finish();
+            startActivity(new Intent(this,RegisterActivity.class));
+            this.finish();
         }
     }
 

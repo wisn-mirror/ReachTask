@@ -5,9 +5,11 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +26,7 @@ import com.wisn.mainmodule.entity.bean.Image;
 import com.wisn.mainmodule.model.impl.MediaModel;
 import com.wisn.mainmodule.utils.Contants;
 import com.wisn.mainmodule.view.viewholder.ToolbarHolder;
+import com.wisn.skinlib.utils.LogUtils;
 import com.wisn.utils.DateUtils;
 
 import java.util.ArrayList;
@@ -35,8 +38,8 @@ import java.util.ArrayList;
 
 
 public class SelectImageListActivity extends BaseAppCompatActivity implements View.OnClickListener, SelectImageAdapter.SelectImageListener, SelectImageFolderAdapter.SelectImageFolderListener {
-    private static final String TAG ="SelectImageListActivity" ;
-//    private TextView image_back;
+    private static final String TAG = "SelectImageListActivity";
+    //    private TextView image_back;
 //    private TextView image_title;
 //    private Button submit;
     private TextView select_dir;
@@ -51,8 +54,10 @@ public class SelectImageListActivity extends BaseAppCompatActivity implements Vi
     private SelectImageFolderAdapter folderAdapter;
     private Handler handler = new Handler(Looper.getMainLooper());
     private GridLayoutManager gridLayoutManager;
-    private int firstVisibleItemPosition;
+    private int firstVisibleItemPosition=0;
     private boolean isShowTime;
+    private final int request_code_CAMERA = 100;
+    private final int request_code_PREVIEWIMAGE = 200;
     private int maxCount;
     private ToolbarHolder toolbar;
 
@@ -74,15 +79,14 @@ public class SelectImageListActivity extends BaseAppCompatActivity implements Vi
         mediaModel = new MediaModel();
         initView();
         initListener();
-        changeTime();
     }
 
     @Override
     public void initToolbarView(ToolbarHolder toolbar) {
-         toolbar.getToolbar().setTitle("相册");
-         toolbar.getToolbar().setNavigationIcon(R.drawable.back);
-         toolbar.setRightButton("确定", this);
-         this.toolbar=toolbar;
+        toolbar.getToolbar().setTitle("相册");
+        toolbar.getToolbar().setNavigationIcon(R.drawable.back);
+        toolbar.setRightButton("确定", this);
+        this.toolbar = toolbar;
     }
 
     @Override
@@ -93,15 +97,24 @@ public class SelectImageListActivity extends BaseAppCompatActivity implements Vi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(data!=null){
-            ArrayList<Image> select_image= data.getParcelableArrayListExtra(Contants.Select_ImageList);
-            if(select_image!=null&&select_image.size()>0){
-                imageAdapter.setSelectImageList(select_image);
+        if (requestCode == request_code_PREVIEWIMAGE) {
+            if (data != null) {
+                ArrayList<Image> select_image = data.getParcelableArrayListExtra(Contants.Select_ImageList);
+                if (select_image != null && select_image.size() > 0) {
+                    imageAdapter.setSelectImageList(select_image);
+                }
+                if (data.getBooleanExtra(Contants.Select_Preview_isSubmit, false)) {
+                    finish();
+                }
             }
-            if(data.getBooleanExtra(Contants.Select_Preview_isSubmit,false)){
-                finish();
+        } else if (requestCode == request_code_CAMERA) {
+            Uri uri = null;
+            if (data != null && data.getData() != null) {
+                uri = data.getData();
             }
+            LogUtils.e(TAG, " uri:" + uri);
         }
+
     }
 
     public void finish() {
@@ -126,6 +139,13 @@ public class SelectImageListActivity extends BaseAppCompatActivity implements Vi
         gridLayoutManager = new GridLayoutManager(this, 3);
         image_list.setLayoutManager(gridLayoutManager);
         imageAdapter.setSelectImageListener(this);
+        imageAdapter.setHeadView(R.layout.item_select_image, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent, request_code_CAMERA);
+            }
+        });
         image_list.setAdapter(imageAdapter);
         dir_list.setLayoutManager(new LinearLayoutManager(this));
         dir_list.setAdapter(folderAdapter);
@@ -138,6 +158,7 @@ public class SelectImageListActivity extends BaseAppCompatActivity implements Vi
                         @Override
                         public void run() {
                             folderAdapter.refresh(folders);
+                            changeTime();
                         }
                     });
                 }
@@ -162,11 +183,10 @@ public class SelectImageListActivity extends BaseAppCompatActivity implements Vi
 
     private void changeTime() {
         int firstvisibleIndex = gridLayoutManager.findFirstVisibleItemPosition();
-        if (firstvisibleIndex == firstVisibleItemPosition) return;
+        if (firstvisibleIndex == firstVisibleItemPosition&&firstVisibleItemPosition!=0) return;
         firstVisibleItemPosition = firstvisibleIndex;
         long firstVisibleTime = imageAdapter.getFirstVisibleTime(firstVisibleItemPosition);
         if (firstVisibleTime > 0) {
-            System.out.println(System.currentTimeMillis() + ": " + firstVisibleItemPosition + " time" + firstVisibleTime);
             String dateDespre = DateUtils.getDateDespre(firstVisibleTime * 1000);
             image_date.setText(dateDespre);
             showTime();
@@ -222,7 +242,7 @@ public class SelectImageListActivity extends BaseAppCompatActivity implements Vi
 
     @Override
     public void imageSelect(int current, int max, ArrayList<Image> images) {
-        toolbar.getToolbar().setTitle("相册("+current + "/" + max+")");
+        toolbar.getToolbar().setTitle("相册(" + current + "/" + max + ")");
         pre_review.setText("预览(" + current + ")");
         if (current == max) {
             toolbar.toolbar_ib_right.setEnabled(true);
@@ -245,7 +265,7 @@ public class SelectImageListActivity extends BaseAppCompatActivity implements Vi
                 closeFolder();
             }
         } else if (v == pre_review) {
-            PreviewImageActivity.start(this, 100, maxCount, imageAdapter.getSelectImageList(), imageAdapter.getSelectImageList());
+            PreviewImageActivity.start(this, request_code_PREVIEWIMAGE, maxCount, imageAdapter.getSelectImageList(), imageAdapter.getSelectImageList());
         } else if (v == select_dir) {
             if (isOpenFolder) {
                 closeFolder();

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wisn.mainmodule.R;
+import com.wisn.mainmodule.TestActivity;
 import com.wisn.mainmodule.base.BaseAppCompatActivity;
 import com.wisn.mainmodule.http.request.Register;
 import com.wisn.mainmodule.presenter.RegisterPresenter;
@@ -28,6 +29,7 @@ public class RegisterActivity extends BaseAppCompatActivity implements View.OnCl
     private TextView login;
     private EditText password;
     private EditText username;
+    private EditText nickName;
     private EditText userid;
     private TextView forgetpassword;
     private Button register;
@@ -54,6 +56,7 @@ public class RegisterActivity extends BaseAppCompatActivity implements View.OnCl
         login = (TextView) findViewById(R.id.login);
         password = (EditText) findViewById(R.id.password);
         username = (EditText) findViewById(R.id.username);
+        nickName = (EditText) findViewById(R.id.nickname);
         userid = (EditText) findViewById(R.id.userid);
         forgetpassword = (TextView) findViewById(R.id.forgetpassword);
         register = (Button) findViewById(R.id.register);
@@ -69,6 +72,8 @@ public class RegisterActivity extends BaseAppCompatActivity implements View.OnCl
           this.finish();
         } else if (v == register) {
             submit();
+        }else if(v==forgetpassword){
+            startActivity(new Intent(this,TestActivity.class));
         }
     }
 
@@ -83,6 +88,11 @@ public class RegisterActivity extends BaseAppCompatActivity implements View.OnCl
         String usernameString = username.getText().toString().trim();
         if (TextUtils.isEmpty(usernameString)) {
             Toast.makeText(this, "Phone is null ", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String nickNameStr = nickName.getText().toString().trim();
+        if (TextUtils.isEmpty(nickNameStr)) {
+            Toast.makeText(this, "nickName is null ", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -103,6 +113,7 @@ public class RegisterActivity extends BaseAppCompatActivity implements View.OnCl
         register.setPassword(password.getText().toString().trim());
         register.setPhonenumber(username.getText().toString().trim());
         register.setNameid(userid.getText().toString().trim());
+        register.setNickname(nickName.getText().toString().trim());
         return register;
     }
 
