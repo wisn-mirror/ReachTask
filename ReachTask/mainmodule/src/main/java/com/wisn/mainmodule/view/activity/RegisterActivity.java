@@ -3,7 +3,6 @@ package com.wisn.mainmodule.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +15,7 @@ import com.wisn.mainmodule.base.BaseAppCompatActivity;
 import com.wisn.mainmodule.http.request.Register;
 import com.wisn.mainmodule.presenter.RegisterPresenter;
 import com.wisn.mainmodule.view.RegisterView;
+import com.wisn.mainmodule.view.viewholder.ToolbarHolder;
 import com.wisn.utils.ToastUtils;
 
 /**
@@ -41,7 +41,7 @@ public class RegisterActivity extends BaseAppCompatActivity implements View.OnCl
     }
 
     @Override
-    public void initToolbarView(Toolbar toolbar) {
+    public void initToolbarView(ToolbarHolder toolbar) {
 
     }
 

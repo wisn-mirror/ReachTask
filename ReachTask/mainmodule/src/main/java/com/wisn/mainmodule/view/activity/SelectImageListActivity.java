@@ -12,9 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.wisn.mainmodule.R;
@@ -25,6 +23,7 @@ import com.wisn.mainmodule.entity.bean.Folder;
 import com.wisn.mainmodule.entity.bean.Image;
 import com.wisn.mainmodule.model.impl.MediaModel;
 import com.wisn.mainmodule.utils.Contants;
+import com.wisn.mainmodule.view.viewholder.ToolbarHolder;
 import com.wisn.utils.DateUtils;
 
 import java.util.ArrayList;
@@ -37,9 +36,9 @@ import java.util.ArrayList;
 
 public class SelectImageListActivity extends BaseAppCompatActivity implements View.OnClickListener, SelectImageAdapter.SelectImageListener, SelectImageFolderAdapter.SelectImageFolderListener {
     private static final String TAG ="SelectImageListActivity" ;
-    private TextView image_back;
-    private TextView image_title;
-    private Button submit;
+//    private TextView image_back;
+//    private TextView image_title;
+//    private Button submit;
     private TextView select_dir;
     private TextView pre_review;
     private RecyclerView image_list;
@@ -55,6 +54,7 @@ public class SelectImageListActivity extends BaseAppCompatActivity implements Vi
     private int firstVisibleItemPosition;
     private boolean isShowTime;
     private int maxCount;
+    private ToolbarHolder toolbar;
 
     public static void start(Activity activity, int requestCode, int maxCount, ArrayList<Image> imageslist) {
         Intent intent = new Intent(activity, SelectImageListActivity.class);
@@ -74,11 +74,15 @@ public class SelectImageListActivity extends BaseAppCompatActivity implements Vi
         mediaModel = new MediaModel();
         initView();
         initListener();
+        changeTime();
     }
 
     @Override
-    public void initToolbarView(Toolbar toolbar) {
-
+    public void initToolbarView(ToolbarHolder toolbar) {
+         toolbar.getToolbar().setTitle("相册");
+         toolbar.getToolbar().setNavigationIcon(R.drawable.back);
+         toolbar.setRightButton("确定", this);
+         this.toolbar=toolbar;
     }
 
     @Override
@@ -116,9 +120,7 @@ public class SelectImageListActivity extends BaseAppCompatActivity implements Vi
 
 
     private void initListener() {
-        submit.setOnClickListener(this);
         select_dir.setOnClickListener(this);
-        image_back.setOnClickListener(this);
         pre_review.setOnClickListener(this);
         mark.setOnClickListener(this);
         gridLayoutManager = new GridLayoutManager(this, 3);
@@ -195,9 +197,7 @@ public class SelectImageListActivity extends BaseAppCompatActivity implements Vi
     }
 
     private void initView() {
-        image_back = (TextView) findViewById(R.id.image_back);
-        image_title = (TextView) findViewById(R.id.image_title);
-        submit = (Button) findViewById(R.id.submit);
+
         select_dir = (TextView) findViewById(R.id.select_dir);
         pre_review = (TextView) findViewById(R.id.pre_review);
         image_list = (RecyclerView) findViewById(R.id.image_list);
@@ -222,12 +222,12 @@ public class SelectImageListActivity extends BaseAppCompatActivity implements Vi
 
     @Override
     public void imageSelect(int current, int max, ArrayList<Image> images) {
-        image_title.setText(current + "/" + max);
+        toolbar.getToolbar().setTitle("相册("+current + "/" + max+")");
         pre_review.setText("预览(" + current + ")");
         if (current == max) {
-            submit.setEnabled(true);
+            toolbar.toolbar_ib_right.setEnabled(true);
         } else {
-            submit.setEnabled(false);
+            toolbar.toolbar_ib_right.setEnabled(false);
         }
     }
 
@@ -238,7 +238,7 @@ public class SelectImageListActivity extends BaseAppCompatActivity implements Vi
 
     @Override
     public void onClick(View v) {
-        if (v == submit) {
+        if (v == toolbar.toolbar_ib_right) {
             finish();
         } else if (v == mark) {
             if (isOpenFolder) {
@@ -252,8 +252,6 @@ public class SelectImageListActivity extends BaseAppCompatActivity implements Vi
             } else {
                 openFolder();
             }
-        } else if (v == image_back) {
-            this.finish();
         }
     }
 

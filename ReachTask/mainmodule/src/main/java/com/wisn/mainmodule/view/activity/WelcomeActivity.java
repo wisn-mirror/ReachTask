@@ -7,7 +7,6 @@ import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -16,6 +15,7 @@ import com.wisn.mainmodule.R;
 import com.wisn.mainmodule.base.BaseAppCompatActivity;
 import com.wisn.mainmodule.presenter.LauncherPresenter;
 import com.wisn.mainmodule.view.LauncherView;
+import com.wisn.mainmodule.view.viewholder.ToolbarHolder;
 import com.wisn.mainmodule.widget.CountdownView;
 import com.wisn.mainmodule.widget.IndicatorScrollView;
 import com.wisn.skinlib.utils.LogUtils;
@@ -46,7 +46,7 @@ public class WelcomeActivity extends BaseAppCompatActivity implements LauncherVi
     }
 
     @Override
-    public void initToolbarView(Toolbar toolbar) {
+    public void initToolbarView(ToolbarHolder toolbar) {
 
     }
 

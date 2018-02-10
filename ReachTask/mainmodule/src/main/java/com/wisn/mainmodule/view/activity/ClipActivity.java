@@ -1,8 +1,7 @@
 package com.wisn.mainmodule.view.activity;
 
-import android.support.v7.widget.Toolbar;
-
 import com.wisn.mainmodule.base.BaseAppCompatActivity;
+import com.wisn.mainmodule.view.viewholder.ToolbarHolder;
 
 /**
  * @author Wisn
@@ -12,7 +11,7 @@ import com.wisn.mainmodule.base.BaseAppCompatActivity;
 
 public class ClipActivity extends BaseAppCompatActivity {
     @Override
-    public void initToolbarView(Toolbar toolbar) {
+    public void initToolbarView(ToolbarHolder toolbar) {
 
     }
 

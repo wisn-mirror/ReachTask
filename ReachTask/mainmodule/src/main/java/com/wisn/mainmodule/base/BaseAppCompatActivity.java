@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.wisn.mainmodule.R;
+import com.wisn.mainmodule.view.viewholder.ToolbarHolder;
 import com.wisn.skinlib.base.SkinAppCompatActivity;
 import com.wisn.skinlib.utils.LogUtils;
 
@@ -39,11 +40,11 @@ public abstract  class BaseAppCompatActivity extends SkinAppCompatActivity {
                     finish();
                 }
             });
-            initToolbarView(toolbar);
+            initToolbarView(new ToolbarHolder(toolbar));
         }
     }
 
-    public abstract void initToolbarView(Toolbar toolbar);
+    public abstract void initToolbarView(ToolbarHolder toolbar);
 
     public abstract int getContentViewId()  ;
 

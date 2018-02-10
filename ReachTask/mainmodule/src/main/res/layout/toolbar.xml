@@ -7,7 +7,7 @@
     android:layout_height="?attr/actionBarSize"
     android:background="?attr/colorPrimary"
     android:elevation="4dp"
-    android:paddingRight="0dp"
+    android:paddingRight="13dp"
     android:paddingLeft="13dp"
     android:theme="@style/ToolbarTheme"
     app:popupTheme="@style/ToolbarPopupTheme"

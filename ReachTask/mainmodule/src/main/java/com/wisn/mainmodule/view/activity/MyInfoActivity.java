@@ -2,11 +2,11 @@ package com.wisn.mainmodule.view.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 
 import com.wisn.mainmodule.R;
 import com.wisn.mainmodule.base.BaseAppCompatActivity;
+import com.wisn.mainmodule.view.viewholder.ToolbarHolder;
 import com.wisn.mainmodule.widget.CombinationListItemLayout;
 
 /**
@@ -31,7 +31,7 @@ public class MyInfoActivity extends BaseAppCompatActivity {
     }
 
     @Override
-    public void initToolbarView(Toolbar toolbar) {
+    public void initToolbarView(ToolbarHolder toolbar) {
 
     }
 

@@ -5,12 +5,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
 
 import com.wisn.mainmodule.R;
 import com.wisn.mainmodule.base.BaseAppCompatActivity;
 import com.wisn.mainmodule.presenter.LauncherPresenter;
 import com.wisn.mainmodule.view.LauncherView;
+import com.wisn.mainmodule.view.viewholder.ToolbarHolder;
 
 /**
  * @author Wisn
@@ -28,7 +28,7 @@ public class LaunchActivity  extends BaseAppCompatActivity implements LauncherVi
     }
 
     @Override
-    public void initToolbarView(Toolbar toolbar) {
+    public void initToolbarView(ToolbarHolder toolbar) {
 
     }
 

@@ -1,106 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-    <RelativeLayout
-        android:id="@+id/chrooseimage_title"
-        android:layout_width="match_parent"
-        android:layout_alignParentTop="true"
-        android:paddingRight="10dp"
-        android:paddingLeft="10dp"
-        android:layout_height="50dp">
-        <TextView
-            android:id="@+id/image_back"
-            android:layout_width="wrap_content"
-            android:minWidth="45dp"
-            android:layout_height="45dp"
-            android:background="@drawable/title_bar_back_btn"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            />
-        <TextView
-            android:id="@+id/image_title"
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:minWidth="45dp"
-            android:layout_centerVertical="true"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:text="照片"/>
-        <Button
-            android:id="@+id/submit"
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:minWidth="45dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="确定"/>
+    android:layout_height="match_parent">
 
-    </RelativeLayout>
+    <include
+        android:id="@+id/include_toolbar"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true" />
+
     <RelativeLayout
         android:id="@+id/chrooseimage_bottom"
         android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:paddingRight="30dp"
         android:paddingLeft="30dp"
-        android:layout_height="50dp">
+        android:paddingRight="30dp">
+
         <TextView
             android:id="@+id/select_dir"
             android:layout_width="wrap_content"
-            android:minWidth="45dp"
             android:layout_height="45dp"
-            android:gravity="center"
-            android:text="image"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:drawableRight="@drawable/text_indicator"
-            />
+            android:gravity="center"
+            android:minWidth="45dp"
+            android:text="image" />
 
         <TextView
             android:id="@+id/pre_review"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
-            android:minWidth="45dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="预览"/>
+            android:minWidth="45dp"
+            android:text="预览" />
 
     </RelativeLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/image_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
         android:layout_above="@id/chrooseimage_bottom"
-        android:layout_below="@id/chrooseimage_title"/>
+        android:layout_below="@id/include_toolbar"
+        android:background="@android:color/white" />
+
     <TextView
         android:id="@+id/image_date"
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:textSize="12sp"
+        android:layout_below="@id/include_toolbar"
         android:background="#9e111212"
+        android:gravity="left|center"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:gravity="left|center"
-        android:layout_below="@id/chrooseimage_title"
-        android:textColor="@android:color/white"/>
+        android:textColor="@android:color/white"
+        android:textSize="12sp" />
+
     <View
         android:id="@+id/mark"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/chrooseimage_bottom"
         android:background="#c4111212"
-        android:visibility="gone"
-        />
+        android:visibility="gone" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/dir_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="80dp"
-        android:visibility="gone"
-        android:background="@android:color/white"
         android:layout_above="@id/chrooseimage_bottom"
-        android:layout_below="@id/chrooseimage_title"/>
+        android:layout_below="@id/include_toolbar"
+        android:layout_marginTop="80dp"
+        android:background="@android:color/white"
+        android:visibility="gone" />
 
 </RelativeLayout>

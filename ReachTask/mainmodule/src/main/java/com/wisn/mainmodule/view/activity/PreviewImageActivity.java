@@ -9,9 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -21,6 +19,7 @@ import com.wisn.mainmodule.adapter.PreviewImagePageAdapter;
 import com.wisn.mainmodule.base.BaseAppCompatActivity;
 import com.wisn.mainmodule.entity.bean.Image;
 import com.wisn.mainmodule.utils.Contants;
+import com.wisn.mainmodule.view.viewholder.ToolbarHolder;
 import com.wisn.mainmodule.widget.MViewPager;
 import com.wisn.utils.ToastUtils;
 
@@ -34,10 +33,9 @@ import java.util.ArrayList;
 
 public class PreviewImageActivity extends BaseAppCompatActivity implements View.OnClickListener {
     private MViewPager vp_image;
-    private TextView image_back;
-    private TextView image_title;
-    private Button submit;
-    private RelativeLayout chrooseimage_title;
+//    private TextView image_back;
+//    private TextView image_title;
+//    private Button submit;
     private TextView pre_review;
     private RelativeLayout chrooseimage_bottom;
     private PreviewImagePageAdapter previewImagePageAdapter;
@@ -49,6 +47,7 @@ public class PreviewImageActivity extends BaseAppCompatActivity implements View.
 
     private boolean showtitle = true;
     private boolean submitfinsh = false;
+    private ToolbarHolder toolbarHolder;
 
     public static void start(Activity activity, int requestCode, int maxCount, ArrayList<Image> selectImageList, ArrayList<Image> imageslist) {
         Intent intent = new Intent(activity, PreviewImageActivity.class);
@@ -65,14 +64,18 @@ public class PreviewImageActivity extends BaseAppCompatActivity implements View.
         maxCount = intent.getIntExtra(Contants.Select_MaxCount, 1);
         selectImageList = intent.getParcelableArrayListExtra(Contants.Select_Select_ImageList);
         imageslist = intent.getParcelableArrayListExtra(Contants.Select_ImageList);
+        toolbarHolder.getToolbar().setTitle("预览("+1 + "/" + imageslist.size()+")");
         setStatusBarVisible(true);
         initView();
         initListener();
     }
 
     @Override
-    public void initToolbarView(Toolbar toolbar) {
-
+    public void initToolbarView(ToolbarHolder toolbar) {
+        toolbar.getToolbar().setTitle("预览");
+        toolbar.getToolbar().setNavigationIcon(R.drawable.back);
+        toolbarHolder =toolbar;
+        toolbar.setRightButton("确定",this);
     }
 
     @Override
@@ -102,9 +105,7 @@ public class PreviewImageActivity extends BaseAppCompatActivity implements View.
                 }
             }
         });
-        submit.setOnClickListener(this);
         pre_review.setOnClickListener(this);
-        image_back.setOnClickListener(this);
         vp_image.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -112,7 +113,7 @@ public class PreviewImageActivity extends BaseAppCompatActivity implements View.
 
             @Override
             public void onPageSelected(int position) {
-                image_title.setText(position + 1 + "/" + imageslist.size());
+                toolbarHolder.getToolbar().setTitle("预览("+(position + 1) + "/" + imageslist.size()+")");
                 viewPageIndex = position;
                 Image image = imageslist.get(viewPageIndex);
                 if (selectImageList.contains(image)) {
@@ -131,30 +132,26 @@ public class PreviewImageActivity extends BaseAppCompatActivity implements View.
 
     private void initView() {
         vp_image = (MViewPager) findViewById(R.id.vp_image);
-        image_back = (TextView) findViewById(R.id.image_back);
-        iv_select = (ImageView) findViewById(R.id.iv_select);
-        image_title = (TextView) findViewById(R.id.image_title);
-        submit = (Button) findViewById(R.id.submit);
-        chrooseimage_title = (RelativeLayout) findViewById(R.id.chrooseimage_title);
+         iv_select = (ImageView) findViewById(R.id.iv_select);
         pre_review = (TextView) findViewById(R.id.pre_review);
         chrooseimage_bottom = (RelativeLayout) findViewById(R.id.chrooseimage_bottom);
-        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) chrooseimage_title.getLayoutParams();
+        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) toolbarHolder.getToolbar().getLayoutParams();
         lp.topMargin = getStatusBarHeight(this);
-        chrooseimage_title.setLayoutParams(lp);
+        toolbarHolder.getToolbar().setLayoutParams(lp);
     }
 
     @Override
     public void onClick(View v) {
-        if (v == submit) {
+        if (v == toolbarHolder.toolbar_ib_right) {
             submitfinsh=true;
             this.finish();
         } else if (v == pre_review) {
             if (selectImageList.size() >= maxCount) {
-                submit.setEnabled(true);
+                toolbarHolder.toolbar_ib_right.setEnabled(true);
                 ToastUtils.show("最多选择" + maxCount + "张");
                 return;
             }
-            submit.setEnabled(false);
+            toolbarHolder.toolbar_ib_right.setEnabled(false);
             Image image = imageslist.get(viewPageIndex);
             if (!selectImageList.contains(image)) {
                 selectImageList.add(image);
@@ -164,11 +161,9 @@ public class PreviewImageActivity extends BaseAppCompatActivity implements View.
                 iv_select.setImageResource(R.drawable.icon_image_un_select);
             }
             if (selectImageList.size() >= maxCount) {
-                submit.setEnabled(true);
+                toolbarHolder.toolbar_ib_right.setEnabled(true);
             }
-            submit.setText("确定(" + selectImageList.size() + "/" + maxCount + ")");
-        }else if(v==image_back){
-            this.finish();
+            toolbarHolder.toolbar_ib_right.setText("确定(" + selectImageList.size() + "/" + maxCount + ")");
         }
     }
 
@@ -197,18 +192,18 @@ public class PreviewImageActivity extends BaseAppCompatActivity implements View.
 
     private void hideTitleAndbottom() {
         showtitle = false;
-        chrooseimage_title.postDelayed(new Runnable() {
+        toolbarHolder.getToolbar().postDelayed(new Runnable() {
             @Override
             public void run() {
-                ObjectAnimator animator = ObjectAnimator.ofFloat(chrooseimage_title, "translationY"
-                        , 0, -chrooseimage_title.getHeight()).setDuration(300);
+                ObjectAnimator animator = ObjectAnimator.ofFloat(toolbarHolder.getToolbar(), "translationY"
+                        , 0, -toolbarHolder.getToolbar().getHeight()).setDuration(300);
                 animator.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         super.onAnimationCancel(animation);
-                        if (chrooseimage_title != null)
-                            chrooseimage_title.setVisibility(View.GONE);
-                        chrooseimage_title.postDelayed(new Runnable() {
+                        if (toolbarHolder.getToolbar() != null)
+                            toolbarHolder.getToolbar().setVisibility(View.GONE);
+                        toolbarHolder.getToolbar().postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 setStatusBarVisible(false);
@@ -227,17 +222,17 @@ public class PreviewImageActivity extends BaseAppCompatActivity implements View.
     private void showTitleAndbottom() {
         showtitle = true;
         setStatusBarVisible(true);
-        chrooseimage_title.postDelayed(new Runnable() {
+        toolbarHolder.getToolbar().postDelayed(new Runnable() {
             @Override
             public void run() {
-                ObjectAnimator animator = ObjectAnimator.ofFloat(chrooseimage_title, "translationY"
-                        , chrooseimage_title.getTranslationY(), 0).setDuration(300);
+                ObjectAnimator animator = ObjectAnimator.ofFloat(toolbarHolder.getToolbar(), "translationY"
+                        , toolbarHolder.getToolbar().getTranslationY(), 0).setDuration(300);
                 animator.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationStart(Animator animation) {
                         super.onAnimationCancel(animation);
-                        if (chrooseimage_title != null)
-                            chrooseimage_title.setVisibility(View.VISIBLE);
+                        if (toolbarHolder.getToolbar() != null)
+                            toolbarHolder.getToolbar().setVisibility(View.VISIBLE);
                     }
                 });
                 animator.start();

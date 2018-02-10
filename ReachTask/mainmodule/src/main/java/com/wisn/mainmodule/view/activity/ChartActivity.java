@@ -10,7 +10,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,6 +33,7 @@ import com.wisn.mainmodule.protocal.service.MessageChangeListener;
 import com.wisn.mainmodule.utils.Contants;
 import com.wisn.mainmodule.view.ChatView;
 import com.wisn.mainmodule.view.viewholder.TextMessageLeftHolder;
+import com.wisn.mainmodule.view.viewholder.ToolbarHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,7 +88,7 @@ public class ChartActivity extends BaseAppCompatActivity implements View.OnClick
     }
 
     @Override
-    public void initToolbarView(Toolbar toolbar) {
+    public void initToolbarView(ToolbarHolder toolbar) {
 
     }
 

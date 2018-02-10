@@ -3,7 +3,6 @@ package com.wisn.mainmodule.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,6 +14,7 @@ import com.wisn.mainmodule.entity.User;
 import com.wisn.mainmodule.presenter.InfoPresenter;
 import com.wisn.mainmodule.utils.Contants;
 import com.wisn.mainmodule.view.InfoView;
+import com.wisn.mainmodule.view.viewholder.ToolbarHolder;
 
 /**
  * @author Wisn
@@ -36,7 +36,7 @@ public class InfoActivity extends BaseAppCompatActivity implements View.OnClickL
     }
 
     @Override
-    public void initToolbarView(Toolbar toolbar) {
+    public void initToolbarView(ToolbarHolder toolbar) {
 
     }
 

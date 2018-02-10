@@ -2,10 +2,10 @@ package com.wisn.mainmodule.view.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
 
 import com.wisn.mainmodule.R;
 import com.wisn.mainmodule.base.BaseAppCompatActivity;
+import com.wisn.mainmodule.view.viewholder.ToolbarHolder;
 
 /**
  * @author Wisn
@@ -20,7 +20,7 @@ public class SkinChangeActivity extends BaseAppCompatActivity {
     }
 
     @Override
-    public void initToolbarView(Toolbar toolbar) {
+    public void initToolbarView(ToolbarHolder toolbar) {
 
     }
 

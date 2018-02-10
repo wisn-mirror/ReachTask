@@ -3,7 +3,6 @@ package com.wisn.mainmodule.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +18,7 @@ import com.wisn.mainmodule.http.request.Login;
 import com.wisn.mainmodule.presenter.LoginPresenter;
 import com.wisn.mainmodule.utils.Contants;
 import com.wisn.mainmodule.view.LoginView;
+import com.wisn.mainmodule.view.viewholder.ToolbarHolder;
 import com.wisn.skinlib.utils.LogUtils;
 import com.wisn.utils.ToastUtils;
 
@@ -48,7 +48,7 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
     }
 
     @Override
-    public void initToolbarView(Toolbar toolbar) {
+    public void initToolbarView(ToolbarHolder toolbar) {
 
     }
 

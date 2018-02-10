@@ -10,7 +10,6 @@ import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.view.menu.MenuBuilder;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,6 +29,7 @@ import com.wisn.mainmodule.protocal.service.MessageChangeListener;
 import com.wisn.mainmodule.view.BaseUpdateView;
 import com.wisn.mainmodule.view.ChatView;
 import com.wisn.mainmodule.view.HomeView;
+import com.wisn.mainmodule.view.viewholder.ToolbarHolder;
 import com.wisn.mainmodule.widget.TipRadioButton;
 import com.wisn.utils.ToastUtils;
 
@@ -57,8 +57,8 @@ public class HomeActivity extends BaseAppCompatActivity implements RadioGroup.On
     private HandleMessage handleMessage;
     private HomeActivityAdapter fragmentAdapter;
     @Override
-    public void initToolbarView(Toolbar toolbar) {
-        toolbar.setTitle("任务通");
+    public void initToolbarView(ToolbarHolder toolbar) {
+        toolbar.getToolbar().setTitle("任务通");
 
     }
 

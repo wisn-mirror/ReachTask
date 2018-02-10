@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.view.menu.MenuBuilder;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -12,6 +11,7 @@ import com.wisn.mainmodule.R;
 import com.wisn.mainmodule.base.BaseAppCompatActivity;
 import com.wisn.mainmodule.utils.Contants;
 import com.wisn.mainmodule.view.MyPhotoView;
+import com.wisn.mainmodule.view.viewholder.ToolbarHolder;
 import com.wisn.skinlib.utils.LogUtils;
 import com.wisn.utils.ToastUtils;
 
@@ -33,10 +33,10 @@ public class MyPhotoActivity extends BaseAppCompatActivity implements MyPhotoVie
     }
 
     @Override
-    public void initToolbarView(Toolbar toolbar) {
+    public void initToolbarView(ToolbarHolder toolbar) {
         LogUtils.e(TAG,"boolbar"+toolbar);
-        toolbar.setTitle("头像");
-        toolbar.setNavigationIcon(R.drawable.back);
+        toolbar.getToolbar().setTitle("头像");
+        toolbar.getToolbar().setNavigationIcon(R.drawable.back);
     }
 
     @Override
