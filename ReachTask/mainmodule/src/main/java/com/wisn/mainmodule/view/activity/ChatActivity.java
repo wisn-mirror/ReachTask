@@ -7,11 +7,13 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +38,8 @@ import com.wisn.mainmodule.utils.Contants;
 import com.wisn.mainmodule.view.ChatView;
 import com.wisn.mainmodule.view.viewholder.TextMessageLeftHolder;
 import com.wisn.mainmodule.view.viewholder.ToolbarHolder;
+import com.wisn.skinlib.utils.LogUtils;
+import com.wisn.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +53,7 @@ import java.util.List;
 public class ChatActivity extends BaseAppCompatActivity implements View.OnClickListener, ChatView, MessageChangeListener {
     public static String TAG = "ChatActivity";
     private RecyclerView message_list;
-    //    private SwipeRefreshLayout message_list_refresh;
+    private SwipeRefreshLayout message_list_refresh;
     private EditText message_content;
     private Button message_send;
     private HandleMessage handleMessage;
@@ -102,27 +106,44 @@ public class ChatActivity extends BaseAppCompatActivity implements View.OnClickL
         return R.layout.activity_message;
     }
 
+    @Override
+    public void updateMoreMessage(List<Message> messages, boolean isTop) {
+        if(messages==null||messages.size()==0){
+            ToastUtils.show("没有更多数据了");
+            return;
+        }
+        message_list_refresh.setRefreshing(false);
+        if(isTop){
+            messageList.addAll(0,messages);
+            int firstVisibleItemPosition=mLinearLayoutManager.findFirstVisibleItemPosition();
+            int lastVisibleItemPosition=mLinearLayoutManager.findLastVisibleItemPosition();
+            adapter.notifyDataSetChanged();
+            moveToPosition(messages.size()+lastVisibleItemPosition-firstVisibleItemPosition);
+        }
+
+    }
     private void initView() {
         final RequestOptions options = new RequestOptions().centerCrop()
                 .placeholder(R.drawable.photo)
                 .error(R.drawable.photo)
                 .fallback(R.drawable.photo);
-//        message_list_refresh = (SwipeRefreshLayout) findViewById(R.id.message_list_refresh);
+        message_list_refresh = (SwipeRefreshLayout) findViewById(R.id.message_list_refresh);
         message_list = (RecyclerView) findViewById(R.id.message_list);
         message_list.setOnClickListener(this);
         message_content = (EditText) findViewById(R.id.message_content);
         message_content.setOnClickListener(this);
         message_send = (Button) findViewById(R.id.message_send);
         message_send.setOnClickListener(this);
-//        message_list_refresh.setProgressViewOffset(false, 0,
-//                (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
-//
-//        message_list_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                // TODO: 2018/1/26
-//            }
-//        });
+        message_list_refresh.setProgressViewOffset(false, 0,
+                (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
+
+        message_list_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // TODO: 2018/1/26
+                messagePresenter.loadMoreMessage(contact);
+            }
+        });
         mLinearLayoutManager = new LinearLayoutManager(this);
         message_list.setLayoutManager(mLinearLayoutManager);
         message_list.setItemAnimator(new DefaultItemAnimator());
@@ -252,8 +273,17 @@ public class ChatActivity extends BaseAppCompatActivity implements View.OnClickL
     }
 
     @Override
+    protected void onPause() {
+        LogUtils.e(TAG,"onPause");
+        messagePresenter.clearTip(contact);
+        super.onPause();
+    }
+
+    @Override
     protected void onDestroy() {
+        LogUtils.e(TAG,"destory");
         if (connection != null) {
+            handleMessage.removeMessageListener(ChatActivity.this);
             unbindService(connection);
         }
         super.onDestroy();
@@ -264,10 +294,6 @@ public class ChatActivity extends BaseAppCompatActivity implements View.OnClickL
         return handleMessage;
     }
 
-    @Override
-    public void updateMoreMessage(List<Message> messageList, boolean isTop) {
-
-    }
 
     @Override
     public void updateMoreMessage(Message message) {

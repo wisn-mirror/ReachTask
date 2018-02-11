@@ -82,7 +82,7 @@ public class ContactFragament extends BaseLazyFragment implements ContactView {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE
                         && mLastVisibleItem + 5 > mLinearLayoutManager.getItemCount()) {
-                    contactPresenter.addMore();
+//                    contactPresenter.addMore();
                 }
             }
 

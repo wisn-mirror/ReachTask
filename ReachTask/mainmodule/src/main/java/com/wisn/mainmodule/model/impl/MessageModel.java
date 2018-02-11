@@ -32,9 +32,19 @@ public class MessageModel implements IMessageModel {
     public List<Message> getMesssages() {
         MessageDao messageDao = MApplication.getInstance().getDaoSession().getMessageDao();
         List<Message> messages = messageDao.loadAll();
-        Collections.sort(messages);
+//        Collections.sort(messages);
         for (Message message : messages) {
            LogUtils.e(TAG,"  ddd:" + message);
+        }
+        return messages;
+    }
+
+    public List<Message> getMesssages(int offset,int limit) {
+        MessageDao messageDao = MApplication.getInstance().getDaoSession().getMessageDao();
+        List<Message> messages = messageDao.queryBuilder().offset(offset ).limit(limit).list();
+        Collections.sort(messages);
+        for (Message message : messages) {
+            LogUtils.e(TAG,"  ddd:" + message);
         }
         return messages;
     }
@@ -51,10 +61,23 @@ public class MessageModel implements IMessageModel {
         return list;
     }
 
-    @Override
-    public List<Message> getMesssagesByContactid(Long contactid) {
+    public List<Message> getMesssagesByContactidAll(Long contactid) {
         MessageDao messageDao = MApplication.getInstance().getDaoSession().getMessageDao();
         Query<Message> build = messageDao.queryBuilder().where(MessageDao.Properties.Contactid.eq(contactid))
+                .orderAsc(MessageDao.Properties._id)
+                .build();
+        List<Message> list = build.list();
+        for (Message message : list) {
+            LogUtils.e(TAG,"  ddd:" + message);
+        }
+        return list;
+    }
+    @Override
+    public List<Message> getMesssagesByContactid(Long contactid,int offset,int limit) {
+        LogUtils.e(TAG,"  offset:" + offset+" limit:"+limit);
+        MessageDao messageDao = MApplication.getInstance().getDaoSession().getMessageDao();
+        Query<Message> build = messageDao.queryBuilder().where(MessageDao.Properties.Contactid.eq(contactid))
+                .offset(offset).limit(limit)
                 .orderAsc(MessageDao.Properties._id)
                 .build();
         List<Message> list = build.list();

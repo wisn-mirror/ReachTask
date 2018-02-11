@@ -1,15 +1,12 @@
 package com.wisn.mainmodule.presenter;
 
 import com.wisn.mainmodule.entity.Contact;
-import com.wisn.mainmodule.entity.Message;
 import com.wisn.mainmodule.model.IMessageModel;
 import com.wisn.mainmodule.model.IUserModel;
 import com.wisn.mainmodule.model.impl.ContactMessageModel;
 import com.wisn.mainmodule.model.impl.MessageModel;
 import com.wisn.mainmodule.model.impl.UserModel;
 import com.wisn.mainmodule.view.ChatView;
-
-import java.util.List;
 
 /**
  * @author Wisn
@@ -32,12 +29,12 @@ public class HomePresenter {
     }
 
     public void loadMessage(Contact contact) {
-        List<Message> messsagesByContactid = messageModel.getMesssagesByContactid(contact.getContactid());
+      /*  List<Message> messsagesByContactid = messageModel.getMesssagesByContactid(contact.getContactid());
         if (messsagesByContactid != null && messsagesByContactid.size() != 0) {
             messageView.setMessageList(messsagesByContactid);
         }
         contact.setUnReadMessageNumber(0);
-        contactMessageModel.saveContacts(contact);
+        contactMessageModel.saveContacts(contact);*/
     }
 
 }

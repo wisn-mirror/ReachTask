@@ -8,11 +8,6 @@
         android:title="Search"
         app:showAsAction="always" />
     <item
-        android:id="@+id/kong"
-        android:icon="@null"
-        android:title=" "
-        app:showAsAction="always" />
-    <item
         android:id="@+id/addfrends"
         android:icon="@drawable/home_bottom_tab_icon_work_normal"
         android:title="添加朋友"

@@ -22,6 +22,7 @@ import com.wisn.mainmodule.view.HomeView;
 import com.wisn.mainmodule.view.MessageContactView;
 import com.wisn.mainmodule.view.activity.ChatActivity;
 import com.wisn.mainmodule.view.viewholder.MessageItemHolder;
+import com.wisn.skinlib.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,11 +54,11 @@ public class MessageFragament extends BaseLazyFragment implements MessageContact
     }
 
     private void initView(View view) {
-        final RequestOptions options = new RequestOptions();
-        options.centerCrop()
+        final RequestOptions options = new RequestOptions()
+                .centerCrop()
                 .placeholder(R.drawable.radiobutton_bg_message)
-                .error(R.drawable.photo)
-                .fallback(R.drawable.radiobutton_bg_work);
+                .error(R.drawable.radiobutton_bg_message)
+                .fallback(R.drawable.radiobutton_bg_message);
         contact_list =(RecyclerView) view.findViewById(R.id.contact_list);
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         contact_list.setLayoutManager(mLinearLayoutManager);
@@ -128,14 +129,15 @@ public class MessageFragament extends BaseLazyFragment implements MessageContact
             }
         };
         contact_list.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        dataChange();
     }
 
     @Override
     public void onFragmentVisibleChange(boolean isVisible) {
         super.onFragmentVisibleChange(isVisible);
-        dataChange();
-
+        if(contactPresenter!=null){
+            contactPresenter.getContacts();
+        }
     }
 
     @Override
@@ -161,14 +163,17 @@ public class MessageFragament extends BaseLazyFragment implements MessageContact
         }
     }
     private void dataChange(){
+        LogUtils.e(getTAG(),"dataChange");
+        int count=0;
+        for(Contact contact:contacts){
+            count=count+contact.getUnReadMessageNumber();
+        }
+        if(homeView==null){
+            homeView = (HomeView) getActivity();
+        }
+        if(homeView!=null)
+        homeView.updateTipMessage(0,count);
         if(adapter!=null){
-            int count=0;
-            for(Contact contact:contacts){
-                count=count+contact.getUnReadMessageNumber();
-            }
-            if(homeView!=null){
-                homeView.updateTipMessage(0,count);
-            }
             adapter.notifyDataSetChanged();
         }
     }

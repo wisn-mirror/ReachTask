@@ -14,7 +14,8 @@ public interface IMessageModel {
     void saveMessage(Message message);
     List<Message> getMesssages();
     List<Message> getMesssagesByTargetid(Long targerid);
-    List<Message> getMesssagesByContactid(Long contactid);
+    List<Message> getMesssagesByContactidAll(Long contactid);
+    List<Message> getMesssagesByContactid(Long contactid,int offset,int limit);
     void updateMessage(Message message);
     Message getMesssage(Long messageId);
     void deleteMessage(Long messageid);

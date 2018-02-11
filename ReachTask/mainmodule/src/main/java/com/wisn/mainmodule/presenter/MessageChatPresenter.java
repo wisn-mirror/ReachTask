@@ -30,19 +30,33 @@ public class MessageChatPresenter {
     IMessageModel messageModel;
     IUserModel userModel;
     ContactMessageModel contactMessageModel;
-
+    private int historyMessageCount;
+    private int offsetIndex=1;
+    private int limit=15;
     public MessageChatPresenter(ChatView messageView) {
         this.messageView = messageView;
         messageModel = new MessageModel();
         userModel = new UserModel();
         contactMessageModel = new ContactMessageModel();
+
     }
 
     public void loadMessage(Contact contact) {
-        List<Message> messsagesByContactid = messageModel.getMesssagesByContactid(contact.getContactid());
+        List<Message> messsagesByTargetid = messageModel.getMesssagesByContactidAll(contact.getContactid());
+        historyMessageCount = messsagesByTargetid.size();
+        List<Message> messsagesByContactid = messageModel.getMesssagesByContactid(contact.getContactid(),historyMessageCount-limit,limit);
         if (messsagesByContactid != null && messsagesByContactid.size() != 0) {
             messageView.setMessageList(messsagesByContactid);
         }
+    }
+    public void loadMoreMessage(Contact contact) {
+        offsetIndex++;
+        List<Message> messsagesByContactid = messageModel.getMesssagesByContactid(contact.getContactid(),historyMessageCount-offsetIndex*limit,limit);
+        if (messsagesByContactid != null && messsagesByContactid.size() != 0) {
+            messageView.updateMoreMessage(messsagesByContactid,true);
+        }
+    }
+    public void clearTip(Contact contact){
         contact.setUnReadMessageNumber(0);
         contactMessageModel.saveContacts(contact);
     }

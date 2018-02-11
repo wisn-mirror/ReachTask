@@ -92,8 +92,8 @@ public class MessageAService extends Service implements HandleMessage {
                                     Log.e(TAG, "newMessage ");
                                     // TODO: 2018/1/26 添加联系关系
                                     Contact contact = contactMessageModel.getContactByTargetid(message.getFromuserid());
-                                    if (contact == null) {
                                         User userbyUserid = iUserModel.getUserbyUserid(message.getFromuserid());
+                                    if (contact == null) {
                                         long contactid = Long.parseLong(String.valueOf(message.getTargetuserid()) + String.valueOf(message.getFromuserid()));
                                         contact = new Contact();
                                         contact.setContactid(contactid);
@@ -109,6 +109,7 @@ public class MessageAService extends Service implements HandleMessage {
                                         contact.setLastmessage(message.getContent());
                                         contact.setLastcontacttime(System.currentTimeMillis());
                                         contact.setUnReadMessageNumber(contact.getUnReadMessageNumber()+1);
+                                        contact.setIcon(userbyUserid.getIconurl());
                                         contactMessageModel.saveContacts(contact);
                                     }
                                     message.setContactid(contact.getContactid());
@@ -124,7 +125,6 @@ public class MessageAService extends Service implements HandleMessage {
                                             }
                                         }
                                     });
-
                                 } else {
                                     Log.e(TAG, "receiptMessage ");
                                     //回执消息

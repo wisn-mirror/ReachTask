@@ -21,6 +21,7 @@ import com.wisn.mainmodule.view.MineFragmentView;
 import com.wisn.mainmodule.view.activity.MyInfoActivity;
 import com.wisn.mainmodule.view.activity.MyPhotoActivity;
 import com.wisn.mainmodule.widget.CombinationListItemLayout;
+import com.wisn.skinlib.utils.LogUtils;
 import com.wisn.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ import java.util.ArrayList;
 
 public class MineFragament extends BaseLazyFragment implements View.OnClickListener ,MineFragmentView {
 
+    private static final String TAG ="MineFragament" ;
     private ImageView info_photo;
     private TextView info_id;
     private TextView info_nickname;
@@ -54,9 +56,11 @@ public class MineFragament extends BaseLazyFragment implements View.OnClickListe
     public View onCreateLazyView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mine, container, false);
         initView(view);
-        if(mineFragmentPresenter!=null){
-            mineFragmentPresenter.load();
+        LogUtils.e(TAG,mineFragmentPresenter+"mineFragmentPresenter");
+        if(mineFragmentPresenter==null){
+            mineFragmentPresenter=new MineFragmentPresenter(this);
         }
+        mineFragmentPresenter.load();
         return view;
     }
 
@@ -64,17 +68,13 @@ public class MineFragament extends BaseLazyFragment implements View.OnClickListe
     public void firstVisible() {
         super.firstVisible();
         mineFragmentPresenter=new MineFragmentPresenter(this);
-        options = new RequestOptions();
-        options.centerCrop()
-                .placeholder(R.drawable.photo)
-                .error(R.drawable.photo)
-                .fallback(R.drawable.photo);
     }
 
     @Override
     public void onFragmentVisibleChange(boolean isVisible) {
         super.onFragmentVisibleChange(isVisible);
     }
+
 
     private void initView(View view) {
         info = (LinearLayout) view.findViewById(R.id.info);
@@ -129,11 +129,17 @@ public class MineFragament extends BaseLazyFragment implements View.OnClickListe
 
     @Override
     public void updateInfo(User user) {
-        Glide.with(this)
-                .load(Contants.baseImage+ user.getIconurl())
-                .apply(options).into(info_photo);
-        info_id.setText(user.getNameid());
-        info_nickname.setText(user.getNickname());
+        if(user!=null){
+            Glide.with(this)
+                    .load(Contants.baseImage+ user.getIconurl())
+                    .apply(new RequestOptions()
+                            .centerCrop()
+                            .placeholder(R.drawable.photo)
+                            .error(R.drawable.photo)
+                            .fallback(R.drawable.photo)).into(info_photo);
+            info_id.setText(user.getNameid());
+            info_nickname.setText(user.getNickname());
+        }
     }
 
 

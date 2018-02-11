@@ -32,6 +32,7 @@ import com.wisn.mainmodule.view.HomeView;
 import com.wisn.mainmodule.view.fragment.HomeFragmentFactory;
 import com.wisn.mainmodule.view.viewholder.ToolbarHolder;
 import com.wisn.mainmodule.widget.TipRadioButton;
+import com.wisn.skinlib.utils.LogUtils;
 import com.wisn.utils.ToastUtils;
 
 import java.lang.reflect.Method;
@@ -158,6 +159,7 @@ public class HomeActivity extends BaseAppCompatActivity implements RadioGroup.On
 
     @Override
     public void updateTipMessage(int index, int messageCount) {
+        LogUtils.e(TAG,"index:"+index+" messageCount:"+messageCount);
         TipRadioButton tipRadioButton = null;
         switch (index) {
             case 0:
@@ -216,10 +218,11 @@ public class HomeActivity extends BaseAppCompatActivity implements RadioGroup.On
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         if (connection != null) {
+            handleMessage.removeMessageListener(HomeActivity.this);
             unbindService(connection);
         }
+        super.onDestroy();
     }
 
     @Override
